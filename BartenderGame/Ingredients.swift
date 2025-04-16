@@ -1,0 +1,210 @@
+import Foundation
+
+// Ingredient Categories
+enum IngredientCategory: String, CaseIterable, Hashable {
+    // Main Categories
+    case spirits = "Spirits"
+    case liqueurs = "Liqueurs"
+    case wine = "Wine"
+    case beer = "Beer"
+    case mixers = "Mixers"
+    
+    var subcategories: [String] {
+        switch self {
+        case .spirits:
+            return ["Whiskey", "Rum", "Vodka", "Gin", "Tequila", "Brandy", "Other Spirits"]
+        case .liqueurs:
+            return ["Orange", "Coffee", "Nut", "Anise", "Cherry", "Mint", "Chocolate", "Fruit", "Berry", "Cream", "Bitters", "Other"]
+        case .wine:
+            return ["Red Wine", "White Wine", "Rosé Wine", "Sparkling Wine", "Vermouth", "Fortified"]
+        case .beer:
+            return ["Ale", "Stout", "Beer", "Cider"]
+        case .mixers:
+            return ["Carbonated", "Juice", "Syrups", "Dairy", "Other"]
+        }
+    }
+}
+
+// Drink Ingredient
+struct DrinkIngredient: Identifiable, Hashable {
+    let id = UUID()
+    let name: String
+    let shortName: String
+    let category: IngredientCategory
+    let subcategory: String
+    let cost: Double  // Cost per unit in pounds
+    let amount: Double // in oz
+    
+    // Implement Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: DrinkIngredient, rhs: DrinkIngredient) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    init(name: String, amount: Double) {
+        self.name = name
+        self.amount = amount
+        if let availableIngredient = DrinkIngredient.availableIngredients.first(where: { $0.name == name }) {
+            self.shortName = availableIngredient.shortName
+            self.category = availableIngredient.category
+            self.subcategory = availableIngredient.subcategory
+            self.cost = availableIngredient.cost
+        } else {
+            self.shortName = name
+            self.category = .spirits
+            self.subcategory = "Whiskey"
+            self.cost = 2.50
+        }
+    }
+    
+    init(name: String, shortName: String, category: IngredientCategory, subcategory: String, cost: Double, amount: Double = 1.0) {
+        self.name = name
+        self.shortName = shortName
+        self.category = category
+        self.subcategory = subcategory
+        self.cost = cost
+        self.amount = amount
+    }
+    
+    static func getIngredientsByCategory() -> [IngredientCategory: [String: [String]]] {
+        var categorized: [IngredientCategory: [String: [String]]] = [:]
+        
+        // Initialize all categories and their subcategories
+        for category in IngredientCategory.allCases {
+            categorized[category] = [:]
+            for subcategory in category.subcategories {
+                categorized[category]?[subcategory] = []
+            }
+        }
+        
+        // Add ingredients to their respective categories and subcategories
+        for ingredient in availableIngredients {
+            if var categoryDict = categorized[ingredient.category] {
+                if var subcategoryList = categoryDict[ingredient.subcategory] {
+                    subcategoryList.append(ingredient.name)
+                    categoryDict[ingredient.subcategory] = subcategoryList
+                    categorized[ingredient.category] = categoryDict
+                }
+            }
+        }
+        
+        return categorized
+    }
+    
+    static let availableIngredients: [DrinkIngredient] = [
+        // Spirits
+        DrinkIngredient(name: "Bourbon Whiskey", shortName: "Bourbon", category: .spirits, subcategory: "Whiskey", cost: 2.50),
+        DrinkIngredient(name: "Rye Whiskey", shortName: "Rye", category: .spirits, subcategory: "Whiskey", cost: 2.75),
+        DrinkIngredient(name: "Blended Scotch", shortName: "Blended", category: .spirits, subcategory: "Whiskey", cost: 2.75),
+        DrinkIngredient(name: "Single Malt Scotch", shortName: "Single Malt", category: .spirits, subcategory: "Whiskey", cost: 3.25),
+        DrinkIngredient(name: "Canadian Whiskey", shortName: "Canadian", category: .spirits, subcategory: "Whiskey", cost: 2.50),
+        DrinkIngredient(name: "Irish Whiskey", shortName: "Irish", category: .spirits, subcategory: "Whiskey", cost: 2.75),
+        DrinkIngredient(name: "Gin", shortName: "Gin", category: .spirits, subcategory: "Gin", cost: 2.25),
+        DrinkIngredient(name: "Vodka", shortName: "Vodka", category: .spirits, subcategory: "Vodka", cost: 2.00),
+        DrinkIngredient(name: "Brandy", shortName: "Brandy", category: .spirits, subcategory: "Brandy", cost: 2.50),
+        DrinkIngredient(name: "Cognac", shortName: "Cognac", category: .spirits, subcategory: "Brandy", cost: 3.00),
+        DrinkIngredient(name: "Armagnac", shortName: "Armagnac", category: .spirits, subcategory: "Brandy", cost: 3.00),
+        DrinkIngredient(name: "Blanco Tequila", shortName: "Blanco", category: .spirits, subcategory: "Tequila", cost: 2.25),
+        DrinkIngredient(name: "Reposado Tequila", shortName: "Reposado", category: .spirits, subcategory: "Tequila", cost: 2.50),
+        DrinkIngredient(name: "Añejo Tequila", shortName: "Añejo", category: .spirits, subcategory: "Tequila", cost: 2.75),
+        DrinkIngredient(name: "Golden Rum", shortName: "Golden", category: .spirits, subcategory: "Rum", cost: 2.25),
+        DrinkIngredient(name: "Dark Rum", shortName: "Dark", category: .spirits, subcategory: "Rum", cost: 2.50),
+        DrinkIngredient(name: "Spiced Rum", shortName: "Spiced", category: .spirits, subcategory: "Rum", cost: 2.75),
+        DrinkIngredient(name: "White Rum", shortName: "White", category: .spirits, subcategory: "Rum", cost: 2.25),
+        DrinkIngredient(name: "Rhum Agricole", shortName: "Agricole", category: .spirits, subcategory: "Rum", cost: 2.75),
+        DrinkIngredient(name: "Calvados", shortName: "Calvados", category: .spirits, subcategory: "Brandy", cost: 2.75),
+        
+        // Wine & Beer
+        DrinkIngredient(name: "Champagne", shortName: "Champagne", category: .wine, subcategory: "Sparkling Wine", cost: 0.75),
+        DrinkIngredient(name: "Sweet Vermouth", shortName: "Sweet", category: .wine, subcategory: "Vermouth", cost: 0.40),
+        DrinkIngredient(name: "Dry Vermouth", shortName: "Dry", category: .wine, subcategory: "Vermouth", cost: 0.40),
+        DrinkIngredient(name: "Semi-Dry Vermouth", shortName: "Semi-Dry", category: .wine, subcategory: "Vermouth", cost: 0.40),
+        DrinkIngredient(name: "Lillet Blanc", shortName: "Lillet", category: .wine, subcategory: "Vermouth", cost: 1.75),
+        DrinkIngredient(name: "Pinot Noir", shortName: "Pinot Noir", category: .wine, subcategory: "Red Wine", cost: 0.40),
+        DrinkIngredient(name: "Cabernet Sauvignon", shortName: "Cab Sav", category: .wine, subcategory: "Red Wine", cost: 0.45),
+        DrinkIngredient(name: "Rioja", shortName: "Rioja", category: .wine, subcategory: "Red Wine", cost: 0.40),
+        DrinkIngredient(name: "Chardonnay", shortName: "Chardonnay", category: .wine, subcategory: "White Wine", cost: 0.40),
+        DrinkIngredient(name: "Pinot Grigio", shortName: "Pinot Grigio", category: .wine, subcategory: "White Wine", cost: 0.40),
+        DrinkIngredient(name: "Sauvignon Blanc", shortName: "Sauv Blanc", category: .wine, subcategory: "White Wine", cost: 0.40),
+        DrinkIngredient(name: "Ruby Port", shortName: "Ruby Port", category: .wine, subcategory: "Fortified", cost: 0.50),
+        DrinkIngredient(name: "Tawny Port", shortName: "Tawny Port", category: .wine, subcategory: "Fortified", cost: 0.55),
+        DrinkIngredient(name: "Dry Sherry", shortName: "Dry Sherry", category: .wine, subcategory: "Fortified", cost: 0.45),
+        DrinkIngredient(name: "Sweet Sherry", shortName: "Sweet Sherry", category: .wine, subcategory: "Fortified", cost: 0.45),
+        DrinkIngredient(name: "Stout", shortName: "Stout", category: .beer, subcategory: "Stout", cost: 0.30),
+        DrinkIngredient(name: "Ale", shortName: "Ale", category: .beer, subcategory: "Ale", cost: 0.28),
+        DrinkIngredient(name: "Brown Ale", shortName: "Brown Ale", category: .beer, subcategory: "Ale", cost: 0.28),
+        DrinkIngredient(name: "Bitter", shortName: "Bitter", category: .beer, subcategory: "Beer", cost: 0.28),
+        DrinkIngredient(name: "India Pale Ale", shortName: "IPA", category: .beer, subcategory: "Ale", cost: 0.30),
+        DrinkIngredient(name: "Cider", shortName: "Cider", category: .beer, subcategory: "Cider", cost: 0.28),
+        DrinkIngredient(name: "Lager", shortName: "Lager", category: .beer, subcategory: "Beer", cost: 0.28),
+        
+        // Liqueurs
+        DrinkIngredient(name: "Triple Sec", shortName: "Triple Sec", category: .liqueurs, subcategory: "Orange", cost: 1.75),
+        DrinkIngredient(name: "Cointreau", shortName: "Cointreau", category: .liqueurs, subcategory: "Orange", cost: 2.00),
+        DrinkIngredient(name: "Grand Marnier", shortName: "Grand Marnier", category: .liqueurs, subcategory: "Orange", cost: 2.25),
+        DrinkIngredient(name: "Blue Curaçao", shortName: "Blue Curaçao", category: .liqueurs, subcategory: "Orange", cost: 1.75),
+        DrinkIngredient(name: "Frangelico", shortName: "Frangelico", category: .liqueurs, subcategory: "Nut", cost: 2.00),
+        DrinkIngredient(name: "Amaretto", shortName: "Amaretto", category: .liqueurs, subcategory: "Nut", cost: 1.75),
+        DrinkIngredient(name: "Tia Maria", shortName: "Tia Maria", category: .liqueurs, subcategory: "Coffee", cost: 1.75),
+        DrinkIngredient(name: "Kahlua", shortName: "Kahlua", category: .liqueurs, subcategory: "Coffee", cost: 1.75),
+        DrinkIngredient(name: "Absinthe", shortName: "Absinthe", category: .liqueurs, subcategory: "Anise", cost: 2.50),
+        DrinkIngredient(name: "Sambuca", shortName: "Sambuca", category: .liqueurs, subcategory: "Anise", cost: 2.00),
+        DrinkIngredient(name: "Pernod", shortName: "Pernod", category: .liqueurs, subcategory: "Anise", cost: 2.00),
+        DrinkIngredient(name: "Cherry Marnier", shortName: "Cherry Marnier", category: .liqueurs, subcategory: "Cherry", cost: 2.25),
+        DrinkIngredient(name: "Maraschino Liqueur", shortName: "Maraschino", category: .liqueurs, subcategory: "Cherry", cost: 2.00),
+        DrinkIngredient(name: "Cherry Heering", shortName: "Heering", category: .liqueurs, subcategory: "Cherry", cost: 1.75),
+        DrinkIngredient(name: "Campari", shortName: "Campari", category: .liqueurs, subcategory: "Other", cost: 2.00),
+        DrinkIngredient(name: "Aperol", shortName: "Aperol", category: .liqueurs, subcategory: "Other", cost: 1.75),
+        DrinkIngredient(name: "Drambuie", shortName: "Drambuie", category: .liqueurs, subcategory: "Other", cost: 2.25),
+        DrinkIngredient(name: "Crème de Violette", shortName: "Violette", category: .liqueurs, subcategory: "Other", cost: 1.75),
+        DrinkIngredient(name: "Benedictine", shortName: "Benedictine", category: .liqueurs, subcategory: "Other", cost: 2.00),
+        DrinkIngredient(name: "Crème de Menthe", shortName: "Menthe", category: .liqueurs, subcategory: "Other", cost: 1.75),
+        DrinkIngredient(name: "Light Crème de Cacao", shortName: "Light Cacao", category: .liqueurs, subcategory: "Chocolate", cost: 1.75),
+        DrinkIngredient(name: "Dark Crème de Cacao", shortName: "Dark Cacao", category: .liqueurs, subcategory: "Chocolate", cost: 1.75),
+        DrinkIngredient(name: "Peach Schnapps", shortName: "Peach", category: .liqueurs, subcategory: "Fruit", cost: 1.75),
+        DrinkIngredient(name: "Chambord", shortName: "Chambord", category: .liqueurs, subcategory: "Fruit", cost: 2.25),
+        DrinkIngredient(name: "Baileys", shortName: "Baileys", category: .liqueurs, subcategory: "Cream", cost: 2.00),
+        DrinkIngredient(name: "Amarula", shortName: "Amarula", category: .liqueurs, subcategory: "Cream", cost: 2.25),
+        DrinkIngredient(name: "Midori", shortName: "Midori", category: .liqueurs, subcategory: "Fruit", cost: 2.00),
+        DrinkIngredient(name: "Yellow Chartreuse", shortName: "Yellow Chartreuse", category: .liqueurs, subcategory: "Other", cost: 2.50),
+        DrinkIngredient(name: "Green Chartreuse", shortName: "Green Chartreuse", category: .liqueurs, subcategory: "Other", cost: 2.50),
+        DrinkIngredient(name: "Crème Pêche", shortName: "Pêche", category: .liqueurs, subcategory: "Fruit", cost: 1.75),
+        DrinkIngredient(name: "Lychee Liqueur", shortName: "Lychee", category: .liqueurs, subcategory: "Fruit", cost: 2.00),
+        
+        // Mixers
+        DrinkIngredient(name: "Tonic Water", shortName: "Tonic", category: .mixers, subcategory: "Carbonated", cost: 0.50),
+        DrinkIngredient(name: "Lemon-Lime Soda", shortName: "Lemon-Lime", category: .mixers, subcategory: "Carbonated", cost: 0.50),
+        DrinkIngredient(name: "Ginger Beer", shortName: "Ginger Beer", category: .mixers, subcategory: "Carbonated", cost: 0.75),
+        DrinkIngredient(name: "Cola", shortName: "Cola", category: .mixers, subcategory: "Carbonated", cost: 0.50),
+        DrinkIngredient(name: "Soda Water", shortName: "Soda", category: .mixers, subcategory: "Carbonated", cost: 0.25),
+        DrinkIngredient(name: "Lemonade", shortName: "Lemonade", category: .mixers, subcategory: "Carbonated", cost: 0.50),
+        DrinkIngredient(name: "Ginger Ale", shortName: "Ginger Ale", category: .mixers, subcategory: "Carbonated", cost: 0.50),
+        DrinkIngredient(name: "Orange Juice", shortName: "Orange", category: .mixers, subcategory: "Juice", cost: 0.75),
+        DrinkIngredient(name: "Cranberry Juice", shortName: "Cranberry", category: .mixers, subcategory: "Juice", cost: 0.75),
+        DrinkIngredient(name: "Pineapple Juice", shortName: "Pineapple", category: .mixers, subcategory: "Juice", cost: 0.75),
+        DrinkIngredient(name: "Lime Juice", shortName: "Lime", category: .mixers, subcategory: "Juice", cost: 0.50),
+        DrinkIngredient(name: "Lemon Juice", shortName: "Lemon", category: .mixers, subcategory: "Juice", cost: 0.50),
+        DrinkIngredient(name: "Grapefruit Juice", shortName: "Grapefruit", category: .mixers, subcategory: "Juice", cost: 0.75),
+        DrinkIngredient(name: "Tomato Juice", shortName: "Tomato", category: .mixers, subcategory: "Juice", cost: 0.75),
+        DrinkIngredient(name: "Gomme Syrup", shortName: "Gomme", category: .mixers, subcategory: "Syrups", cost: 0.50),
+        DrinkIngredient(name: "Grenadine", shortName: "Grenadine", category: .mixers, subcategory: "Syrups", cost: 0.50),
+        DrinkIngredient(name: "Blackcurrant Cordial", shortName: "Blackcurrant", category: .mixers, subcategory: "Syrups", cost: 0.50),
+        DrinkIngredient(name: "Raspberry Syrup", shortName: "Raspberry", category: .mixers, subcategory: "Syrups", cost: 0.50),
+        DrinkIngredient(name: "Passion Fruit Syrup", shortName: "Passion", category: .mixers, subcategory: "Syrups", cost: 0.75),
+        DrinkIngredient(name: "Orgeat", shortName: "Orgeat", category: .mixers, subcategory: "Syrups", cost: 0.75),
+        DrinkIngredient(name: "Coconut Cream", shortName: "Coconut Cream", category: .mixers, subcategory: "Other", cost: 0.75),
+        DrinkIngredient(name: "Heavy Cream", shortName: "Cream", category: .mixers, subcategory: "Dairy", cost: 0.75),
+        DrinkIngredient(name: "Half and Half", shortName: "Half & Half", category: .mixers, subcategory: "Dairy", cost: 0.75),
+        DrinkIngredient(name: "Egg White", shortName: "Egg White", category: .mixers, subcategory: "Dairy", cost: 0.25),
+        DrinkIngredient(name: "Egg Yolk", shortName: "Egg Yolk", category: .mixers, subcategory: "Dairy", cost: 0.25),
+        DrinkIngredient(name: "Whole Egg", shortName: "Whole Egg", category: .mixers, subcategory: "Dairy", cost: 0.25),
+        DrinkIngredient(name: "Espresso", shortName: "Espresso", category: .mixers, subcategory: "Other", cost: 1.00),
+        DrinkIngredient(name: "Worcestershire Sauce", shortName: "Worcestershire", category: .mixers, subcategory: "Other", cost: 0.25),
+        DrinkIngredient(name: "Tabasco Sauce", shortName: "Tabasco", category: .mixers, subcategory: "Other", cost: 0.25),
+        DrinkIngredient(name: "Brine", shortName: "Brine", category: .mixers, subcategory: "Other", cost: 0.25),
+        DrinkIngredient(name: "Sugar Cube", shortName: "Sugar Cube", category: .mixers, subcategory: "Other", cost: 0.25)
+    ]
+} 
