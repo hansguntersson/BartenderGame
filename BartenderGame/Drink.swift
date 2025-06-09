@@ -84,8 +84,9 @@ struct Drink {
     let category: DrinkCategory
     let style: DrinkStyle
     let family: DrinkFamily
+    let requiredGarnish: Garnish?
     
-    init(name: String, recipe: [DrinkIngredient], description: String, requiredIce: IceType, requiredMethod: MethodType, requiredGlass: Glassware, category: DrinkCategory, style: DrinkStyle, family: DrinkFamily) {
+    init(name: String, recipe: [DrinkIngredient], description: String, requiredIce: IceType, requiredMethod: MethodType, requiredGlass: Glassware, category: DrinkCategory, style: DrinkStyle, family: DrinkFamily, requiredGarnish: Garnish? = nil) {
         self.name = name
         self.recipe = recipe
         self.description = description
@@ -95,6 +96,7 @@ struct Drink {
         self.category = category
         self.style = style
         self.family = family
+        self.requiredGarnish = requiredGarnish
     }
     
     var preparationInfo: String {
@@ -120,7 +122,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Cosmopolitan Glass" })!,
             category: .cocktail,
             style: .modern,
-            family: .cosmopolitan
+            family: .cosmopolitan,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "Lime Twist" })
         ),
         Drink(
             name: "Negroni",
@@ -135,7 +138,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .negroni
+            family: .negroni,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "Orange Twist" })
         ),
         Drink(
             name: "Daiquiri",
@@ -150,7 +154,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .daiquiri
+            family: .daiquiri,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })
         ),
         Drink(
             name: "Whiskey Sour",
@@ -165,7 +170,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .whiskeySour
+            family: .whiskeySour,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "Lemon Wheel" })
         ),
         Drink(
             name: "Tom Collins",
@@ -181,7 +187,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .tomCollins
+            family: .tomCollins,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "Lemon Wheel" })
         ),
         Drink(
             name: "Mai Tai",
@@ -198,7 +205,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .party,
-            family: .maiTai
+            family: .maiTai,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Gimlet",
@@ -213,7 +221,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .gimlet
+            family: .gimlet,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Dark 'n' Stormy",
@@ -228,7 +237,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .darkNStormy
+            family: .darkNStormy,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Sazerac",
@@ -244,7 +254,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .sazerac
+            family: .sazerac,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Martini",
@@ -258,7 +269,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .martini
+            family: .martini,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Rob Roy",
@@ -273,7 +285,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .robRoy
+            family: .robRoy,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Sidecar",
@@ -288,7 +301,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .sidecar
+            family: .sidecar,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Mint Julep",
@@ -303,7 +317,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Julep Cup" })!,
             category: .cocktail,
             style: .classic,
-            family: .julep
+            family: .julep,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Rusty Nail",
@@ -317,7 +332,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .rustyNail
+            family: .rustyNail,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "White Lady",
@@ -333,7 +349,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .whiteLady
+            family: .whiteLady,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Bobby Burns",
@@ -348,7 +365,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .bobbyBurns
+            family: .bobbyBurns,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Clover Club",
@@ -365,7 +383,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .cloverClub
+            family: .cloverClub,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Death in the Afternoon",
@@ -379,7 +398,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Champagne Flute" })!,
             category: .cocktail,
             style: .obscure,
-            family: .deathInTheAfternoon
+            family: .deathInTheAfternoon,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "El Presidente",
@@ -395,7 +415,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .elPresidente
+            family: .elPresidente,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Hemingway Daiquiri",
@@ -412,7 +433,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .daiquiri
+            family: .daiquiri,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Monkey Gland",
@@ -428,7 +450,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .monkeyGland
+            family: .monkeyGland,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Remember the Maine",
@@ -444,7 +467,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .manhattan
+            family: .manhattan,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Saturn",
@@ -461,7 +485,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Hurricane Glass" })!,
             category: .cocktail,
             style: .party,
-            family: .saturn
+            family: .saturn,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Ti' Punch",
@@ -476,7 +501,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .cocktail,
             style: .party,
-            family: .tiPunch
+            family: .tiPunch,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Vieux Mot",
@@ -492,7 +518,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .vieuxMot
+            family: .vieuxMot,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Warday's Sour",
@@ -508,7 +535,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .sour
+            family: .sour,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Warday's",
@@ -524,7 +552,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         // Regular Drinks
         Drink(
@@ -538,7 +567,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Red Wine Glass" })!,
             category: .regular,
             style: .regular,
-            family: .redWine
+            family: .redWine,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "White Wine",
@@ -551,7 +581,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "White Wine Glass" })!,
             category: .regular,
             style: .regular,
-            family: .whiteWine
+            family: .whiteWine,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Champagne",
@@ -564,7 +595,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Champagne Flute" })!,
             category: .regular,
             style: .regular,
-            family: .champagne
+            family: .champagne,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Stout",
@@ -577,7 +609,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
             category: .regular,
             style: .regular,
-            family: .stout
+            family: .stout,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Ale",
@@ -590,7 +623,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
             category: .regular,
             style: .regular,
-            family: .ale
+            family: .ale,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "IPA",
@@ -603,7 +637,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
             category: .regular,
             style: .regular,
-            family: .ipa
+            family: .ipa,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Cider",
@@ -616,7 +651,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
             category: .regular,
             style: .regular,
-            family: .cider
+            family: .cider,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Bourbon Neat",
@@ -629,7 +665,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .regular,
             style: .regular,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Scotch Neat",
@@ -642,7 +679,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .regular,
             style: .regular,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Bourbon on the Rocks",
@@ -655,7 +693,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .regular,
             style: .regular,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Scotch on the Rocks",
@@ -668,7 +707,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .regular,
             style: .regular,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Gin & Tonic",
@@ -682,7 +722,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
             category: .regular,
             style: .regular,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Vodka & Soda",
@@ -696,7 +737,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
             category: .regular,
             style: .regular,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Rum & Cola",
@@ -710,7 +752,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
             category: .regular,
             style: .regular,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Old Fashioned",
@@ -725,7 +768,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .oldFashioned
+            family: .oldFashioned,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Manhattan",
@@ -740,7 +784,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .manhattan
+            family: .manhattan,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Moscow Mule",
@@ -755,7 +800,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Copper Mug" })!,
             category: .cocktail,
             style: .classic,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Brandy Sidecar",
@@ -770,7 +816,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .sidecar
+            family: .sidecar,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Margarita",
@@ -785,7 +832,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Margarita Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .margarita
+            family: .margarita,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Mojito",
@@ -802,7 +850,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .mojito
+            family: .mojito,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Espresso Martini",
@@ -817,7 +866,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .modern,
-            family: .espressoMartini
+            family: .espressoMartini,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Long Island Iced Tea",
@@ -837,7 +887,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
             category: .cocktail,
             style: .party,
-            family: .longIslandIcedTea
+            family: .longIslandIcedTea,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Champagne Cocktail",
@@ -852,7 +903,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Champagne Flute" })!,
             category: .cocktail,
             style: .classic,
-            family: .champagneCocktail
+            family: .champagneCocktail,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "French 75",
@@ -868,7 +920,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Champagne Flute" })!,
             category: .cocktail,
             style: .classic,
-            family: .french75
+            family: .french75,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Pina Colada",
@@ -883,7 +936,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Hurricane Glass" })!,
             category: .cocktail,
             style: .party,
-            family: .pinaColada
+            family: .pinaColada,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         // New Drinks
         Drink(
@@ -899,7 +953,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .modern,
-            family: .martini
+            family: .martini,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Brain Haemorrhage",
@@ -914,7 +969,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Shot Glass" })!,
             category: .cocktail,
             style: .party,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Tequila Sunrise",
@@ -929,7 +985,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
             category: .cocktail,
             style: .party,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Blue Lagoon",
@@ -944,7 +1001,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
             category: .cocktail,
             style: .party,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Grasshopper",
@@ -959,7 +1017,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Bloody Mary",
@@ -977,7 +1036,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Sex on the Beach",
@@ -993,7 +1053,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
             category: .cocktail,
             style: .party,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Shirley Temple",
@@ -1008,7 +1069,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
             category: .regular,
             style: .party,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Black Velvet",
@@ -1022,7 +1084,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
             category: .regular,
             style: .party,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Snakebite and Black",
@@ -1037,7 +1100,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
             category: .regular,
             style: .party,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "New York Flip",
@@ -1054,7 +1118,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Godfather",
@@ -1068,7 +1133,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "White Russian",
@@ -1083,7 +1149,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Black Russian",
@@ -1097,7 +1164,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         // New Cocktails
         Drink(
@@ -1113,7 +1181,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .modern,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Armagnac Sidecar",
@@ -1128,7 +1197,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .sidecar
+            family: .sidecar,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Canadian Manhattan",
@@ -1143,7 +1213,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .manhattan
+            family: .manhattan,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Sambuca Sour",
@@ -1159,7 +1230,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .sour
+            family: .sour,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Pernod Fizz",
@@ -1176,7 +1248,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .fizz
+            family: .fizz,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Cherry Marnier Old Fashioned",
@@ -1191,7 +1264,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .cocktail,
             style: .modern,
-            family: .oldFashioned
+            family: .oldFashioned,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Frangelico Flip",
@@ -1206,7 +1280,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Tia Maria Colada",
@@ -1221,7 +1296,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Hurricane Glass" })!,
             category: .cocktail,
             style: .party,
-            family: .pinaColada
+            family: .pinaColada,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Aperol Spritz",
@@ -1236,7 +1312,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "White Wine Glass" })!,
             category: .cocktail,
             style: .classic,
-            family: .spritz
+            family: .spritz,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Midori Sour",
@@ -1252,7 +1329,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .party,
-            family: .sour
+            family: .sour,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Lychee Martini",
@@ -1267,7 +1345,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .modern,
-            family: .martini
+            family: .martini,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Crème Pêche Fizz",
@@ -1282,7 +1361,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
             category: .cocktail,
             style: .party,
-            family: .fizz
+            family: .fizz,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Yellow Chartreuse Swizzle",
@@ -1298,7 +1378,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .swizzle
+            family: .swizzle,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Ruby Port Flip",
@@ -1313,7 +1394,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Brown Ale Shandy",
@@ -1327,7 +1409,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
             category: .regular,
             style: .party,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Sauvignon Blanc Spritzer",
@@ -1341,7 +1424,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "White Wine Glass" })!,
             category: .regular,
             style: .regular,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Tawny Port Toddy",
@@ -1356,7 +1440,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Irish Coffee Glass" })!,
             category: .regular,
             style: .obscure,
-            family: .toddy
+            family: .toddy,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Dry Sherry Cobbler",
@@ -1370,7 +1455,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Sherry Glass" })!,
             category: .regular,
             style: .obscure,
-            family: .cobbler
+            family: .cobbler,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Crème de Violette Aviation",
@@ -1386,7 +1472,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Benedictine Sazerac",
@@ -1402,7 +1489,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
             category: .cocktail,
             style: .obscure,
-            family: .sazerac
+            family: .sazerac,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         ),
         Drink(
             name: "Bitter",
@@ -1415,7 +1503,8 @@ struct Drink {
             requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
             category: .regular,
             style: .regular,
-            family: .none
+            family: .none,
+            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
         )
     ]
 } 

@@ -26,6 +26,8 @@ struct Garnish: Identifiable, Hashable {
     }
     
     static let allGarnishes: [Garnish] = [
+        // None
+        Garnish(name: "None", shortName: "None", category: .other, cost: 0.0),
         // Citrus
         Garnish(name: "Lemon Twist", shortName: "Lemon Twist", category: .citrus, cost: 0.25),
         Garnish(name: "Lemon Wedge", shortName: "Lemon Wedge", category: .citrus, cost: 0.25),

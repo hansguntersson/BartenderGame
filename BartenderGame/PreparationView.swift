@@ -129,6 +129,41 @@ struct PreparationView: View {
         customer.selectedIngredients = selectedIngredients
     }
     
+    // Add descriptions for MethodType
+    private func methodDescription(_ method: MethodType) -> String {
+        switch method {
+        case .built:
+            return "Building a drink involves adding ingredients directly to the glass and stirring gently. This method is ideal for drinks that are meant to be simple and refreshing, allowing the flavors to meld naturally."
+        case .stirred:
+            return "Stirring is a method where ingredients are mixed with ice in a mixing glass, then strained. This creates a smooth, clear drink that is perfect for spirit-forward cocktails, enhancing the complexity and balance of the flavors."
+        case .shaken:
+            return "Shaking is better for drinks with fresh ingredients because those cocktails tend to be lighter, citrusy and more refreshing. They benefit from a more vibrant, aerated texture and because they go down easily, we have a propensity to drink them quicker, so the added chill and dilution is a good thing."
+        case .blended:
+            return "Blending is used to create a smooth, frozen texture by combining ingredients with ice. This method is perfect for tropical and dessert cocktails, providing a refreshing and indulgent experience."
+        case .roll:
+            return "Rolling involves pouring ingredients back and forth between two vessels to mix gently. This method is ideal for delicate cocktails that require a light touch to maintain their integrity."
+        case .layer:
+            return "Layering is a technique where ingredients are carefully poured to create distinct layers. This method is used for visually striking cocktails, adding an element of artistry to the drink."
+        }
+    }
+    // Add descriptions for IceType
+    private func iceDescription(_ ice: IceType) -> String {
+        switch ice {
+        case .none:
+            return "No Ice: Served without ice, allowing the drink to be enjoyed at room temperature."
+        case .cubed:
+            return "Cubed Ice: Standard ice cubes provide slow dilution, making them ideal for drinks that are meant to be savored over time."
+        case .crushed:
+            return "Crushed Ice: Small pieces of ice chill quickly and provide fast dilution, perfect for refreshing cocktails that are meant to be consumed quickly."
+        case .sphere:
+            return "Ice Sphere: Large round ice provides very slow dilution, making it ideal for premium spirits and cocktails that are meant to be enjoyed slowly."
+        case .cracked:
+            return "Cracked Ice: Broken cubes offer moderate dilution, suitable for a variety of cocktails that benefit from a balanced chill and dilution."
+        case .dry:
+            return "Dry Ice: Used for dramatic effect, not for consumption, adding a visual element to the drink."
+        }
+    }
+    
     var body: some View {
         let placeholderIcon = "circle.dashed"
         NavigationView {
@@ -176,8 +211,15 @@ struct PreparationView: View {
                                         .foregroundColor(secondaryColor)
                                     Divider()
                                         .background(secondaryColor.opacity(0.3))
+                                    // Description box
+                                    Text(methodDescription(selectedMethod))
+                                        .font(.custom("Georgia", size: 16))
+                                        .foregroundColor(primaryColor)
+                                        .padding(16)
+                                        .frame(height: UIScreen.main.bounds.height * 0.2)
+                                        .cornerRadius(8)
                                     LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 12) {
-                                        ForEach(MethodType.allCases, id: \.self) { method in
+                                        ForEach(MethodType.allCases, id: \ .self) { method in
                                             Button(action: { 
                                                 selectedMethod = method
                                                 updateCustomerState()
@@ -186,13 +228,13 @@ struct PreparationView: View {
                                                     Image(systemName: placeholderIcon)
                                                         .font(.system(size: 28, weight: .medium))
                                                         .foregroundColor(selectedMethod == method ? .white : secondaryColor)
-                                                Text(method.rawValue)
-                                                    .font(.subheadline)
-                                                    .foregroundColor(selectedMethod == method ? .white : secondaryColor)
+                                                    Text(method.rawValue)
+                                                        .font(.subheadline)
+                                                        .foregroundColor(selectedMethod == method ? .white : secondaryColor)
                                                 }
                                                 .padding(.vertical, 12)
-                                                    .frame(maxWidth: .infinity)
-                                                    .background(selectedMethod == method ? primaryColor : Color.white)
+                                                .frame(maxWidth: .infinity)
+                                                .background(selectedMethod == method ? primaryColor : Color.white)
                                                 .cornerRadius(12)
                                                 .shadow(color: selectedMethod == method ? primaryColor.opacity(0.18) : Color.clear, radius: 2, x: 0, y: 1)
                                             }
@@ -213,12 +255,17 @@ struct PreparationView: View {
                                     Text("Ice")
                                         .font(.headline)
                                         .foregroundColor(secondaryColor)
-                                    
                                     Divider()
                                         .background(secondaryColor.opacity(0.3))
-                                    
+                                    // Description box
+                                    Text(iceDescription(selectedIce))
+                                        .font(.custom("Georgia", size: 16))
+                                        .foregroundColor(primaryColor)
+                                        .padding(16)
+                                        .frame(height: UIScreen.main.bounds.height * 0.3)
+                                        .cornerRadius(8)
                                     LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 12) {
-                                        ForEach(IceType.allCases, id: \.self) { ice in
+                                        ForEach(IceType.allCases, id: \ .self) { ice in
                                             Button(action: {
                                                 selectedIce = ice
                                             }) {
@@ -226,13 +273,13 @@ struct PreparationView: View {
                                                     Image(systemName: placeholderIcon)
                                                         .font(.system(size: 28, weight: .medium))
                                                         .foregroundColor(selectedIce == ice ? .white : secondaryColor)
-                                                Text(ice.rawValue)
-                                                    .font(.subheadline)
-                                                    .foregroundColor(selectedIce == ice ? .white : secondaryColor)
+                                                    Text(ice.rawValue)
+                                                        .font(.subheadline)
+                                                        .foregroundColor(selectedIce == ice ? .white : secondaryColor)
                                                 }
                                                 .padding(.vertical, 12)
-                                                    .frame(maxWidth: .infinity)
-                                                    .background(selectedIce == ice ? primaryColor : Color.white)
+                                                .frame(maxWidth: .infinity)
+                                                .background(selectedIce == ice ? primaryColor : Color.white)
                                                 .cornerRadius(12)
                                                 .shadow(color: selectedIce == ice ? primaryColor.opacity(0.18) : Color.clear, radius: 2, x: 0, y: 1)
                                             }
@@ -315,6 +362,7 @@ struct PreparationView: View {
                         Button(action: { withAnimation { currentPage = 0 } }) {
                             Text("Method")
                                 .font(.caption)
+                                .fontWeight(.bold)
                                 .foregroundColor(currentPage == 0 ? .white : secondaryColor)
                                 .padding(.vertical, 6)
                                 .padding(.horizontal, 12)
@@ -325,6 +373,7 @@ struct PreparationView: View {
                         Button(action: { withAnimation { currentPage = 1 } }) {
                             Text("Ice")
                                 .font(.caption)
+                                .fontWeight(.bold)
                                 .foregroundColor(currentPage == 1 ? .white : secondaryColor)
                                 .padding(.vertical, 6)
                                 .padding(.horizontal, 12)
@@ -335,6 +384,7 @@ struct PreparationView: View {
                         Button(action: { withAnimation { currentPage = 2 } }) {
                             Text("Glass")
                                 .font(.caption)
+                                .fontWeight(.bold)
                                 .foregroundColor(currentPage == 2 ? .white : secondaryColor)
                                 .padding(.vertical, 6)
                                 .padding(.horizontal, 12)
@@ -345,6 +395,7 @@ struct PreparationView: View {
                         Button(action: { withAnimation { currentPage = 3 } }) {
                             Text("Ingredients")
                                 .font(.caption)
+                                .fontWeight(.bold)
                                 .foregroundColor(currentPage == 3 ? .white : secondaryColor)
                                 .padding(.vertical, 6)
                                 .padding(.horizontal, 12)
@@ -355,6 +406,7 @@ struct PreparationView: View {
                         Button(action: { withAnimation { currentPage = 4 } }) {
                             Text("Garnish")
                                 .font(.caption)
+                                .fontWeight(.bold)
                                 .foregroundColor(currentPage == 4 ? .white : secondaryColor)
                                 .padding(.vertical, 6)
                                 .padding(.horizontal, 12)
