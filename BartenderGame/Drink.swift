@@ -1,16 +1,83 @@
 import Foundation
 
+// Glass Requirements Structure
+struct GlassRequirement {
+    let ideal: [Glassware]      // Primary/preferred glasses
+    let acceptable: [Glassware] // Alternative valid glasses
+    let minimum: Glassware?     // Minimum size requirement (optional)
+    
+    init(ideal: [Glassware], acceptable: [Glassware] = [], minimum: Glassware? = nil) {
+        self.ideal = ideal
+        self.acceptable = acceptable
+        self.minimum = minimum
+    }
+    
+    // Helper method to check if a glass is valid
+    func isValidGlass(_ glass: Glassware) -> Bool {
+        return ideal.contains(glass) || acceptable.contains(glass)
+    }
+    
+    // Helper method to get tip multiplier based on glass quality
+    func getTipMultiplier(for glass: Glassware) -> Double {
+        if ideal.contains(glass) {
+            return 1.0  // Full tip for ideal glass
+        } else if acceptable.contains(glass) {
+            return 0.8  // 80% tip for acceptable glass
+        } else {
+            return 0.2  // 20% tip for wrong glass
+        }
+    }
+}
+
+// Garnish Requirements Structure
+struct GarnishRequirement {
+    let ideal: [Garnish]        // Primary/preferred garnishes
+    let acceptable: [Garnish]   // Alternative valid garnishes
+    let required: Bool          // Whether garnish is required
+    
+    init(ideal: [Garnish], acceptable: [Garnish] = [], required: Bool = true) {
+        self.ideal = ideal
+        self.acceptable = acceptable
+        self.required = required
+    }
+    
+    // Helper method to check if a garnish is valid
+    func isValidGarnish(_ garnish: Garnish) -> Bool {
+        return ideal.contains(garnish) || acceptable.contains(garnish)
+    }
+    
+    // Helper method to get tip multiplier based on garnish quality
+    func getTipMultiplier(for garnish: Garnish) -> Double {
+        if ideal.contains(garnish) {
+            return 1.0  // Full tip for ideal garnish
+        } else if acceptable.contains(garnish) {
+            return 0.8  // 80% tip for acceptable garnish
+        } else {
+            return 0.2  // 20% tip for wrong garnish
+        }
+    }
+    
+    // Helper method to check if no garnish is acceptable
+    func allowsNoGarnish() -> Bool {
+        return !required || ideal.contains(where: { $0.name == "None" }) || acceptable.contains(where: { $0.name == "None" })
+    }
+}
+
 enum DrinkCategory: String, CaseIterable {
     case cocktail = "Cocktail"
     case regular = "Regular"
 }
 
 enum DrinkStyle: String, CaseIterable {
-    case regular = "Regular"
+    case spirits = "Spirits"
+    case draught = "Draught"
+    case spiritMixer = "Spirit Mixer"
+    case wine = "Wine"
     case classic = "Classic"
     case modern = "Modern"
     case party = "Party"
     case obscure = "Obscure"
+    case nonAlcoholic = "Non-Alcoholic"
 }
 
 enum DrinkFamily: String, CaseIterable {
@@ -72,6 +139,15 @@ enum DrinkFamily: String, CaseIterable {
     case french75 = "French 75"
     case pinaColada = "Pina Colada"
     case mojito = "Mojito"
+    case hocusPocus = "Hocus Pocus"
+    case vampiresKiss = "Vampires Kiss"
+    case foolishMortal = "Foolish Mortal"
+    case allHallowsEve = "All Hallow's Eve"
+    case lovePotion = "Love Potion"
+    case irishCoffee = "Irish Coffee"
+    case pornstarMartini = "Pornstar Martini"
+    case ginRickey = "Gin Rickey"
+    case whiskeyHighball = "Whiskey Highball"
 }
 
 struct Drink {
@@ -80,30 +156,31 @@ struct Drink {
     let description: String
     let requiredIce: IceType
     let requiredMethod: MethodType
-    let requiredGlass: Glassware
+    let glassRequirement: GlassRequirement
+    let garnishRequirement: GarnishRequirement
     let category: DrinkCategory
     let style: DrinkStyle
     let family: DrinkFamily
-    let requiredGarnish: Garnish?
     
-    init(name: String, recipe: [DrinkIngredient], description: String, requiredIce: IceType, requiredMethod: MethodType, requiredGlass: Glassware, category: DrinkCategory, style: DrinkStyle, family: DrinkFamily, requiredGarnish: Garnish? = nil) {
+    init(name: String, recipe: [DrinkIngredient], description: String, requiredIce: IceType, requiredMethod: MethodType, glassRequirement: GlassRequirement, garnishRequirement: GarnishRequirement, category: DrinkCategory, style: DrinkStyle, family: DrinkFamily) {
         self.name = name
         self.recipe = recipe
         self.description = description
         self.requiredIce = requiredIce
         self.requiredMethod = requiredMethod
-        self.requiredGlass = requiredGlass
+        self.glassRequirement = glassRequirement
+        self.garnishRequirement = garnishRequirement
         self.category = category
         self.style = style
         self.family = family
-        self.requiredGarnish = requiredGarnish
     }
     
     var preparationInfo: String {
         """
-        Glass: \(requiredGlass.name)
+        Glass: \(glassRequirement.ideal.first?.name ?? "Multiple options")
         Ice: \(requiredIce.rawValue)
         Method: \(requiredMethod.rawValue)
+        Garnish: \(garnishRequirement.ideal.first?.name ?? "Multiple options")
         """
     }
     
@@ -119,11 +196,17 @@ struct Drink {
             description: "A modern classic vodka cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Cosmopolitan Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Cosmopolitan Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Flaming Orange Zest" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Orange Twist" })!]
+            ),
             category: .cocktail,
             style: .modern,
-            family: .cosmopolitan,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "Lime Twist" })
+            family: .cosmopolitan
         ),
         Drink(
             name: "Negroni",
@@ -135,11 +218,17 @@ struct Drink {
             description: "A classic Italian aperitif cocktail",
             requiredIce: .cubed,
             requiredMethod: .stirred,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Orange Twist" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Orange Wheel" })!, Garnish.allGarnishes.first(where: { $0.name == "Orange Wedge" })!]
+            ),
             category: .cocktail,
             style: .classic,
-            family: .negroni,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "Orange Twist" })
+            family: .negroni
         ),
         Drink(
             name: "Daiquiri",
@@ -151,11 +240,17 @@ struct Drink {
             description: "A classic Cuban rum cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lime Twist" })!, Garnish.allGarnishes.first(where: { $0.name == "Lime Wedge" })!]
+            ),
             category: .cocktail,
             style: .classic,
-            family: .daiquiri,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })
+            family: .daiquiri
         ),
         Drink(
             name: "Whiskey Sour",
@@ -167,11 +262,17 @@ struct Drink {
             description: "A classic whiskey cocktail with citrus",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Wedge" })!, Garnish.allGarnishes.first(where: { $0.name == "Maraschino Cherry" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Twist" })!, Garnish.allGarnishes.first(where: { $0.name == "Lemon Wheel" })!]
+            ),
             category: .cocktail,
             style: .classic,
-            family: .whiskeySour,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "Lemon Wheel" })
+            family: .whiskeySour
         ),
         Drink(
             name: "Tom Collins",
@@ -184,93 +285,197 @@ struct Drink {
             description: "A refreshing gin highball cocktail",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!],
+                acceptable: [
+                    Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
+                    Glassware.allGlassware.first(where: { $0.name == "Milkshake Glass" })!
+                ]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Wheel" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Twist" })!]
+            ),
             category: .cocktail,
             style: .classic,
-            family: .tomCollins,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "Lemon Wheel" })
+            family: .tomCollins
         ),
         Drink(
             name: "Mai Tai",
             recipe: [
-                DrinkIngredient(name: "White Rum", amount: 1.0),
-                DrinkIngredient(name: "Dark Rum", amount: 1.0),
-                DrinkIngredient(name: "Triple Sec", amount: 0.5),
+                DrinkIngredient(name: "Dark Rum", amount: 1.5),
+                DrinkIngredient(name: "Golden Rum", amount: 0.5),
                 DrinkIngredient(name: "Lime Juice", amount: 1.0),
-                DrinkIngredient(name: "Gomme Syrup", amount: 0.5)
+                DrinkIngredient(name: "Orgeat", amount: 0.75),
+                DrinkIngredient(name: "Gomme Syrup", amount: 0.5),
+                DrinkIngredient(name: "Orange Bitters", amount: 0.25)
             ],
-            description: "A tropical rum cocktail",
+            description: "A classic tiki cocktail",
             requiredIce: .crushed,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Hurricane Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Mint Sprig" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Pineapple Leaf" })!]
+            ),
             category: .cocktail,
             style: .party,
-            family: .maiTai,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .maiTai
         ),
         Drink(
             name: "Gimlet",
             recipe: [
                 DrinkIngredient(name: "Gin", amount: 2.0),
-                DrinkIngredient(name: "Lime Juice", amount: 1.0),
-                DrinkIngredient(name: "Gomme Syrup", amount: 0.75)
+                DrinkIngredient(name: "Lime Juice", amount: 0.75),
+                DrinkIngredient(name: "Gomme Syrup", amount: 0.5)
             ],
-            description: "A classic gin cocktail",
+            description: "A classic gin and lime cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Twist" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!]
+            ),
             category: .cocktail,
-            style: .obscure,
-            family: .gimlet,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .classic,
+            family: .gimlet
         ),
         Drink(
             name: "Dark 'n' Stormy",
             recipe: [
                 DrinkIngredient(name: "Dark Rum", amount: 2.0),
-                DrinkIngredient(name: "Ginger Beer", amount: 3.0),
-                DrinkIngredient(name: "Lime Juice", amount: 0.5)
+                DrinkIngredient(name: "Ginger Beer", amount: 4.0)
             ],
-            description: "A rum and ginger beer cocktail",
+            description: "A classic rum and ginger beer cocktail",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wedge" })!]
+            ),
             category: .cocktail,
             style: .classic,
-            family: .darkNStormy,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .darkNStormy
         ),
         Drink(
             name: "Sazerac",
             recipe: [
                 DrinkIngredient(name: "Rye Whiskey", amount: 2.0),
-                DrinkIngredient(name: "Sugar Cube", amount: 1.0),
                 DrinkIngredient(name: "Peychaud's Bitters", amount: 0.25),
-                DrinkIngredient(name: "Angostura Bitters", amount: 0.25)
+                DrinkIngredient(name: "Absinthe", amount: 0.25),
+                DrinkIngredient(name: "Gomme Syrup", amount: 0.25)
             ],
-            description: "A New Orleans classic cocktail",
+            description: "A classic New Orleans cocktail",
             requiredIce: .none,
             requiredMethod: .stirred,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Twist" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
             category: .cocktail,
             style: .classic,
-            family: .sazerac,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .sazerac
         ),
         Drink(
-            name: "Martini",
+            name: "Gin Martini",
             recipe: [
-                DrinkIngredient(name: "Gin", amount: 2.0),
+                DrinkIngredient(name: "Gin", amount: 2.5),
                 DrinkIngredient(name: "Dry Vermouth", amount: 0.5)
             ],
-            description: "The king of cocktails",
+            description: "The classic gin cocktail",
             requiredIce: .none,
             requiredMethod: .stirred,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Twist" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Olive" })!]
+            ),
             category: .cocktail,
             style: .classic,
-            family: .martini,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .martini
+        ),
+        Drink(
+            name: "Vodka Martini",
+            recipe: [
+                DrinkIngredient(name: "Vodka", amount: 2.5),
+                DrinkIngredient(name: "Dry Vermouth", amount: 0.5)
+            ],
+            description: "A vodka-based martini variation",
+            requiredIce: .none,
+            requiredMethod: .stirred,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Twist" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Olive" })!]
+            ),
+            category: .cocktail,
+            style: .modern,
+            family: .martini
+        ),
+        Drink(
+            name: "Dirty Martini",
+            recipe: [
+                DrinkIngredient(name: "Gin", amount: 2.0),
+                DrinkIngredient(name: "Dry Vermouth", amount: 0.5),
+                DrinkIngredient(name: "Olive Brine", amount: 0.5)
+            ],
+            description: "A martini with olive brine for a savory twist",
+            requiredIce: .none,
+            requiredMethod: .stirred,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Olive" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Twist" })!]
+            ),
+            category: .cocktail,
+            style: .modern,
+            family: .martini
+        ),
+        Drink(
+            name: "Vesper",
+            recipe: [
+                DrinkIngredient(name: "Gin", amount: 3.0),
+                DrinkIngredient(name: "Vodka", amount: 1.0),
+                DrinkIngredient(name: "Lillet Blanc", amount: 0.5)
+            ],
+            description: "James Bond's signature cocktail",
+            requiredIce: .none,
+            requiredMethod: .shaken,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Twist" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .cocktail,
+            style: .modern,
+            family: .martini
         ),
         Drink(
             name: "Rob Roy",
@@ -282,11 +487,18 @@ struct Drink {
             description: "A Scotch-based Manhattan variation",
             requiredIce: .none,
             requiredMethod: .stirred,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .robRoy,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .robRoy
         ),
         Drink(
             name: "Sidecar",
@@ -298,42 +510,60 @@ struct Drink {
             description: "A classic brandy cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Sugar Rim" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Twist" })!, Garnish.allGarnishes.first(where: { $0.name == "Orange Twist" })!]
+            ),
             category: .cocktail,
             style: .classic,
-            family: .sidecar,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .sidecar
         ),
         Drink(
             name: "Mint Julep",
             recipe: [
-                DrinkIngredient(name: "Bourbon Whiskey", amount: 2.0),
+                DrinkIngredient(name: "Bourbon Whiskey", amount: 2.5),
                 DrinkIngredient(name: "Gomme Syrup", amount: 0.5),
-                DrinkIngredient(name: "Mint", amount: 0.25)
+                DrinkIngredient(name: "Mint Leaf", amount: 0.25)
             ],
-            description: "A Kentucky Derby classic",
+            description: "A classic Kentucky Derby cocktail",
             requiredIce: .crushed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Julep Cup" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Julep Cup" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Mint Sprig" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .classic,
-            family: .julep,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .julep
         ),
         Drink(
             name: "Rusty Nail",
             recipe: [
                 DrinkIngredient(name: "Blended Scotch", amount: 2.0),
-                DrinkIngredient(name: "Drambuie", amount: 1.0)
+                DrinkIngredient(name: "Drambuie", amount: 0.75)
             ],
-            description: "A classic Scotch cocktail",
+            description: "A classic scotch and honey liqueur cocktail",
             requiredIce: .cubed,
-            requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            requiredMethod: .stirred,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Twist" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
             category: .cocktail,
             style: .classic,
-            family: .rustyNail,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .rustyNail
         ),
         Drink(
             name: "White Lady",
@@ -346,11 +576,17 @@ struct Drink {
             description: "A classic gin cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Twist" })!, Garnish.allGarnishes.first(where: { $0.name == "Orange Twist" })!]
+            ),
             category: .cocktail,
             style: .classic,
-            family: .whiteLady,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .whiteLady
         ),
         Drink(
             name: "Bobby Burns",
@@ -359,14 +595,20 @@ struct Drink {
                 DrinkIngredient(name: "Sweet Vermouth", amount: 0.75),
                 DrinkIngredient(name: "Benedictine", amount: 0.5)
             ],
-            description: "A Scotch-based variation of the Rob Roy",
+            description: "A classic scotch and vermouth cocktail",
             requiredIce: .none,
             requiredMethod: .stirred,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Twist" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .bobbyBurns,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .bobbyBurns
         ),
         Drink(
             name: "Clover Club",
@@ -380,26 +622,38 @@ struct Drink {
             description: "A classic gin cocktail with raspberry",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Raspberry" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .cloverClub,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .cloverClub
         ),
         Drink(
             name: "Death in the Afternoon",
             recipe: [
-                DrinkIngredient(name: "Champagne", amount: 4.0),
-                DrinkIngredient(name: "Absinthe", amount: 1.0)
+                DrinkIngredient(name: "Absinthe", amount: 1.0),
+                DrinkIngredient(name: "Champagne", amount: 4.0)
             ],
-            description: "A Hemingway creation",
+            description: "A classic Hemingway cocktail",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Champagne Flute" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Champagne Flute" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .deathInTheAfternoon,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .deathInTheAfternoon
         ),
         Drink(
             name: "El Presidente",
@@ -412,11 +666,17 @@ struct Drink {
             description: "A Cuban classic cocktail",
             requiredIce: .none,
             requiredMethod: .stirred,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .elPresidente,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .elPresidente
         ),
         Drink(
             name: "Hemingway Daiquiri",
@@ -430,11 +690,17 @@ struct Drink {
             description: "A variation of the classic Daiquiri",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Grapefruit Twist" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lime Twist" })!, Garnish.allGarnishes.first(where: { $0.name == "Maraschino Cherry" })!]
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .daiquiri,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .daiquiri
         ),
         Drink(
             name: "Monkey Gland",
@@ -447,11 +713,17 @@ struct Drink {
             description: "A classic gin cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .monkeyGland,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .monkeyGland
         ),
         Drink(
             name: "Remember the Maine",
@@ -464,11 +736,17 @@ struct Drink {
             description: "A variation of the Manhattan",
             requiredIce: .none,
             requiredMethod: .stirred,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .manhattan,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .manhattan
         ),
         Drink(
             name: "Saturn",
@@ -482,11 +760,17 @@ struct Drink {
             description: "A tiki-style gin cocktail",
             requiredIce: .crushed,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Hurricane Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Hurricane Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .party,
-            family: .saturn,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .saturn
         ),
         Drink(
             name: "Ti' Punch",
@@ -498,11 +782,17 @@ struct Drink {
             description: "A classic Caribbean cocktail",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .party,
-            family: .tiPunch,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .tiPunch
         ),
         Drink(
             name: "Vieux Mot",
@@ -515,11 +805,17 @@ struct Drink {
             description: "A variation of the Corpse Reviver No. 2",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .vieuxMot,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .vieuxMot
         ),
         Drink(
             name: "Warday's Sour",
@@ -532,11 +828,17 @@ struct Drink {
             description: "A variation of the Gin Sour with bitters",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .sour,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .sour
         ),
         Drink(
             name: "Warday's",
@@ -549,26 +851,39 @@ struct Drink {
             description: "A balanced cocktail with Calvados, vermouth, and gin, finished with Chartreuse",
             requiredIce: .none,
             requiredMethod: .stirred,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         // Regular Drinks
         Drink(
             name: "Red Wine",
             recipe: [
-                DrinkIngredient(name: "Pinot Noir", amount: 5.0)
+                DrinkIngredient(name: "Pinot Noir", amount: 6.0)
             ],
             description: "A glass of red wine",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Red Wine Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Red Wine Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Wine Goblet" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .regular,
-            style: .regular,
-            family: .redWine,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .wine,
+            family: .redWine
         ),
         Drink(
             name: "White Wine",
@@ -578,25 +893,39 @@ struct Drink {
             description: "A glass of white wine",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "White Wine Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "White Wine Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Wine Goblet" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .regular,
-            style: .regular,
-            family: .whiteWine,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .wine,
+            family: .whiteWine
         ),
         Drink(
             name: "Champagne",
             recipe: [
-                DrinkIngredient(name: "Champagne", amount: 5.0)
+                DrinkIngredient(name: "Champagne", amount: 6.0)
             ],
             description: "A glass of champagne",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Champagne Flute" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Champagne Flute" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .regular,
-            style: .regular,
-            family: .champagne,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .wine,
+            family: .champagne
         ),
         Drink(
             name: "Stout",
@@ -606,11 +935,18 @@ struct Drink {
             description: "A pint of stout",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .regular,
-            style: .regular,
-            family: .stout,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .draught,
+            family: .stout
         ),
         Drink(
             name: "Ale",
@@ -620,11 +956,18 @@ struct Drink {
             description: "A pint of ale",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .regular,
-            style: .regular,
-            family: .ale,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .draught,
+            family: .ale
         ),
         Drink(
             name: "IPA",
@@ -634,11 +977,18 @@ struct Drink {
             description: "A pint of IPA",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .regular,
-            style: .regular,
-            family: .ipa,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .draught,
+            family: .ipa
         ),
         Drink(
             name: "Cider",
@@ -648,11 +998,18 @@ struct Drink {
             description: "A pint of cider",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .regular,
-            style: .regular,
-            family: .cider,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .draught,
+            family: .cider
         ),
         Drink(
             name: "Bourbon Neat",
@@ -662,11 +1019,18 @@ struct Drink {
             description: "Bourbon whiskey served neat",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .regular,
-            style: .regular,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .spirits,
+            family: .none
         ),
         Drink(
             name: "Scotch Neat",
@@ -676,11 +1040,18 @@ struct Drink {
             description: "Single malt scotch served neat",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .regular,
-            style: .regular,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .spirits,
+            family: .none
         ),
         Drink(
             name: "Bourbon on the Rocks",
@@ -690,11 +1061,18 @@ struct Drink {
             description: "Bourbon whiskey served over ice",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .regular,
-            style: .regular,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .spirits,
+            family: .none
         ),
         Drink(
             name: "Scotch on the Rocks",
@@ -704,26 +1082,102 @@ struct Drink {
             description: "Single malt scotch served over ice",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .regular,
-            style: .regular,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .spirits,
+            family: .none
         ),
         Drink(
-            name: "Gin & Tonic",
+            name: "Absinthe",
+            recipe: [
+                DrinkIngredient(name: "Absinthe", amount: 2.0)
+            ],
+            description: "Traditional absinthe served with water",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Absinthe Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
+            category: .regular,
+            style: .spirits,
+            family: .none
+        ),
+        Drink(
+            name: "Pernod",
+            recipe: [
+                DrinkIngredient(name: "Pernod", amount: 2.0)
+            ],
+            description: "French anise liqueur served with water",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
+            category: .regular,
+            style: .spirits,
+            family: .none
+        ),
+        Drink(
+            name: "Sambuca",
+            recipe: [
+                DrinkIngredient(name: "White Sambuca", amount: 2.0)
+            ],
+            description: "Italian anise liqueur served with coffee beans",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Coffee Beans" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                required: false
+            ),
+            category: .regular,
+            style: .spirits,
+            family: .none
+        ),
+        Drink(
+            name: "Gin and Tonic",
             recipe: [
                 DrinkIngredient(name: "Gin", amount: 2.0),
                 DrinkIngredient(name: "Tonic Water", amount: 4.0)
             ],
-            description: "A classic highball drink",
+            description: "A classic gin highball",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wedge" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!]
+            ),
             category: .regular,
-            style: .regular,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .spiritMixer,
+            family: .none
         ),
         Drink(
             name: "Vodka & Soda",
@@ -734,11 +1188,17 @@ struct Drink {
             description: "A simple highball drink",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .regular,
-            style: .regular,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .spiritMixer,
+            family: .none
         ),
         Drink(
             name: "Rum & Cola",
@@ -749,27 +1209,207 @@ struct Drink {
             description: "A classic highball drink",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .regular,
-            style: .regular,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .spiritMixer,
+            family: .none
+        ),
+        Drink(
+            name: "Rum and Ginger Ale",
+            recipe: [
+                DrinkIngredient(name: "Golden Rum", amount: 2.0),
+                DrinkIngredient(name: "Ginger Ale", amount: 4.0)
+            ],
+            description: "A refreshing rum highball with ginger ale",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wedge" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!]
+            ),
+            category: .regular,
+            style: .spiritMixer,
+            family: .none
+        ),
+        Drink(
+            name: "Vodka and Tonic",
+            recipe: [
+                DrinkIngredient(name: "Vodka", amount: 2.0),
+                DrinkIngredient(name: "Tonic Water", amount: 4.0)
+            ],
+            description: "A simple vodka highball with tonic",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wedge" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!]
+            ),
+            category: .regular,
+            style: .spiritMixer,
+            family: .none
+        ),
+        Drink(
+            name: "Whisky and Coke",
+            recipe: [
+                DrinkIngredient(name: "Bourbon Whiskey", amount: 2.0),
+                DrinkIngredient(name: "Cola", amount: 4.0)
+            ],
+            description: "A classic whiskey highball with cola",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .spiritMixer,
+            family: .none
+        ),
+        Drink(
+            name: "Brandy and Coke",
+            recipe: [
+                DrinkIngredient(name: "Cognac", amount: 2.0),
+                DrinkIngredient(name: "Cola", amount: 4.0)
+            ],
+            description: "A smooth brandy highball with cola",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .spiritMixer,
+            family: .none
+        ),
+        Drink(
+            name: "Brandy and Ginger",
+            recipe: [
+                DrinkIngredient(name: "Cognac", amount: 2.0),
+                DrinkIngredient(name: "Ginger Ale", amount: 4.0)
+            ],
+            description: "A warming brandy highball with ginger ale",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Wedge" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Wheel" })!]
+            ),
+            category: .regular,
+            style: .spiritMixer,
+            family: .none
+        ),
+        Drink(
+            name: "Gin and Orange Juice",
+            recipe: [
+                DrinkIngredient(name: "Gin", amount: 2.0),
+                DrinkIngredient(name: "Orange Juice", amount: 4.0)
+            ],
+            description: "A refreshing gin highball with orange juice",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Orange Wedge" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Orange Wheel" })!]
+            ),
+            category: .regular,
+            style: .spiritMixer,
+            family: .none
+        ),
+        Drink(
+            name: "Vodka Cranberry",
+            recipe: [
+                DrinkIngredient(name: "Vodka", amount: 2.0),
+                DrinkIngredient(name: "Cranberry Juice", amount: 4.0)
+            ],
+            description: "A tart vodka highball with cranberry juice",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wedge" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!]
+            ),
+            category: .regular,
+            style: .spiritMixer,
+            family: .none
+        ),
+        Drink(
+            name: "Vodka Lemonade",
+            recipe: [
+                DrinkIngredient(name: "Vodka", amount: 2.0),
+                DrinkIngredient(name: "Lemonade", amount: 4.0)
+            ],
+            description: "A refreshing vodka highball with lemonade",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Wedge" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Wheel" })!]
+            ),
+            category: .regular,
+            style: .spiritMixer,
+            family: .none
         ),
         Drink(
             name: "Old Fashioned",
             recipe: [
-                DrinkIngredient(name: "Bourbon", amount: 2.0),
-                DrinkIngredient(name: "Sugar Cube", amount: 1.0),
-                DrinkIngredient(name: "Angostura Bitters", amount: 2.0)
+                DrinkIngredient(name: "Bourbon Whiskey", amount: 2.0),
+                DrinkIngredient(name: "Gomme Syrup", amount: 0.25),
+                DrinkIngredient(name: "Angostura Bitters", amount: 0.25)
             ],
-            description: "A classic whiskey cocktail",
+            description: "The original cocktail",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Orange Twist" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Orange Wheel" })!]
+            ),
             category: .cocktail,
             style: .classic,
-            family: .oldFashioned,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .oldFashioned
         ),
         Drink(
             name: "Manhattan",
@@ -781,27 +1421,39 @@ struct Drink {
             description: "A classic whiskey cocktail",
             requiredIce: .none,
             requiredMethod: .stirred,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Orange Twist" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Maraschino Cherry" })!]
+            ),
             category: .cocktail,
             style: .classic,
-            family: .manhattan,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .manhattan
         ),
         Drink(
             name: "Moscow Mule",
             recipe: [
                 DrinkIngredient(name: "Vodka", amount: 2.0),
-                DrinkIngredient(name: "Ginger Beer", amount: 3.0),
+                DrinkIngredient(name: "Ginger Beer", amount: 4.0),
                 DrinkIngredient(name: "Lime Juice", amount: 0.5)
             ],
-            description: "A refreshing vodka cocktail",
+            description: "A classic vodka and ginger beer cocktail",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Copper Mug" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Copper Mug" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wedge" })!]
+            ),
             category: .cocktail,
-            style: .classic,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .party,
+            family: .none
         ),
         Drink(
             name: "Brandy Sidecar",
@@ -813,11 +1465,18 @@ struct Drink {
             description: "A classic brandy cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .cocktail,
             style: .classic,
-            family: .sidecar,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .sidecar
         ),
         Drink(
             name: "Margarita",
@@ -827,13 +1486,19 @@ struct Drink {
                 DrinkIngredient(name: "Triple Sec", amount: 0.75)
             ],
             description: "A classic tequila cocktail",
-            requiredIce: .none,
+            requiredIce: .crushed,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Margarita Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Margarita Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Salt Rim" })!]
+            ),
             category: .cocktail,
             style: .classic,
-            family: .margarita,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .margarita
         ),
         Drink(
             name: "Mojito",
@@ -841,33 +1506,46 @@ struct Drink {
                 DrinkIngredient(name: "White Rum", amount: 2.0),
                 DrinkIngredient(name: "Lime Juice", amount: 1.0),
                 DrinkIngredient(name: "Gomme Syrup", amount: 0.75),
-                DrinkIngredient(name: "Mint", amount: 0.25),
+                DrinkIngredient(name: "Mint Leaf", amount: 0.25),
                 DrinkIngredient(name: "Soda Water", amount: 2.0)
             ],
             description: "A refreshing rum cocktail",
             requiredIce: .crushed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Mint Sprig" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!]
+            ),
             category: .cocktail,
             style: .classic,
-            family: .mojito,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .mojito
         ),
         Drink(
             name: "Espresso Martini",
             recipe: [
-                DrinkIngredient(name: "Vodka", amount: 2.0),
-                DrinkIngredient(name: "Kahlua", amount: 1.0),
+                DrinkIngredient(name: "Vodka", amount: 1.5),
+                DrinkIngredient(name: "Kahlua", amount: 0.5),
                 DrinkIngredient(name: "Espresso", amount: 1.0)
             ],
-            description: "A coffee-flavored vodka cocktail",
+            description: "A modern coffee cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Coffee Beans" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .cocktail,
             style: .modern,
-            family: .espressoMartini,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .espressoMartini
         ),
         Drink(
             name: "Long Island Iced Tea",
@@ -884,11 +1562,18 @@ struct Drink {
             description: "A strong mixed drink",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .cocktail,
             style: .party,
-            family: .longIslandIcedTea,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .longIslandIcedTea
         ),
         Drink(
             name: "Champagne Cocktail",
@@ -900,11 +1585,18 @@ struct Drink {
             description: "A classic champagne cocktail",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Champagne Flute" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Champagne Flute" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .cocktail,
             style: .classic,
-            family: .champagneCocktail,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .champagneCocktail
         ),
         Drink(
             name: "French 75",
@@ -917,11 +1609,18 @@ struct Drink {
             description: "A champagne and gin cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Champagne Flute" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Champagne Flute" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: [],
+                required: false
+            ),
             category: .cocktail,
             style: .classic,
-            family: .french75,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .french75
         ),
         Drink(
             name: "Pina Colada",
@@ -933,11 +1632,17 @@ struct Drink {
             description: "A tropical rum cocktail",
             requiredIce: .crushed,
             requiredMethod: .blended,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Hurricane Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Hurricane Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Pineapple Leaf" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Pineapple Chunk" })!]
+            ),
             category: .cocktail,
             style: .party,
-            family: .pinaColada,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .pinaColada
         ),
         // New Drinks
         Drink(
@@ -950,11 +1655,17 @@ struct Drink {
             description: "A modern vodka cocktail with raspberry liqueur",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Raspberry" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .modern,
-            family: .martini,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .martini
         ),
         Drink(
             name: "Brain Haemorrhage",
@@ -966,11 +1677,17 @@ struct Drink {
             description: "A layered shot with a dramatic appearance",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Shot Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Shot Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .party,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Tequila Sunrise",
@@ -982,11 +1699,17 @@ struct Drink {
             description: "A layered cocktail with a sunrise effect",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .party,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Blue Lagoon",
@@ -998,27 +1721,39 @@ struct Drink {
             description: "A refreshing blue cocktail",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .party,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Grasshopper",
             recipe: [
                 DrinkIngredient(name: "Crème de Menthe", amount: 1.0),
                 DrinkIngredient(name: "Light Crème de Cacao", amount: 1.0),
-                DrinkIngredient(name: "Heavy Cream", amount: 1.0)
+                DrinkIngredient(name: "Cream", amount: 1.0)
             ],
             description: "A minty chocolate cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Bloody Mary",
@@ -1033,11 +1768,17 @@ struct Drink {
             description: "A savory cocktail with a spicy kick",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Celery Salt Rim" })!, Garnish.allGarnishes.first(where: { $0.name == "Celery Stalk" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .classic,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Sex on the Beach",
@@ -1050,27 +1791,38 @@ struct Drink {
             description: "A fruity vodka cocktail",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .party,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Shirley Temple",
             recipe: [
                 DrinkIngredient(name: "Ginger Ale", amount: 4.0),
-                DrinkIngredient(name: "Grenadine", amount: 0.5),
-                DrinkIngredient(name: "Maraschino Cherry", amount: 1.0)
+                DrinkIngredient(name: "Grenadine", amount: 0.5)
             ],
             description: "A non-alcoholic classic",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Maraschino Cherry" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
             category: .regular,
             style: .party,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Black Velvet",
@@ -1081,11 +1833,17 @@ struct Drink {
             description: "A mix of stout and champagne",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .regular,
             style: .party,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Snakebite and Black",
@@ -1097,11 +1855,17 @@ struct Drink {
             description: "A mix of lager, cider, and blackcurrant",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .regular,
             style: .party,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "New York Flip",
@@ -1115,11 +1879,17 @@ struct Drink {
             description: "A rich and creamy bourbon cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Godfather",
@@ -1130,27 +1900,39 @@ struct Drink {
             description: "A simple but sophisticated Scotch cocktail",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .classic,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "White Russian",
             recipe: [
                 DrinkIngredient(name: "Vodka", amount: 2.0),
                 DrinkIngredient(name: "Kahlua", amount: 1.0),
-                DrinkIngredient(name: "Heavy Cream", amount: 1.0)
+                DrinkIngredient(name: "Cream", amount: 1.0)
             ],
             description: "A creamy coffee-flavored cocktail",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Coffee Beans" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .classic,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Black Russian",
@@ -1161,11 +1943,17 @@ struct Drink {
             description: "A simple coffee-flavored cocktail",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .classic,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         // New Cocktails
         Drink(
@@ -1173,16 +1961,22 @@ struct Drink {
             recipe: [
                 DrinkIngredient(name: "Amarula", amount: 2.0),
                 DrinkIngredient(name: "Espresso", amount: 1.0),
-                DrinkIngredient(name: "Heavy Cream", amount: 0.5)
+                DrinkIngredient(name: "Cream", amount: 0.5)
             ],
             description: "A luxurious coffee cocktail with Amarula cream liqueur",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .modern,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Armagnac Sidecar",
@@ -1194,11 +1988,17 @@ struct Drink {
             description: "A sophisticated brandy cocktail using Armagnac",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .sidecar,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .sidecar
         ),
         Drink(
             name: "Canadian Manhattan",
@@ -1210,16 +2010,22 @@ struct Drink {
             description: "A smooth variation of the Manhattan using Canadian Whiskey",
             requiredIce: .none,
             requiredMethod: .stirred,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .manhattan,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .manhattan
         ),
         Drink(
             name: "Sambuca Sour",
             recipe: [
-                DrinkIngredient(name: "Sambuca", amount: 2.0),
+                DrinkIngredient(name: "White Sambuca", amount: 2.0),
                 DrinkIngredient(name: "Lemon Juice", amount: 1.0),
                 DrinkIngredient(name: "Egg White", amount: 1.0),
                 DrinkIngredient(name: "Gomme Syrup", amount: 0.75)
@@ -1227,11 +2033,17 @@ struct Drink {
             description: "A unique anise-flavored sour cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .sour,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .sour
         ),
         Drink(
             name: "Pernod Fizz",
@@ -1245,11 +2057,17 @@ struct Drink {
             description: "A refreshing anise-flavored fizz",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .fizz,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .fizz
         ),
         Drink(
             name: "Cherry Marnier Old Fashioned",
@@ -1261,11 +2079,17 @@ struct Drink {
             description: "A fruity twist on the classic Old Fashioned",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .modern,
-            family: .oldFashioned,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .oldFashioned
         ),
         Drink(
             name: "Frangelico Flip",
@@ -1277,11 +2101,17 @@ struct Drink {
             description: "A rich, nutty dessert cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Tia Maria Colada",
@@ -1293,11 +2123,17 @@ struct Drink {
             description: "A coffee-flavored take on the Piña Colada",
             requiredIce: .crushed,
             requiredMethod: .blended,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Hurricane Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Hurricane Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .party,
-            family: .pinaColada,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .pinaColada
         ),
         Drink(
             name: "Aperol Spritz",
@@ -1309,16 +2145,22 @@ struct Drink {
             description: "A classic Italian aperitif",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "White Wine Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "White Wine Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Wine Goblet" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .classic,
-            family: .spritz,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .spritz
         ),
         Drink(
-            name: "Midori Sour",
+            name: "Melon Sour",
             recipe: [
-                DrinkIngredient(name: "Midori", amount: 2.0),
+                DrinkIngredient(name: "Melon Liqueur", amount: 2.0),
                 DrinkIngredient(name: "Lemon Juice", amount: 1.0),
                 DrinkIngredient(name: "Gomme Syrup", amount: 0.75),
                 DrinkIngredient(name: "Egg White", amount: 1.0)
@@ -1326,11 +2168,17 @@ struct Drink {
             description: "A vibrant green sour cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .party,
-            family: .sour,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .sour
         ),
         Drink(
             name: "Lychee Martini",
@@ -1342,11 +2190,17 @@ struct Drink {
             description: "A floral, exotic martini variation",
             requiredIce: .none,
             requiredMethod: .stirred,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .modern,
-            family: .martini,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .martini
         ),
         Drink(
             name: "Crème Pêche Fizz",
@@ -1358,11 +2212,17 @@ struct Drink {
             description: "A refreshing peach cocktail",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .party,
-            family: .fizz,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .fizz
         ),
         Drink(
             name: "Yellow Chartreuse Swizzle",
@@ -1370,16 +2230,22 @@ struct Drink {
                 DrinkIngredient(name: "Yellow Chartreuse", amount: 2.0),
                 DrinkIngredient(name: "Lime Juice", amount: 1.0),
                 DrinkIngredient(name: "Gomme Syrup", amount: 0.75),
-                DrinkIngredient(name: "Mint", amount: 0.25)
+                DrinkIngredient(name: "Mint Leaf", amount: 0.25)
             ],
             description: "A herbal, complex swizzle",
             requiredIce: .crushed,
             requiredMethod: .stirred,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .swizzle,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .swizzle
         ),
         Drink(
             name: "Ruby Port Flip",
@@ -1391,11 +2257,17 @@ struct Drink {
             description: "A rich, fortified wine cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Brown Ale Shandy",
@@ -1406,11 +2278,17 @@ struct Drink {
             description: "A refreshing beer cocktail",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .regular,
             style: .party,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Sauvignon Blanc Spritzer",
@@ -1421,11 +2299,17 @@ struct Drink {
             description: "A light, refreshing wine cocktail",
             requiredIce: .cubed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "White Wine Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "White Wine Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Wine Goblet" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .regular,
-            style: .regular,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .wine,
+            family: .none
         ),
         Drink(
             name: "Tawny Port Toddy",
@@ -1437,11 +2321,17 @@ struct Drink {
             description: "A warming winter drink",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Irish Coffee Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Irish Coffee Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Copper Mug" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .regular,
-            style: .obscure,
-            family: .toddy,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .wine,
+            family: .toddy
         ),
         Drink(
             name: "Dry Sherry Cobbler",
@@ -1452,11 +2342,17 @@ struct Drink {
             description: "A refreshing wine-based cobbler",
             requiredIce: .crushed,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Sherry Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Sherry Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Wine Goblet" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .regular,
-            style: .obscure,
-            family: .cobbler,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .wine,
+            family: .cobbler
         ),
         Drink(
             name: "Crème de Violette Aviation",
@@ -1469,11 +2365,17 @@ struct Drink {
             description: "A classic Aviation cocktail with violet liqueur",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .none
         ),
         Drink(
             name: "Benedictine Sazerac",
@@ -1486,11 +2388,17 @@ struct Drink {
             description: "A herbal variation on the Sazerac",
             requiredIce: .none,
             requiredMethod: .stirred,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .cocktail,
             style: .obscure,
-            family: .sazerac,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            family: .sazerac
         ),
         Drink(
             name: "Bitter",
@@ -1500,11 +2408,771 @@ struct Drink {
             description: "A pint of bitter",
             requiredIce: .none,
             requiredMethod: .built,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
             category: .regular,
-            style: .regular,
-            family: .none,
-            requiredGarnish: Garnish.allGarnishes.first(where: { $0.name == "None" })
+            style: .draught,
+            family: .none
+        ),
+        // Halloween and Themed Cocktails
+        Drink(
+            name: "Hocus Pocus",
+            recipe: [
+                DrinkIngredient(name: "Vanilla Vodka", amount: 1.5),
+                DrinkIngredient(name: "St. Germain", amount: 0.75),
+                DrinkIngredient(name: "Lemon Juice", amount: 0.75),
+                DrinkIngredient(name: "Vanilla Syrup", amount: 0.5),
+                DrinkIngredient(name: "Soda Water", amount: 1.0)
+            ],
+            description: "A magical vanilla and elderflower cocktail",
+            requiredIce: .cubed,
+            requiredMethod: .shaken,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Twist" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .cocktail,
+            style: .modern,
+            family: .hocusPocus
+        ),
+        Drink(
+            name: "Vampires Kiss Martini",
+            recipe: [
+                DrinkIngredient(name: "Vodka", amount: 2.0),
+                DrinkIngredient(name: "Chambord", amount: 0.5),
+                DrinkIngredient(name: "Cranberry Juice", amount: 0.5),
+                DrinkIngredient(name: "Grenadine", amount: 0.25)
+            ],
+            description: "A blood-red martini with raspberry and cranberry",
+            requiredIce: .none,
+            requiredMethod: .shaken,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Raspberry" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .cocktail,
+            style: .modern,
+            family: .vampiresKiss
+        ),
+        Drink(
+            name: "Foolish Mortal",
+            recipe: [
+                DrinkIngredient(name: "Gin", amount: 1.5),
+                DrinkIngredient(name: "Melon Liqueur", amount: 0.75),
+                DrinkIngredient(name: "Lime Juice", amount: 0.75),
+                DrinkIngredient(name: "Gomme Syrup", amount: 0.5),
+                DrinkIngredient(name: "Green Food Coloring", amount: 0.1)
+            ],
+            description: "A bright green cocktail with melon and citrus",
+            requiredIce: .none,
+            requiredMethod: .shaken,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .cocktail,
+            style: .modern,
+            family: .foolishMortal
+        ),
+        Drink(
+            name: "All Hallow's Eve Martini",
+            recipe: [
+                DrinkIngredient(name: "Black Vodka", amount: 2.0),
+                DrinkIngredient(name: "Blackcurrant Cordial", amount: 0.75),
+                DrinkIngredient(name: "Lemon Juice", amount: 0.5),
+                DrinkIngredient(name: "Black Food Coloring", amount: 0.1)
+            ],
+            description: "A mysterious black martini with blackcurrant",
+            requiredIce: .none,
+            requiredMethod: .shaken,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Blackberry" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .cocktail,
+            style: .modern,
+            family: .allHallowsEve
+        ),
+        Drink(
+            name: "Love Potion Cocktail",
+            recipe: [
+                DrinkIngredient(name: "Vodka", amount: 1.5),
+                DrinkIngredient(name: "St. Germain", amount: 0.75),
+                DrinkIngredient(name: "Crème Pêche", amount: 0.75),
+                DrinkIngredient(name: "Lemon Juice", amount: 0.5),
+                DrinkIngredient(name: "Grenadine", amount: 0.25)
+            ],
+            description: "A romantic pink cocktail with elderflower and peach",
+            requiredIce: .none,
+            requiredMethod: .shaken,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Strawberry" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .cocktail,
+            style: .modern,
+            family: .lovePotion
+        ),
+        Drink(
+            name: "Irish Coffee",
+            recipe: [
+                DrinkIngredient(name: "Irish Whiskey", amount: 1.5),
+                DrinkIngredient(name: "Espresso", amount: 1.0),
+                DrinkIngredient(name: "Cream", amount: 0.5),
+                DrinkIngredient(name: "Gomme Syrup", amount: 0.25)
+            ],
+            description: "A classic Irish coffee with whiskey and cream",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Irish Coffee Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Copper Mug" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .cocktail,
+            style: .classic,
+            family: .irishCoffee
+        ),
+        Drink(
+            name: "Pornstar Martini",
+            recipe: [
+                DrinkIngredient(name: "Vanilla Vodka", amount: 1.5),
+                DrinkIngredient(name: "Passion Fruit Syrup", amount: 0.75),
+                DrinkIngredient(name: "Lime Juice", amount: 0.5),
+                DrinkIngredient(name: "Vanilla Syrup", amount: 0.25),
+                DrinkIngredient(name: "Champagne", amount: 0.5)
+            ],
+            description: "A modern martini with passion fruit and vanilla",
+            requiredIce: .none,
+            requiredMethod: .shaken,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Pineapple Chunk" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .cocktail,
+            style: .modern,
+            family: .pornstarMartini
+        ),
+        Drink(
+            name: "Gin Rickey",
+            recipe: [
+                DrinkIngredient(name: "Gin", amount: 2.0),
+                DrinkIngredient(name: "Lime Juice", amount: 0.75),
+                DrinkIngredient(name: "Soda Water", amount: 3.0)
+            ],
+            description: "A refreshing gin highball with lime and soda",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [
+                    Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!,
+                    Glassware.allGlassware.first(where: { $0.name == "Milkshake Glass" })!
+                ]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .cocktail,
+            style: .classic,
+            family: .ginRickey
+        ),
+        Drink(
+            name: "Whiskey Highball",
+            recipe: [
+                DrinkIngredient(name: "Bourbon Whiskey", amount: 2.0),
+                DrinkIngredient(name: "Soda Water", amount: 4.0)
+            ],
+            description: "A simple whiskey and soda highball",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [
+                    Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!,
+                    Glassware.allGlassware.first(where: { $0.name == "Rocks Glass" })!
+                ]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lemon Twist" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .cocktail,
+            style: .classic,
+            family: .whiskeyHighball
+        ),
+        Drink(
+            name: "Aviation",
+            recipe: [
+                DrinkIngredient(name: "Gin", amount: 2.0),
+                DrinkIngredient(name: "Maraschino Liqueur", amount: 0.5),
+                DrinkIngredient(name: "Lemon Juice", amount: 0.75),
+                DrinkIngredient(name: "Crème de Violette", amount: 0.25)
+            ],
+            description: "A classic gin cocktail with violet liqueur",
+            requiredIce: .none,
+            requiredMethod: .shaken,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .cocktail,
+            style: .obscure,
+            family: .none
+        ),
+        Drink(
+            name: "Lager",
+            recipe: [
+                DrinkIngredient(name: "Lager", amount: 16.0)
+            ],
+            description: "A pint of lager",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .draught,
+            family: .none
+        ),
+        Drink(
+            name: "Victorian Shandy",
+            recipe: [
+                DrinkIngredient(name: "Stout", amount: 6.0),
+                DrinkIngredient(name: "Ginger Ale", amount: 6.0)
+            ],
+            description: "A classic Victorian-era beer cocktail with stout and ginger ale",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .draught,
+            family: .none
+        ),
+        Drink(
+            name: "Half of Ale",
+            recipe: [
+                DrinkIngredient(name: "Ale", amount: 8.0)
+            ],
+            description: "A half pint of traditional ale",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .draught,
+            family: .none
+        ),
+        Drink(
+            name: "Half of Stout",
+            recipe: [
+                DrinkIngredient(name: "Stout", amount: 8.0)
+            ],
+            description: "A half pint of rich, dark stout",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .draught,
+            family: .none
+        ),
+        Drink(
+            name: "Half of Bitter",
+            recipe: [
+                DrinkIngredient(name: "Bitter", amount: 8.0)
+            ],
+            description: "A half pint of traditional English bitter",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .draught,
+            family: .none
+        ),
+        Drink(
+            name: "Half of Lager",
+            recipe: [
+                DrinkIngredient(name: "Lager", amount: 8.0)
+            ],
+            description: "A half pint of crisp lager",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .draught,
+            family: .none
+        ),
+        Drink(
+            name: "Half of Brown Ale",
+            recipe: [
+                DrinkIngredient(name: "Brown Ale", amount: 8.0)
+            ],
+            description: "A half pint of smooth brown ale",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .draught,
+            family: .none
+        ),
+        Drink(
+            name: "Half of IPA",
+            recipe: [
+                DrinkIngredient(name: "India Pale Ale", amount: 8.0)
+            ],
+            description: "A half pint of hoppy India Pale Ale",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .draught,
+            family: .none
+        ),
+        Drink(
+            name: "Half of Cider",
+            recipe: [
+                DrinkIngredient(name: "Cider", amount: 8.0)
+            ],
+            description: "A half pint of refreshing cider",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .draught,
+            family: .none
+        ),
+        // Additional Classic Cocktails
+        Drink(
+            name: "Zombie",
+            recipe: [
+                DrinkIngredient(name: "White Rum", amount: 1.5),
+                DrinkIngredient(name: "Golden Rum", amount: 1.5),
+                DrinkIngredient(name: "Dark Rum", amount: 1.0),
+                DrinkIngredient(name: "Lime Juice", amount: 1.0),
+                DrinkIngredient(name: "Pineapple Juice", amount: 1.0),
+                DrinkIngredient(name: "Passion Fruit Syrup", amount: 0.5),
+                DrinkIngredient(name: "Gomme Syrup", amount: 0.5),
+                DrinkIngredient(name: "Angostura Bitters", amount: 0.25),
+                DrinkIngredient(name: "Absinthe", amount: 0.25)
+            ],
+            description: "A complex tiki cocktail with multiple rums and tropical flavors",
+            requiredIce: .crushed,
+            requiredMethod: .shaken,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Hurricane Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Pineapple Leaf" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Mint Sprig" })!]
+            ),
+            category: .cocktail,
+            style: .party,
+            family: .none
+        ),
+        Drink(
+            name: "Hurricane",
+            recipe: [
+                DrinkIngredient(name: "White Rum", amount: 2.0),
+                DrinkIngredient(name: "Dark Rum", amount: 2.0),
+                DrinkIngredient(name: "Passion Fruit Syrup", amount: 1.0),
+                DrinkIngredient(name: "Orange Juice", amount: 1.0),
+                DrinkIngredient(name: "Lime Juice", amount: 0.5),
+                DrinkIngredient(name: "Gomme Syrup", amount: 0.5)
+            ],
+            description: "A New Orleans classic with rum and passion fruit",
+            requiredIce: .crushed,
+            requiredMethod: .shaken,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Hurricane Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Orange Wheel" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Pineapple Leaf" })!]
+            ),
+            category: .cocktail,
+            style: .party,
+            family: .none
+        ),
+        Drink(
+            name: "Salty Dog",
+            recipe: [
+                DrinkIngredient(name: "Gin", amount: 2.0),
+                DrinkIngredient(name: "Grapefruit Juice", amount: 4.0)
+            ],
+            description: "A gin highball with grapefruit juice and salt rim",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Salt Rim" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Grapefruit Twist" })!]
+            ),
+            category: .cocktail,
+            style: .classic,
+            family: .none
+        ),
+        Drink(
+            name: "Sea Breeze",
+            recipe: [
+                DrinkIngredient(name: "Vodka", amount: 2.0),
+                DrinkIngredient(name: "Cranberry Juice", amount: 3.0),
+                DrinkIngredient(name: "Grapefruit Juice", amount: 1.0)
+            ],
+            description: "A refreshing vodka cocktail with cranberry and grapefruit",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wedge" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Grapefruit Twist" })!]
+            ),
+            category: .cocktail,
+            style: .classic,
+            family: .none
+        ),
+        Drink(
+            name: "Strawberry Daiquiri",
+            recipe: [
+                DrinkIngredient(name: "White Rum", amount: 2.0),
+                DrinkIngredient(name: "Lime Juice", amount: 1.0),
+                DrinkIngredient(name: "Gomme Syrup", amount: 0.75),
+                DrinkIngredient(name: "Strawberry Syrup", amount: 0.5)
+            ],
+            description: "A fruity variation of the classic Daiquiri",
+            requiredIce: .crushed,
+            requiredMethod: .shaken,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Martini Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Champagne Coupe" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Strawberry" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!]
+            ),
+            category: .cocktail,
+            style: .party,
+            family: .daiquiri
+        ),
+        Drink(
+            name: "Singapore Sling",
+            recipe: [
+                DrinkIngredient(name: "Gin", amount: 1.5),
+                DrinkIngredient(name: "Cherry Heering", amount: 0.5),
+                DrinkIngredient(name: "Benedictine", amount: 0.25),
+                DrinkIngredient(name: "Cointreau", amount: 0.25),
+                DrinkIngredient(name: "Pineapple Juice", amount: 1.0),
+                DrinkIngredient(name: "Lime Juice", amount: 0.5),
+                DrinkIngredient(name: "Gomme Syrup", amount: 0.25),
+                DrinkIngredient(name: "Angostura Bitters", amount: 0.25)
+            ],
+            description: "A complex gin cocktail with multiple liqueurs and tropical flavors",
+            requiredIce: .crushed,
+            requiredMethod: .shaken,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Hurricane Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Pineapple Leaf" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Maraschino Cherry" })!]
+            ),
+            category: .cocktail,
+            style: .classic,
+            family: .sling
+        ),
+        // Non-Alcoholic Drinks
+        Drink(
+            name: "Vanilla Milkshake",
+            recipe: [
+                DrinkIngredient(name: "Vanilla Ice Cream", amount: 4.0),
+                DrinkIngredient(name: "Milk", amount: 2.0),
+                DrinkIngredient(name: "Vanilla Syrup", amount: 0.5)
+            ],
+            description: "A creamy vanilla milkshake",
+            requiredIce: .none,
+            requiredMethod: .blended,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Milkshake Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .nonAlcoholic,
+            family: .none
+        ),
+        Drink(
+            name: "Chocolate Milkshake",
+            recipe: [
+                DrinkIngredient(name: "Chocolate Ice Cream", amount: 4.0),
+                DrinkIngredient(name: "Milk", amount: 2.0),
+                DrinkIngredient(name: "Chocolate Syrup", amount: 0.5)
+            ],
+            description: "A rich chocolate milkshake",
+            requiredIce: .none,
+            requiredMethod: .blended,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Milkshake Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Chocolate Shavings" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .regular,
+            style: .nonAlcoholic,
+            family: .none
+        ),
+        Drink(
+            name: "Strawberry Milkshake",
+            recipe: [
+                DrinkIngredient(name: "Vanilla Ice Cream", amount: 4.0),
+                DrinkIngredient(name: "Milk", amount: 2.0),
+                DrinkIngredient(name: "Strawberry Syrup", amount: 0.5)
+            ],
+            description: "A fruity strawberry milkshake",
+            requiredIce: .none,
+            requiredMethod: .blended,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Milkshake Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Old Fashioned Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Strawberry" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .regular,
+            style: .nonAlcoholic,
+            family: .none
+        ),
+        Drink(
+            name: "Pineapple Juice",
+            recipe: [
+                DrinkIngredient(name: "Pineapple Juice", amount: 6.0)
+            ],
+            description: "A glass of fresh pineapple juice",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Pineapple Chunk" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .regular,
+            style: .nonAlcoholic,
+            family: .none
+        ),
+        Drink(
+            name: "Orange Juice",
+            recipe: [
+                DrinkIngredient(name: "Orange Juice", amount: 6.0)
+            ],
+            description: "A glass of fresh orange juice",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Orange Wedge" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .regular,
+            style: .nonAlcoholic,
+            family: .none
+        ),
+        Drink(
+            name: "Cranberry Juice",
+            recipe: [
+                DrinkIngredient(name: "Cranberry Juice", amount: 6.0)
+            ],
+            description: "A glass of tart cranberry juice",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wedge" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .regular,
+            style: .nonAlcoholic,
+            family: .none
+        ),
+        Drink(
+            name: "Cranberry and Soda",
+            recipe: [
+                DrinkIngredient(name: "Cranberry Juice", amount: 3.0),
+                DrinkIngredient(name: "Soda Water", amount: 3.0)
+            ],
+            description: "A refreshing cranberry spritzer",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Highball Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Collins Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wedge" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "None" })!]
+            ),
+            category: .regular,
+            style: .nonAlcoholic,
+            family: .none
+        ),
+        Drink(
+            name: "Coffee",
+            recipe: [
+                DrinkIngredient(name: "Coffee", amount: 8.0)
+            ],
+            description: "A hot cup of coffee",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Irish Coffee Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Copper Mug" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .nonAlcoholic,
+            family: .none
+        ),
+        Drink(
+            name: "Tea",
+            recipe: [
+                DrinkIngredient(name: "Tea", amount: 8.0)
+            ],
+            description: "A hot cup of tea",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Irish Coffee Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Copper Mug" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .nonAlcoholic,
+            family: .none
         )
     ]
 } 

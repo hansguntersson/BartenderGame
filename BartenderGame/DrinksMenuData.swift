@@ -89,6 +89,7 @@ struct DrinksMenuData {
         "Black Velvet": 8.99,
         "Snakebite and Black": 7.99,
         "Brown Ale Shandy": 7.99,
+        "Victorian Shandy": 7.99,
         "Sauvignon Blanc Spritzer": 8.99,
         "Tawny Port Toddy": 9.99,
         "Dry Sherry Cobbler": 8.99

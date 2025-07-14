@@ -11,7 +11,7 @@ struct Customer: Identifiable {
     var selectedIce: IceType = .none
     var selectedMethod: MethodType?
     var selectedIngredients: [DrinkIngredient] = []
-    var selectedGarnishes: [DrinkIngredient] = []
+    var selectedGarnishes: [Garnish] = []
     
     static var activeCustomers: [Customer] = []
     static var currentVenue: String = ""
@@ -87,7 +87,7 @@ struct Customer: Identifiable {
         }
     }
     
-    init(drinkOrder: String, avatarNumber: Int, orderPhrase: String, selectedGlassware: Glassware? = nil, selectedIce: IceType = .none, selectedMethod: MethodType? = nil, selectedIngredients: [DrinkIngredient] = []) {
+    init(drinkOrder: String, avatarNumber: Int, orderPhrase: String, selectedGlassware: Glassware? = nil, selectedIce: IceType = .none, selectedMethod: MethodType? = nil, selectedIngredients: [DrinkIngredient] = [], selectedGarnishes: [Garnish] = []) {
         self.drinkOrder = drinkOrder
         self.avatarNumber = avatarNumber
         self.orderPhrase = orderPhrase
@@ -95,5 +95,6 @@ struct Customer: Identifiable {
         self.selectedIce = selectedIce
         self.selectedMethod = selectedMethod
         self.selectedIngredients = selectedIngredients
+        self.selectedGarnishes = selectedGarnishes
     }
 } 

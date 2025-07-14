@@ -41,12 +41,20 @@ struct PreparationCategoryNavigationView: View {
             return "drop.fill"
         case .liqueurs:
             return "wineglass.fill"
-        case .wine:
-            return "wineglass.fill"
+        case .aromatics:
+            return "leaf.fill"
         case .beer:
             return "mug.fill"
+        case .wine:
+            return "wineglass.fill"
         case .mixers:
             return "homepod.fill"
+        case .fruit:
+            return "applelogo"
+        case .sweeteners:
+            return "cube.fill"
+        case .other:
+            return "questionmark.circle.fill"
         }
     }
 }
@@ -55,7 +63,7 @@ struct PreparationView: View {
     let drink: Drink
     @Environment(\.dismiss) private var dismiss
     @Binding var isShowing: Bool
-    let onContinue: (Glassware, IceType, MethodType, Bool) -> Void
+    let onContinue: (Glassware, IceType, MethodType, Bool, Double) -> Void
     
     @Binding var customer: Customer
     @Binding var currentCustomerIndex: Int
@@ -65,10 +73,16 @@ struct PreparationView: View {
     @State private var selectedMethod: MethodType = .built
     @State private var showingRecipe = false
     @State private var selectedIngredients: [DrinkIngredient] = []
-    @State private var selectedGarnishes: [DrinkIngredient] = []
+    @State private var selectedGarnishes: [Garnish] = []
     @State private var currentPage: Int = 0
+    @State private var showingIngredientSubList = false
+    @State private var selectedIngredientCategory: IngredientCategory?
+    @State private var showingGarnishSubList = false
+    @State private var selectedGarnishCategory: GarnishCategory?
+    @State private var showingGlasswareSubList = false
+    @State private var selectedGlasswareCategory: GlasswareCategory?
     
-    init(drink: Drink, isShowing: Binding<Bool>, customer: Binding<Customer>, currentCustomerIndex: Binding<Int>, onContinue: @escaping (Glassware, IceType, MethodType, Bool) -> Void) {
+    init(drink: Drink, isShowing: Binding<Bool>, customer: Binding<Customer>, currentCustomerIndex: Binding<Int>, onContinue: @escaping (Glassware, IceType, MethodType, Bool, Double) -> Void) {
         self.drink = drink
         self._isShowing = isShowing
         self._customer = customer
@@ -79,6 +93,7 @@ struct PreparationView: View {
         _selectedIce = State(initialValue: customer.wrappedValue.selectedIce)
         _selectedMethod = State(initialValue: customer.wrappedValue.selectedMethod ?? .built)
         _selectedIngredients = State(initialValue: customer.wrappedValue.selectedIngredients)
+        _selectedGarnishes = State(initialValue: customer.wrappedValue.selectedGarnishes)
     }
     
     private let primaryColor = Color(red: 0.8, green: 0.4, blue: 0.2)  // Burnt Orange
@@ -116,10 +131,43 @@ struct PreparationView: View {
         // Check method
         let methodCorrect = selectedMethod == matchedDrink.requiredMethod
         
-        // Check glassware
-        let glassCorrect = selectedGlassware == matchedDrink.requiredGlass
+        // Check glassware using new glass requirement system
+        let glassCorrect = matchedDrink.glassRequirement.isValidGlass(selectedGlassware)
         
-        return ingredientsCorrect && iceCorrect && methodCorrect && glassCorrect
+        // Check garnish using new garnish requirement system
+        let garnishCorrect: Bool = {
+            let req = matchedDrink.garnishRequirement
+            if req.ideal.isEmpty && req.acceptable.isEmpty {
+                // No garnish required
+                return selectedGarnishes.isEmpty || selectedGarnishes.contains(where: { $0.name == "None" })
+            }
+            // If required, must have at least one garnish
+            if req.required && selectedGarnishes.isEmpty {
+                return false
+            }
+            // All selected garnishes must be valid
+            return selectedGarnishes.allSatisfy { req.isValidGarnish($0) }
+        }()
+        
+        return ingredientsCorrect && iceCorrect && methodCorrect && glassCorrect && garnishCorrect
+    }
+    
+    private func getTipMultiplier() -> Double {
+        guard let matchedDrink = Drink.allDrinks.first(where: { $0.name == drink.name }),
+              let selectedGlassware = selectedGlassware else {
+            return 0.0
+        }
+        let glassMultiplier = matchedDrink.glassRequirement.getTipMultiplier(for: selectedGlassware)
+        let garnishMultiplier: Double = {
+            let req = matchedDrink.garnishRequirement
+            if selectedGarnishes.isEmpty {
+                return req.allowsNoGarnish() ? 1.0 : 0.2
+            }
+            // Use the best (highest) multiplier among selected garnishes
+            return selectedGarnishes.map { req.getTipMultiplier(for: $0) }.max() ?? 0.2
+        }()
+        // Combine multipliers (e.g., average)
+        return ((glassMultiplier + garnishMultiplier) / 2.0).rounded(to: 2)
     }
     
     private func updateCustomerState() {
@@ -127,40 +175,101 @@ struct PreparationView: View {
         customer.selectedIce = selectedIce
         customer.selectedMethod = selectedMethod
         customer.selectedIngredients = selectedIngredients
+        customer.selectedGarnishes = selectedGarnishes
     }
     
     // Add descriptions for MethodType
     private func methodDescription(_ method: MethodType) -> String {
         switch method {
         case .built:
-            return "Building a drink involves adding ingredients directly to the glass and stirring gently. This method is ideal for drinks that are meant to be simple and refreshing, allowing the flavors to meld naturally."
+            return "Building a drink involves adding ingredients directly to the glass.\n\nThis method is ideal for drinks that are meant to be simple and allows the flavors to meld naturally"
         case .stirred:
-            return "Stirring is a method where ingredients are mixed with ice in a mixing glass, then strained. This creates a smooth, clear drink that is perfect for spirit-forward cocktails, enhancing the complexity and balance of the flavors."
+            return "Stirring is a method where ingredients are mixed with ice in a mixing glass.\n\nThis creates a smooth, clear drink that is perfect for spirit-forward cocktails"
         case .shaken:
-            return "Shaking is better for drinks with fresh ingredients because those cocktails tend to be lighter, citrusy and more refreshing. They benefit from a more vibrant, aerated texture and because they go down easily, we have a propensity to drink them quicker, so the added chill and dilution is a good thing."
+            return "Shaking is better for drinks with fresh ingredients and tend to be lighter.\n\nThey benefit from an aerated texture and they go down easily, so the added dilution is a good thing."
         case .blended:
-            return "Blending is used to create a smooth, frozen texture by combining ingredients with ice. This method is perfect for tropical and dessert cocktails, providing a refreshing and indulgent experience."
+            return "Blending is used to create a smooth, frozen texture by blitzing ingredients with ice.\n\nThis method is perfect for tropical and dessert cocktails"
         case .roll:
-            return "Rolling involves pouring ingredients back and forth between two vessels to mix gently. This method is ideal for delicate cocktails that require a light touch to maintain their integrity."
+            return "Rolling involves pouring ingredients back and forth between two vessels to mix gently.\n\nThis method is ideal for delicate cocktails to maintain their integrity"
         case .layer:
-            return "Layering is a technique where ingredients are carefully poured to create distinct layers. This method is used for visually striking cocktails, adding an element of artistry to the drink."
+            return "Layering is a technique where ingredients are carefully poured to create distinct layers.\n\nThis method is used for visually striking cocktails, adding an element of artistry to the drink"
         }
     }
     // Add descriptions for IceType
     private func iceDescription(_ ice: IceType) -> String {
         switch ice {
         case .none:
-            return "No Ice: Served without ice, allowing the drink to be enjoyed at room temperature."
+            return "Served without ice, allowing the drink to be enjoyed at room temperature.\n\nThis method is ideal for spirits that are meant to be sipped slowly"
         case .cubed:
-            return "Cubed Ice: Standard ice cubes provide slow dilution, making them ideal for drinks that are meant to be savored over time."
+            return "Standard ice cubes provide slow dilution while keeping the drink cold.\n\nThey are perfect for spirit-forward cocktails that are meant to be savored over time"
         case .crushed:
-            return "Crushed Ice: Small pieces of ice chill quickly and provide fast dilution, perfect for refreshing cocktails that are meant to be consumed quickly."
+            return "Small pieces of ice chill quickly and provide fast dilution. \n\nThis is most suited to refreshing cocktails that are meant to be consumed quickly"
         case .sphere:
-            return "Ice Sphere: Large round ice provides very slow dilution, making it ideal for premium spirits and cocktails that are meant to be enjoyed slowly."
+            return "Large round ice provides very slow dilution due to reduced surface area. \n\nOften used for premium spirits and cocktails that are meant to be enjoyed slowly"
         case .cracked:
-            return "Cracked Ice: Broken cubes offer moderate dilution, suitable for a variety of cocktails that benefit from a balanced chill and dilution."
+            return "Broken cubes offer moderate dilution somewhere between ctandard and crushed ice. \n\nSuited to cocktails that benefit from a balance between chill and dilution"
         case .dry:
-            return "Dry Ice: Used for dramatic effect, not for consumption, adding a visual element to the drink."
+            return "Used for dramatic effect, not for consumption, adding a visual element to the drink.\n\nIt creates a striking presentation that is perfect for special occasions and themed events."
+        }
+    }
+    
+    // Move iconName here for use in ingredients grid and elsewhere
+    private func iconName(for category: IngredientCategory) -> String {
+        switch category {
+        case .spirits:
+            return "drop.fill"
+        case .liqueurs:
+            return "wineglass.fill"
+        case .aromatics:
+            return "leaf.fill"
+        case .beer:
+            return "mug.fill"
+        case .wine:
+            return "wineglass.fill"
+        case .mixers:
+            return "homepod.fill"
+        case .fruit:
+            return "applelogo"
+        case .sweeteners:
+            return "cube.fill"
+        case .other:
+            return "questionmark.circle.fill"
+        }
+    }
+    
+    // Add iconName function for garnish categories
+    private func iconName(for category: GarnishCategory) -> String {
+        switch category {
+        case .citrus:
+            return "leaf.fill"
+        case .fruit:
+            return "applelogo"
+        case .herb:
+            return "leaf.circle.fill"
+        case .spice:
+            return "sparkles"
+        case .rim:
+            return "circle.dashed"
+        case .other:
+            return "questionmark.circle.fill"
+        }
+    }
+    
+    // Add iconName function for glassware categories
+    private func iconName(for category: GlasswareCategory) -> String {
+        switch category {
+        case .beer:
+            return "mug.fill"
+        case .wine:
+            return "wineglass.fill"
+        case .specialty:
+            return "star.fill"
+        case .tall:
+            return "rectangle.portrait.fill"
+        case .short:
+            return "rectangle.fill"
+        case .cocktail:
+            return "drop.fill"
         }
     }
     
@@ -189,15 +298,81 @@ struct PreparationView: View {
                                 Circle()
                                     .fill(Color.white.opacity(0.15))
                                     .frame(width: 44, height: 44)
-                            Image(systemName: "chevron.up.circle.fill")
-                                    .foregroundColor(.white)
-                                .font(.title)
+                                Image(systemName: "chevron.up.circle.fill")
+                                    .foregroundColor(Color.white)
+                                    .font(.title)
                                     .shadow(color: Color.black.opacity(0.4), radius: 2, x: 0, y: 1)
                             }
                         }
                         .padding(.trailing, 16)
                     }
                     .background(darkBackgroundColor.edgesIgnoringSafeArea(.top))
+                    
+                    // Custom text-based navigation bar - moved here under header
+                    HStack(spacing: 0) {
+                        Button(action: { withAnimation { currentPage = 0 } }) {
+                            Text("Method")
+                                .font(.subheadline)
+                                .fontWeight(.bold)
+                                .foregroundColor(currentPage == 0 ? .white : secondaryColor)
+                                .padding(.vertical, 6)
+                                .padding(.horizontal, 10)
+                                .background(currentPage == 0 ? primaryColor : Color.clear)
+                                .cornerRadius(4)
+                        }
+                        
+                        Button(action: { withAnimation { currentPage = 1 } }) {
+                            Text("Ice")
+                                .font(.subheadline)
+                                .fontWeight(.bold)
+                                .foregroundColor(currentPage == 1 ? .white : secondaryColor)
+                                .padding(.vertical, 6)
+                                .padding(.horizontal, 10)
+                                .background(currentPage == 1 ? primaryColor : Color.clear)
+                                .cornerRadius(4)
+                        }
+                        
+                        Button(action: { withAnimation { currentPage = 2 } }) {
+                            Text("Glass")
+                                .font(.subheadline)
+                                .fontWeight(.bold)
+                                .foregroundColor(currentPage == 2 ? .white : secondaryColor)
+                                .padding(.vertical, 6)
+                                .padding(.horizontal, 10)
+                                .background(currentPage == 2 ? primaryColor : Color.clear)
+                                .cornerRadius(4)
+                        }
+                        
+                        Button(action: { withAnimation { currentPage = 3 } }) {
+                            Text("Ingredients")
+                                .font(.subheadline)
+                                .fontWeight(.bold)
+                                .foregroundColor(currentPage == 3 ? .white : secondaryColor)
+                                .padding(.vertical, 6)
+                                .padding(.horizontal, 10)
+                                .background(currentPage == 3 ? primaryColor : Color.clear)
+                                .cornerRadius(4)
+                        }
+
+                        Button(action: { withAnimation { currentPage = 4 } }) {
+                            Text("Garnish")
+                                .font(.subheadline)
+                                .fontWeight(.bold)
+                                .foregroundColor(currentPage == 4 ? .white : secondaryColor)
+                                .padding(.vertical, 6)
+                                .padding(.horizontal, 10)
+                                .background(currentPage == 4 ? primaryColor : Color.clear)
+                                .cornerRadius(4)
+                        }
+                    }
+                    .background(
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(secondaryColor, lineWidth: 1.2)
+                            .opacity(0.7)
+                    )
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .padding(.top, 12)
                     
                     // Swipable content
                     TabView(selection: $currentPage) {
@@ -206,17 +381,17 @@ struct PreparationView: View {
                             VStack(spacing: 20) {
                                 // Method Section
                                 VStack(alignment: .leading, spacing: 8) {
-                                    Text("Method")
-                                        .font(.headline)
-                                        .foregroundColor(secondaryColor)
-                                    Divider()
-                                        .background(secondaryColor.opacity(0.3))
                                     // Description box
-                                    Text(methodDescription(selectedMethod))
-                                        .font(.custom("Georgia", size: 16))
+                                    Image(systemName: "questionmark.circle")
+                                        .font(.system(size: 120))
                                         .foregroundColor(primaryColor)
-                                        .padding(16)
-                                        .frame(height: UIScreen.main.bounds.height * 0.2)
+                                        .padding(.top, 10)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                    Text(methodDescription(selectedMethod))
+                                        .font(.subheadline)
+                                        .foregroundColor(primaryColor)
+                                        .padding(10)
+                                        .frame(height: UIScreen.main.bounds.height * 0.14, alignment: .top)
                                         .cornerRadius(8)
                                     LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 12) {
                                         ForEach(MethodType.allCases, id: \ .self) { method in
@@ -252,17 +427,17 @@ struct PreparationView: View {
                             VStack(spacing: 20) {
                                 // Ice Selection
                                 VStack(alignment: .leading, spacing: 8) {
-                                    Text("Ice")
-                                        .font(.headline)
-                                        .foregroundColor(secondaryColor)
-                                    Divider()
-                                        .background(secondaryColor.opacity(0.3))
                                     // Description box
-                                    Text(iceDescription(selectedIce))
-                                        .font(.custom("Georgia", size: 16))
+                                    Image(systemName: "questionmark.circle")
+                                        .font(.system(size: 120))
                                         .foregroundColor(primaryColor)
-                                        .padding(16)
-                                        .frame(height: UIScreen.main.bounds.height * 0.3)
+                                        .padding(.top, 10)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                    Text(iceDescription(selectedIce))
+                                        .font(.subheadline)
+                                        .foregroundColor(primaryColor)
+                                        .padding(10)
+                                        .frame(height: UIScreen.main.bounds.height * 0.14, alignment: .top)
                                         .cornerRadius(8)
                                     LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 12) {
                                         ForEach(IceType.allCases, id: \ .self) { ice in
@@ -295,61 +470,278 @@ struct PreparationView: View {
                         // Page 3: Glassware Section
                         ScrollView {
                             VStack(spacing: 20) {
-                                // Glassware Selection grouped by category
+                                // Glassware Selection
                                 VStack(alignment: .leading, spacing: 8) {
-                                    Divider()
-                                        .background(secondaryColor.opacity(0.3))
-                                    ForEach(GlasswareCategory.allCases, id: \.self) { category in
-                                        let glasses = Glassware.allGlassware.filter { $0.category == category }
-                                        if !glasses.isEmpty {
-                                            VStack(alignment: .leading, spacing: 8) {
-                                                Text(category.rawValue)
-                                                    .font(.headline)
-                                                    .foregroundColor(secondaryColor)
-                                                Divider()
-                                                
-                                                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 12) {
-                                                    ForEach(glasses) { glassware in
+                                    // Description box
+                                    Image(systemName: "questionmark.circle")
+                                        .font(.system(size: 120))
+                                        .foregroundColor(primaryColor)
+                                        .padding(.top, 10)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                    Text("Browse the categories to select the glassware you need")
+                                        .font(.subheadline)
+                                        .foregroundColor(primaryColor)
+                                        .padding(10)
+                                        .frame(height: UIScreen.main.bounds.height * 0.08, alignment: .top)
+                                        .cornerRadius(8)
+                                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 12) {
+                                        ForEach(GlasswareCategory.allCases, id: \ .self) { category in
                                         Button(action: { 
-                                                            selectedGlassware = glassware
-                                            updateCustomerState()
+                                                selectedGlasswareCategory = category
+                                                showingGlasswareSubList = true
                                         }) {
-                                                            VStack(spacing: 6) {
-                                                                Image(systemName: placeholderIcon)
-                                                                    .font(.system(size: 28, weight: .medium))
-                                                                    .foregroundColor(selectedGlassware?.name == glassware.name ? .white : secondaryColor)
-                                                                Text(glassware.shortName)
-                                                                    .font(.subheadline)
-                                                                    .foregroundColor(selectedGlassware?.name == glassware.name ? .white : secondaryColor)
-                                                            }
-                                                            .padding(.vertical, 12)
-                                                .frame(maxWidth: .infinity)
-                                                            .background(selectedGlassware?.name == glassware.name ? primaryColor : Color.white)
-                                                            .cornerRadius(12)
-                                                            .shadow(color: selectedGlassware?.name == glassware.name ? primaryColor.opacity(0.18) : Color.clear, radius: 2, x: 0, y: 1)
-                                                        }
-                                                    }
-                                                }
+                                            VStack(spacing: 6) {
+                                                    Image(systemName: iconName(for: category))
+                                                    .font(.system(size: 28, weight: .medium))
+                                                        .foregroundColor(secondaryColor)
+                                                    Text(category.rawValue)
+                                                    .font(.subheadline)
+                                                        .foregroundColor(secondaryColor)
                                             }
-                                            .padding(.bottom, 16)
+                                            .padding(.vertical, 12)
+                                            .frame(maxWidth: .infinity)
+                                                .frame(height: 80)
+                                                .background(Color.white)
+                                            .cornerRadius(12)
+                                                .shadow(color: Color.clear, radius: 2, x: 0, y: 1)
                                         }
                                     }
                                 }
+                                }
                                 .padding(.horizontal)
+                                
+                                // Selected Glassware Box
+                                VStack(alignment: .leading, spacing: 8) {
+                                    HStack {
+                                        Text("Selected Glassware")
+                                            .font(.caption)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(secondaryColor)
+                                        
+                                        Spacer()
+                                        
+                                        if selectedGlassware != nil {
+                                            Button(action: {
+                                                selectedGlassware = nil
+                                                updateCustomerState()
+                                            }) {
+                                                Image(systemName: "trash")
+                                                    .font(.caption)
+                                                    .foregroundColor(secondaryColor)
+                                            }
+                                        }
+                                    }
+                                    .padding(.horizontal)
+                                    
+                                    Divider()
+                                        .background(secondaryColor.opacity(0.3))
+                                        .padding(.horizontal)
+                                    
+                                    if selectedGlassware == nil {
+                                        Text("No glassware selected")
+                                            .font(.caption)
+                                            .foregroundColor(secondaryColor.opacity(0.6))
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                            .padding(.vertical, 20)
+                                    } else {
+                                        HStack {
+                                            Image(systemName: "wineglass.fill")
+                                                .font(.caption)
+                                                .foregroundColor(secondaryColor)
+                                            Text(selectedGlassware?.shortName ?? "")
+                                                .font(.caption)
+                                                .foregroundColor(secondaryColor)
+                                            Spacer()
+                                        }
+                                        .padding(.horizontal)
+                                    }
+                                }
                             }
+                            .padding(.vertical)
                         }
                         .tag(2)
                         // Page 4: Ingredients Section
                         ScrollView {
                             VStack(spacing: 20) {
-                                // Empty for now
+                                // Ingredients Section
+                                VStack(alignment: .leading, spacing: 8) {
+                                    // Description box
+                                    HStack(alignment: .top, spacing: 12) {
+                                        Image(systemName: "questionmark.circle")
+                                            .font(.system(size: 60))
+                                            .foregroundColor(primaryColor)
+                                        Text("Browse the categories to select the ingredients you need")
+                                            .font(.subheadline)
+                                            .foregroundColor(primaryColor)
+                                            .padding(10)
+                                            .frame(height: UIScreen.main.bounds.height * 0.1, alignment: .top)
+                                            .cornerRadius(8)
+                                    }
+                                    .padding(.top, 10)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 12) {
+                                        ForEach(IngredientCategory.allCases, id: \ .self) { category in
+                                            Button(action: {
+                                                selectedIngredientCategory = category
+                                                showingIngredientSubList = true
+                                            }) {
+                                                VStack(spacing: 6) {
+                                                    Image(systemName: iconName(for: category))
+                                                        .font(.system(size: 28, weight: .medium))
+                                                        .foregroundColor(secondaryColor)
+                                                    Text(category.rawValue)
+                                                        .font(.subheadline)
+                                                        .foregroundColor(secondaryColor)
+                                                }
+                                                .padding(.vertical, 12)
+                                                .frame(maxWidth: .infinity)
+                                                .frame(height: 80)
+                                                .background(Color.white)
+                                                .cornerRadius(12)
+                                                .shadow(color: Color.clear, radius: 2, x: 0, y: 1)
+                                            }
+                                        }
+                                    }
+                                }
+                                .padding(.horizontal)
+                                
+                                // Selected Ingredients Box
+                                VStack(alignment: .leading, spacing: 8) {
+                                    HStack {
+                                    Text("Selected Ingredients")
+                                        .font(.caption)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(secondaryColor)
+                                        
+                                        Spacer()
+                                        
+                                        if !selectedIngredients.isEmpty {
+                                            Button(action: {
+                                                selectedIngredients = []
+                                                updateCustomerState()
+                                            }) {
+                                                Image(systemName: "trash")
+                                                    .font(.caption)
+                                                    .foregroundColor(secondaryColor)
+                                            }
+                                        }
+                                    }
+                                        .padding(.horizontal)
+                                    
+                                    Divider()
+                                        .background(secondaryColor.opacity(0.3))
+                                        .padding(.horizontal)
+                                    
+                                    if selectedIngredients.isEmpty {
+                                        Text("No ingredients selected")
+                                            .font(.caption)
+                                            .foregroundColor(secondaryColor.opacity(0.6))
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                            .padding(.vertical, 20)
+                                    } else {
+                                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 2), spacing: 8) {
+                                            ForEach(selectedIngredients, id: \.id) { ingredient in
+                                                Text(ingredient.shortName)
+                                            .font(.caption)
+                                            .foregroundColor(secondaryColor)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            }
+                                    }
+                                    .padding(.horizontal)
+                                    }
+                                }
                             }
+                            .padding(.vertical)
                         }
                         .tag(3)
                         // Page 5: Garnish Section
                         ScrollView {
                             VStack(spacing: 20) {
-                                // Empty for now
+                                // Garnish Selection
+                                VStack(alignment: .leading, spacing: 8) {
+                                    // Description box
+                                    Image(systemName: "leaf.fill")
+                                        .font(.system(size: 120))
+                                        .foregroundColor(primaryColor)
+                                        .padding(.top, 10)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                    Text("Browse the categories to select the garnishes you need")
+                                        .font(.subheadline)
+                                        .foregroundColor(primaryColor)
+                                        .padding(10)
+                                        .frame(height: UIScreen.main.bounds.height * 0.08, alignment: .top)
+                                        .cornerRadius(8)
+                                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 12) {
+                                        ForEach(GarnishCategory.allCases, id: \ .self) { category in
+                                            Button(action: {
+                                                selectedGarnishCategory = category
+                                                showingGarnishSubList = true
+                                            }) {
+                                                VStack(spacing: 6) {
+                                                    Image(systemName: iconName(for: category))
+                                                        .font(.system(size: 28, weight: .medium))
+                                                        .foregroundColor(secondaryColor)
+                                                    Text(category.rawValue)
+                                                        .font(.subheadline)
+                                                        .foregroundColor(secondaryColor)
+                                                }
+                                                .padding(.vertical, 12)
+                                                .frame(maxWidth: .infinity)
+                                                .frame(height: 80)
+                                                .background(Color.white)
+                                                .cornerRadius(12)
+                                                .shadow(color: Color.clear, radius: 2, x: 0, y: 1)
+                                            }
+                                        }
+                                    }
+                                }
+                                .padding(.horizontal)
+                                
+                                // Selected Garnishes Box
+                                VStack(alignment: .leading, spacing: 8) {
+                                    HStack {
+                                        Text("Selected Garnishes")
+                                .font(.caption)
+                                .fontWeight(.bold)
+                                            .foregroundColor(secondaryColor)
+                                        
+                                        Spacer()
+                                        
+                                        if !selectedGarnishes.isEmpty {
+                                            Button(action: {
+                                                selectedGarnishes = []
+                                                updateCustomerState()
+                                            }) {
+                                                Image(systemName: "trash")
+                                .font(.caption)
+                                                    .foregroundColor(secondaryColor)
+                                            }
+                                        }
+                                    }
+                                    .padding(.horizontal)
+                                    
+                                    Divider()
+                                        .background(secondaryColor.opacity(0.3))
+                                        .padding(.horizontal)
+                                    
+                                    if selectedGarnishes.isEmpty {
+                                        Text("No garnishes selected")
+                                .font(.caption)
+                                            .foregroundColor(secondaryColor.opacity(0.6))
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                            .padding(.vertical, 20)
+                                    } else {
+                                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 2), spacing: 8) {
+                                            ForEach(selectedGarnishes, id: \.id) { garnish in
+                                                Text(garnish.shortName)
+                                                    .font(.caption)
+                                                    .foregroundColor(secondaryColor)
+                                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                            }
+                                        }
+                                        .padding(.horizontal)
+                                    }
+                                }
                             }
                             .padding(.vertical)
                         }
@@ -357,72 +749,7 @@ struct PreparationView: View {
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                     
-                    // Custom text-based navigation bar
-                    HStack(spacing: 0) {
-                        Button(action: { withAnimation { currentPage = 0 } }) {
-                            Text("Method")
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .foregroundColor(currentPage == 0 ? .white : secondaryColor)
-                                .padding(.vertical, 6)
-                                .padding(.horizontal, 12)
-                                .background(currentPage == 0 ? primaryColor : Color.clear)
-                                .cornerRadius(8)
-                        }
-                        
-                        Button(action: { withAnimation { currentPage = 1 } }) {
-                            Text("Ice")
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .foregroundColor(currentPage == 1 ? .white : secondaryColor)
-                                .padding(.vertical, 6)
-                                .padding(.horizontal, 12)
-                                .background(currentPage == 1 ? primaryColor : Color.clear)
-                                .cornerRadius(8)
-                        }
-                        
-                        Button(action: { withAnimation { currentPage = 2 } }) {
-                            Text("Glass")
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .foregroundColor(currentPage == 2 ? .white : secondaryColor)
-                                .padding(.vertical, 6)
-                                .padding(.horizontal, 12)
-                                .background(currentPage == 2 ? primaryColor : Color.clear)
-                                .cornerRadius(8)
-                        }
-                        
-                        Button(action: { withAnimation { currentPage = 3 } }) {
-                            Text("Ingredients")
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .foregroundColor(currentPage == 3 ? .white : secondaryColor)
-                                .padding(.vertical, 6)
-                                .padding(.horizontal, 12)
-                                .background(currentPage == 3 ? primaryColor : Color.clear)
-                                .cornerRadius(8)
-                        }
-
-                        Button(action: { withAnimation { currentPage = 4 } }) {
-                            Text("Garnish")
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .foregroundColor(currentPage == 4 ? .white : secondaryColor)
-                                .padding(.vertical, 6)
-                                .padding(.horizontal, 12)
-                                .background(currentPage == 4 ? primaryColor : Color.clear)
-                                .cornerRadius(8)
-                        }
-                    }
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(secondaryColor, lineWidth: 1.2)
-                            .opacity(0.7)
-                    )
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    
-                    // Fixed bottom section
+                    // Footer
                     VStack(spacing: 16) {
                         HStack {
                             Button(action: {
@@ -431,6 +758,8 @@ struct PreparationView: View {
                                 selectedIce = .none
                                 selectedMethod = .built
                                 selectedIngredients = []
+                                selectedGarnishes = []
+                                updateCustomerState()
                             }) {
                                 Image(systemName: "trash")
                                     .font(.title2)
@@ -454,17 +783,20 @@ struct PreparationView: View {
                             if let glassware = selectedGlassware,
                                !selectedIngredients.isEmpty {
                                 let isCorrect = checkDrink()
-                                onContinue(glassware, selectedIce, selectedMethod, isCorrect)
+                                let tipMultiplier = getTipMultiplier()
+                                onContinue(glassware, selectedIce, selectedMethod, isCorrect, tipMultiplier)
                                 // Reset all selections regardless of correctness
                                 selectedGlassware = nil
                                 selectedIce = .none
                                 selectedMethod = .built
                                 selectedIngredients = []
+                                selectedGarnishes = []
                                 // Reset customer's selections
                                 customer.selectedGlassware = nil
                                 customer.selectedIce = .none
                                 customer.selectedMethod = .built
                                 customer.selectedIngredients = []
+                                customer.selectedGarnishes = []
                                 isShowing = false
                             }
                         }) {
@@ -493,22 +825,306 @@ struct PreparationView: View {
         .sheet(isPresented: $showingRecipe) {
             RecipeView(drinkName: drink.name, isShowing: $showingRecipe)
         }
+        .sheet(isPresented: $showingIngredientSubList) {
+            if let category = selectedIngredientCategory {
+                IngredientSubListView(
+                    category: category,
+                    isShowing: $showingIngredientSubList,
+                    selectedIngredients: $selectedIngredients,
+                    onIngredientsChanged: updateCustomerState
+                )
+            }
+        }
+        .sheet(isPresented: $showingGarnishSubList) {
+            if let category = selectedGarnishCategory {
+                GarnishSubListView(
+                    category: category,
+                    isShowing: $showingGarnishSubList,
+                    selectedGarnishes: $selectedGarnishes,
+                    onGarnishesChanged: updateCustomerState
+                )
+            }
+        }
+        .sheet(isPresented: $showingGlasswareSubList) {
+            if let category = selectedGlasswareCategory {
+                GlasswareSubListView(
+                    category: category,
+                    isShowing: $showingGlasswareSubList,
+                    selectedGlassware: $selectedGlassware,
+                    onGlasswareChanged: updateCustomerState,
+                    onGlasswareSelected: {
+                        // Automatically navigate to ingredients page when glass is selected
+                        withAnimation {
+                            currentPage = 3
+                        }
+                    }
+                )
+            }
+        }
+    }
+}
+
+struct IngredientSubListView: View {
+    let category: IngredientCategory
+    @Binding var isShowing: Bool
+    @Binding var selectedIngredients: [DrinkIngredient]
+    let onIngredientsChanged: () -> Void
+    
+    private let primaryColor = Color(red: 0.8, green: 0.4, blue: 0.2)  // Burnt Orange
+    private let secondaryColor = Color(red: 0.6, green: 0.3, blue: 0.1)  // Brown
+    private let backgroundColor = Color(red: 0.95, green: 0.9, blue: 0.8)  // Cream
+    
+    private var ingredientsBySubcategory: [String: [DrinkIngredient]] {
+        let filteredIngredients = DrinkIngredient.availableIngredients.filter { $0.category == category }
+        return Dictionary(grouping: filteredIngredients) { $0.subcategory }
     }
     
-    private func iconName(for category: GlasswareCategory) -> String {
-        switch category {
-        case .tall:
-            return "arrow.up.circle.fill"
-        case .short:
-            return "circle.fill"
-        case .beer:
-            return "mug.fill"
-        case .wine:
-            return "wineglass.fill"
-        case .specialty:
-            return "star.fill"
-        case .cocktail:
-            return "star.fill"
+    var body: some View {
+        NavigationView {
+            ZStack {
+                backgroundColor.edgesIgnoringSafeArea(.all)
+                
+                VStack(spacing: 0) {
+                    // Header
+                    HStack {
+                        Text(category.rawValue)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(secondaryColor)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            isShowing = false
+                        }) {
+                            Image(systemName: "chevron.up.circle.fill")
+                                .foregroundColor(secondaryColor)
+                                .font(.title)
+                        }
+                    }
+                    .padding()
+                    
+                    // Ingredients by Subcategory
+                    ScrollView {
+                        LazyVStack(spacing: 20) {
+                            ForEach(Array(ingredientsBySubcategory.keys.sorted()), id: \.self) { subcategory in
+                                VStack(alignment: .leading, spacing: 12) {
+                                    // Subcategory Header
+                                    Text(subcategory)
+                                        .font(.headline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(secondaryColor)
+                                        .padding(.horizontal)
+                                    
+                                    // Ingredients Grid for this subcategory
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 12) {
+                                        ForEach(ingredientsBySubcategory[subcategory] ?? [], id: \.id) { ingredient in
+                                Button(action: {
+                                    if selectedIngredients.contains(ingredient) {
+                                        selectedIngredients.removeAll { $0.id == ingredient.id }
+                                    } else {
+                                        selectedIngredients.append(ingredient)
+                                    }
+                                                onIngredientsChanged()
+                                }) {
+                                    VStack(spacing: 6) {
+                                        Image(systemName: "circle.dashed")
+                                            .font(.system(size: 28, weight: .medium))
+                                            .foregroundColor(selectedIngredients.contains(ingredient) ? .white : secondaryColor)
+                                        Text(ingredient.shortName)
+                                                        .font(.subheadline)
+                                            .foregroundColor(selectedIngredients.contains(ingredient) ? .white : secondaryColor)
+                                            .multilineTextAlignment(.center)
+                                    }
+                                    .padding(.vertical, 12)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 80)
+                                    .background(selectedIngredients.contains(ingredient) ? primaryColor : Color.white)
+                                    .cornerRadius(12)
+                                    .shadow(color: selectedIngredients.contains(ingredient) ? primaryColor.opacity(0.18) : Color.clear, radius: 2, x: 0, y: 1)
+                                }
+                                        }
+                                    }
+                                    .padding(.horizontal)
+                                }
+                            }
+                        }
+                        .padding(.bottom)
+                    }
+                }
+            }
+            .navigationBarHidden(true)
+        }
+    }
+}
+
+struct GarnishSubListView: View {
+    let category: GarnishCategory
+    @Binding var isShowing: Bool
+    @Binding var selectedGarnishes: [Garnish]
+    let onGarnishesChanged: () -> Void
+    
+    private let primaryColor = Color(red: 0.8, green: 0.4, blue: 0.2)  // Burnt Orange
+    private let secondaryColor = Color(red: 0.6, green: 0.3, blue: 0.1)  // Brown
+    private let backgroundColor = Color(red: 0.95, green: 0.9, blue: 0.8)  // Cream
+    
+    private var filteredGarnishes: [Garnish] {
+        Garnish.allGarnishes.filter { $0.category == category }
+    }
+    
+    var body: some View {
+        NavigationView {
+            ZStack {
+                backgroundColor.edgesIgnoringSafeArea(.all)
+                
+                VStack(spacing: 0) {
+                    // Header
+                    HStack {
+                        Text(category.rawValue)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(secondaryColor)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            isShowing = false
+                        }) {
+                            Image(systemName: "chevron.up.circle.fill")
+                                .foregroundColor(secondaryColor)
+                                .font(.title)
+                            }
+                        }
+                        .padding()
+                    
+                    // Garnishes Grid
+                    ScrollView {
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 12) {
+                            ForEach(filteredGarnishes, id: \.id) { garnish in
+                                Button(action: {
+                                    if selectedGarnishes.contains(garnish) {
+                                        selectedGarnishes.removeAll { $0.id == garnish.id }
+                                    } else {
+                                        selectedGarnishes.append(garnish)
+                                    }
+                                    onGarnishesChanged()
+                                }) {
+                                    VStack(spacing: 6) {
+                                        Image(systemName: "circle.dashed")
+                                            .font(.system(size: 28, weight: .medium))
+                                            .foregroundColor(selectedGarnishes.contains(garnish) ? .white : secondaryColor)
+                                        Text(garnish.shortName)
+                                            .font(.subheadline)
+                                            .foregroundColor(selectedGarnishes.contains(garnish) ? .white : secondaryColor)
+                                            .multilineTextAlignment(.center)
+                                    }
+                                    .padding(.vertical, 12)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 80)
+                                    .background(selectedGarnishes.contains(garnish) ? primaryColor : Color.white)
+                                    .cornerRadius(12)
+                                    .shadow(color: selectedGarnishes.contains(garnish) ? primaryColor.opacity(0.18) : Color.clear, radius: 2, x: 0, y: 1)
+                                }
+                            }
+                        }
+                        .padding()
+                    }
+                }
+            }
+            .navigationBarHidden(true)
+        }
+    }
+}
+
+struct GlasswareSubListView: View {
+    let category: GlasswareCategory
+    @Binding var isShowing: Bool
+    @Binding var selectedGlassware: Glassware?
+    let onGlasswareChanged: () -> Void
+    let onGlasswareSelected: () -> Void
+    
+    private let primaryColor = Color(red: 0.8, green: 0.4, blue: 0.2)  // Burnt Orange
+    private let secondaryColor = Color(red: 0.6, green: 0.3, blue: 0.1)  // Brown
+    private let backgroundColor = Color(red: 0.95, green: 0.9, blue: 0.8)  // Cream
+    
+    private var filteredGlassware: [Glassware] {
+        Glassware.allGlassware.filter { $0.category == category }
+    }
+    
+    var body: some View {
+        NavigationView {
+            ZStack {
+                backgroundColor.edgesIgnoringSafeArea(.all)
+                
+                VStack(spacing: 0) {
+                    // Header
+                    HStack {
+                        Text(category.rawValue)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(secondaryColor)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            isShowing = false
+                        }) {
+                            Image(systemName: "chevron.up.circle.fill")
+                                .foregroundColor(secondaryColor)
+                                .font(.title)
+                        }
+                    }
+                    .padding()
+                    
+                    // Description box
+                    VStack(spacing: 8) {
+                        Image(systemName: "wineglass.fill")
+                            .font(.system(size: 120))
+                            .foregroundColor(primaryColor)
+                            .padding(.top, 10)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                        Text("Select the appropriate glassware for your drink")
+                            .font(.subheadline)
+                            .foregroundColor(primaryColor)
+                            .padding(10)
+                            .frame(height: UIScreen.main.bounds.height * 0.14, alignment: .top)
+                            .cornerRadius(8)
+                    }
+                    .padding(.horizontal)
+                    
+                    // Glassware Grid
+                    ScrollView {
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 12) {
+                            ForEach(filteredGlassware, id: \.id) { glassware in
+                                Button(action: {
+                                    selectedGlassware = glassware
+                                    onGlasswareChanged()
+                                    onGlasswareSelected()
+                                    isShowing = false
+                                }) {
+                                    VStack(spacing: 6) {
+                                        Image(systemName: "wineglass.fill")
+                                            .font(.system(size: 28, weight: .medium))
+                                            .foregroundColor(secondaryColor)
+                                        Text(glassware.shortName)
+                                            .font(.subheadline)
+                                            .foregroundColor(secondaryColor)
+                                            .multilineTextAlignment(.center)
+                                    }
+                                    .padding(.vertical, 12)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 80)
+                                    .background(Color.white)
+                                    .cornerRadius(12)
+                                    .shadow(color: Color.clear, radius: 2, x: 0, y: 1)
+                                }
+                            }
+                        }
+                        .padding()
+                    }
+                }
+            }
+            .navigationBarHidden(true)
         }
     }
 }
@@ -518,14 +1134,20 @@ struct PreparationView: View {
         drink: Drink(
             name: "Margarita",
             recipe: [
-                DrinkIngredient(name: "Tequila", amount: 2.0),
+                DrinkIngredient(name: "Blanco Tequila", amount: 2.0),
                 DrinkIngredient(name: "Lime Juice", amount: 1.0),
                 DrinkIngredient(name: "Triple Sec", amount: 0.75)
             ],
             description: "A classic tequila cocktail",
             requiredIce: .none,
             requiredMethod: .shaken,
-            requiredGlass: Glassware.allGlassware.first(where: { $0.name == "Margarita Glass" })!,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Margarita Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!],
+                acceptable: [Garnish.allGarnishes.first(where: { $0.name == "Mint Leaf" })!]
+            ),
             category: .cocktail,
             style: .classic,
             family: .margarita
@@ -538,10 +1160,11 @@ struct PreparationView: View {
             selectedGlassware: Glassware.allGlassware.first(where: { $0.name == "Margarita Glass" })!,
             selectedIce: .none,
             selectedMethod: .shaken,
-            selectedIngredients: []
+            selectedIngredients: [],
+            selectedGarnishes: [Garnish.allGarnishes.first(where: { $0.name == "Lime Wheel" })!]
         )),
         currentCustomerIndex: .constant(0)
-    ) { _, _, _, _ in
+    ) { _, _, _, _, _ in
         // Preview action
     }
 } 

@@ -113,7 +113,7 @@ struct RecipeMethodSection: View {
             HStack(spacing: 12) {
                 MethodButton(method: drink.requiredMethod, secondaryColor: secondaryColor)
                 IceButton(ice: drink.requiredIce, secondaryColor: secondaryColor)
-                GlasswareButton(glassware: drink.requiredGlass, secondaryColor: secondaryColor)
+                GlasswareButton(glassware: drink.glassRequirement.ideal.first ?? Glassware.allGlassware.first!, secondaryColor: secondaryColor)
             }
             .padding(.horizontal)
         }
@@ -138,6 +138,43 @@ struct RecipeIngredientsSection: View {
             VStack(alignment: .leading, spacing: 4) {
                 ForEach(drink.recipe, id: \.name) { ingredient in
                     Text(ingredient.name)
+                        .font(.subheadline)
+                        .foregroundColor(secondaryColor)
+                }
+            }
+            .padding(.horizontal)
+        }
+        .padding(.bottom, 24)
+    }
+}
+
+struct RecipeGarnishSection: View {
+    let drink: Drink
+    let secondaryColor: Color
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Garnish")
+                .font(.headline)
+                .foregroundColor(secondaryColor)
+                .padding(.horizontal)
+            
+            Divider()
+                .background(secondaryColor.opacity(0.3))
+            
+            VStack(alignment: .leading, spacing: 4) {
+                if !drink.garnishRequirement.ideal.isEmpty {
+                    Text("Ideal: " + drink.garnishRequirement.ideal.map { $0.name }.joined(separator: ", "))
+                        .font(.subheadline)
+                        .foregroundColor(secondaryColor)
+                }
+                if !drink.garnishRequirement.acceptable.isEmpty {
+                    Text("Acceptable: " + drink.garnishRequirement.acceptable.map { $0.name }.joined(separator: ", "))
+                        .font(.subheadline)
+                        .foregroundColor(secondaryColor)
+                }
+                if drink.garnishRequirement.ideal.isEmpty && drink.garnishRequirement.acceptable.isEmpty {
+                    Text("None")
                         .font(.subheadline)
                         .foregroundColor(secondaryColor)
                 }
@@ -185,6 +222,7 @@ struct RecipeView: View {
                                 RecipeHeader(drink: drink, secondaryColor: secondaryColor)
                                 RecipeMethodSection(drink: drink, secondaryColor: secondaryColor)
                                 RecipeIngredientsSection(drink: drink, secondaryColor: secondaryColor)
+                                RecipeGarnishSection(drink: drink, secondaryColor: secondaryColor)
                             } else {
                                 Text("Recipe not found")
                                     .font(.system(size: 16, weight: .regular, design: .serif))

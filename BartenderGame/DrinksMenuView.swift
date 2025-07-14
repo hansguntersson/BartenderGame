@@ -2,10 +2,10 @@ import SwiftUI
 
 struct DrinksMenuView: View {
     @Binding var isShowing: Bool
-    @State private var selectedStyle: DrinkStyle = .regular
+    @State private var selectedStyle: DrinkStyle = .spirits
     @State private var showingRecipe = false
     @State private var selectedDrink: String = ""
-    let venueStyle: VenueStyle
+    let venueName: String
     
     private let primaryColor = Color(red: 0.8, green: 0.4, blue: 0.2)  // Burnt Orange
     private let secondaryColor = Color(red: 0.6, green: 0.3, blue: 0.1)  // Brown
@@ -13,8 +13,14 @@ struct DrinksMenuView: View {
     
     private func iconName(for style: DrinkStyle) -> String {
         switch style {
-        case .regular:
+        case .spirits:
             return "wineglass.fill"
+        case .draught:
+            return "mug.fill"
+        case .spiritMixer:
+            return "drop.fill"
+        case .wine:
+            return "wineglass"
         case .classic:
             return "star.fill"
         case .modern:
@@ -23,30 +29,13 @@ struct DrinksMenuView: View {
             return "party.popper.fill"
         case .obscure:
             return "questionmark.circle.fill"
+        case .nonAlcoholic:
+            return "cup.and.saucer.fill"
         }
     }
     
     private func getVenueName() -> String {
-        switch venueStyle {
-        case .classicCocktail:
-            return "The Classic Cocktail Bar"
-        case .modernMixology:
-            return "The Modern Mixology Lab"
-        case .speakeasy:
-            return "The Hidden Speakeasy"
-        case .tropical:
-            return "Tropical Paradise"
-        case .craftBeer:
-            return "The Craft Beer House"
-        case .skyline:
-            return "Skyline Lounge"
-        case .whiskey:
-            return "The Whiskey Library"
-        case .wine:
-            return "The Wine Cellar"
-        case .dive:
-            return "The Dive Bar"
-        }
+        return venueName
     }
     
     private func getVenueDrinks(for style: DrinkStyle) -> [VenueDrink] {

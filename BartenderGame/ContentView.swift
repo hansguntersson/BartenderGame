@@ -58,8 +58,17 @@ struct ContentView: View {
     
     @State private var showMoneyPopover = false
     
+    // Sales popup states
+    @State private var showSalesPopup = false
+    @State private var lastSaleAmount: Double = 0.0
+    @State private var lastTipAmount: Double = 0.0
+    @State private var salesPopupOffset: CGFloat = -100
+    
+    @State private var sessionStartTime: Date? = nil
+    @State private var totalElapsedTime: Int = 0 // in seconds
+    @State private var showMinimumHoursAlert: Bool = false
+    
     let venueName: String
-    let venueStyle: VenueStyle
     let displayName: String
     
     // Define consistent colors for 70's modernist palette
@@ -85,7 +94,6 @@ struct ContentView: View {
     ]
     
     init(venueName: String,
-         venueStyle: VenueStyle,
          displayName: String,
          initialSales: Double = 0.0,
          initialTips: Double = 0.0,
@@ -95,14 +103,40 @@ struct ContentView: View {
          initialTimeRemaining: Int? = nil,
          initialCustomerIndex: Int = 0) {
         self.venueName = venueName
-        self.venueStyle = venueStyle
         self.displayName = displayName
+        
+        // Check if we're on a new day - if so, reset all game state
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let currentDate = formatter.string(from: Date())
+        let lastGameDate = UserDefaults.standard.string(forKey: "lastGameDate_\(venueName)") ?? ""
+        
+        let shouldResetForNewDay = currentDate != lastGameDate
+        
+        if shouldResetForNewDay {
+            // It's a new day, clear all saved game state
+            let keys = [
+                "gameSales_\(venueName)",
+                "gameTips_\(venueName)",
+                "gameWastage_\(venueName)",
+                "gameSuccessfulDrinks_\(venueName)",
+                "gameFailedDrinks_\(venueName)",
+                "gameTimeRemaining_\(venueName)",
+                "gameCurrentCustomerIndex_\(venueName)"
+            ]
+            for key in keys {
+                UserDefaults.standard.removeObject(forKey: key)
+            }
+            UserDefaults.standard.set(currentDate, forKey: "lastGameDate_\(venueName)")
+        }
+        
         // Load saved state for this venue if it exists, otherwise use defaults
         let savedSales = UserDefaults.standard.object(forKey: "gameSales_\(venueName)") as? Double ?? initialSales
         let savedTips = UserDefaults.standard.object(forKey: "gameTips_\(venueName)") as? Double ?? initialTips
         let savedWastage = UserDefaults.standard.object(forKey: "gameWastage_\(venueName)") as? Double ?? initialWastage
         let savedSuccessfulDrinks = UserDefaults.standard.object(forKey: "gameSuccessfulDrinks_\(venueName)") as? Int ?? initialSuccessfulDrinks
         let savedFailedDrinks = UserDefaults.standard.object(forKey: "gameFailedDrinks_\(venueName)") as? Int ?? initialFailedDrinks
+        
         // Calculate time based on shift length for today if not provided
         let today = Weekday(rawValue: Calendar.current.component(.weekday, from: Date())) ?? .monday
         let venue = Venue.allVenues.first(where: { $0.name == venueName })
@@ -149,7 +183,6 @@ struct ContentView: View {
                     .foregroundColor(.white)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
-                    .shadow(color: Color.black.opacity(0.3), radius: 1, x: 1, y: 1)
                 Spacer()
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()
@@ -332,9 +365,53 @@ struct ContentView: View {
                             .foregroundColor(secondaryColor)
                     }
                     .sheet(isPresented: $showMoneyPopover) {
-                        MoneyPopoverView(sales: sales, tips: tips, wastage: wastage)
+                        MoneyPopoverView(sales: sales, tips: tips, wastage: wastage, venueName: venueName)
                             .presentationDetents([.fraction(0.5)])
                     }
+                    .overlay(
+                        // Sales popup
+                        Group {
+                            if showSalesPopup {
+                                HStack(spacing: 16) {
+                                    VStack(spacing: 2) {
+                                        Text("Sale")
+                                            .font(.caption2)
+                                            .foregroundColor(secondaryColor.opacity(0.7))
+                                        Text(String(format: "£%.2f", lastSaleAmount))
+                                            .font(.caption)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(secondaryColor)
+                                    }
+                                    VStack(spacing: 2) {
+                                        Text("Tip")
+                                            .font(.caption2)
+                                            .foregroundColor(secondaryColor.opacity(0.7))
+                                        Text(String(format: "£%.2f", lastTipAmount))
+                                            .font(.caption)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(accentColor)
+                                    }
+                                }
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .frame(width: 140, height: 50)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(Color.white)
+                                )
+                                .offset(y: showSalesPopup ? 0 : 20)
+                                .opacity(showSalesPopup ? 1 : 0)
+                                .scaleEffect(showSalesPopup ? 1.1 : 0.9)
+                                .animation(.easeInOut(duration: 0.3), value: showSalesPopup)
+                                .transition(.asymmetric(
+                                    insertion: .move(edge: .bottom).combined(with: .opacity),
+                                    removal: .move(edge: .bottom).combined(with: .opacity)
+                                ))
+                                .offset(x: 50, y: -10)
+                            }
+                        }
+                        , alignment: .leading
+                    )
                     Spacer()
                     Button(action: {
                         showingDrinksMenu = true
@@ -361,7 +438,7 @@ struct ContentView: View {
                         set: { Customer.activeCustomers[customerIndex] = $0 }
                     ),
                     currentCustomerIndex: $currentCustomerIndex,
-                    onContinue: { glassware, ice, method, isCorrect in
+                    onContinue: { glassware, ice, method, isCorrect, tipMultiplier in
                         if isCorrect {
                             // Show positive feedback from current customer
                             orderText = "\"" + getRandomPositiveFeedback() + "\""
@@ -371,10 +448,27 @@ struct ContentView: View {
                             let drinkPrice = getDrinkPrice(for: currentCustomer.drinkOrder)
                             sales = (sales + drinkPrice).rounded(to: 2)
                             
-                            // Add tip (random between 10-20% of drink price)
-                            let tipPercentage = Double.random(in: 0.1...0.2)
-                            let tip = (drinkPrice * tipPercentage).rounded(to: 2)
+                            // Add tip based on glass quality (tipMultiplier affects the percentage)
+                            let baseTipPercentage = Double.random(in: 0.1...0.2)
+                            let adjustedTipPercentage = baseTipPercentage * tipMultiplier
+                            let tip = (drinkPrice * adjustedTipPercentage).rounded(to: 2)
                             tips = (tips + tip).rounded(to: 2)
+                            
+                            // Show sales popup
+                            lastSaleAmount = drinkPrice
+                            lastTipAmount = tip
+                            
+                            // Delay the popup appearance for better timing
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                showSalesPopup = true
+                            }
+                            
+                            // Hide popup after delay with fade out
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                withAnimation(.easeInOut(duration: 0.5)) {
+                                    showSalesPopup = false
+                                }
+                            }
                             
                             // Update mood based on success
                             mood = "😊"
@@ -417,7 +511,7 @@ struct ContentView: View {
             }
         }
         .fullScreenCover(isPresented: $showingDrinksMenu) {
-            DrinksMenuView(isShowing: $showingDrinksMenu, venueStyle: venueStyle)
+                            DrinksMenuView(isShowing: $showingDrinksMenu, venueName: venueName)
         }
         .onChange(of: currentCustomerIndex) { oldIndex, newIndex in
             // Ensure we're not out of bounds
@@ -431,10 +525,17 @@ struct ContentView: View {
             if Customer.activeCustomers.isEmpty {
                 Customer.initializeActiveCustomers()
             }
+            // Persistent time tracking setup
+            let todayString = getCurrentDateString()
+            let key = "customerScreenTime_\(venueName)_\(todayString)"
+            let storedElapsed = UserDefaults.standard.integer(forKey: key)
+            totalElapsedTime = storedElapsed
+            sessionStartTime = Date()
             startTimer()
         }
         .onDisappear {
             timer?.invalidate()
+            saveSessionElapsedTime()
         }
         .fullScreenCover(isPresented: $showingShiftSummary) {
             ShiftSummaryView(
@@ -444,27 +545,23 @@ struct ContentView: View {
                 wastage: wastage,
                 successfulDrinks: successfulDrinks,
                 failedDrinks: failedDrinks,
+                venueName: venueName,
                 onStartNewShift: resetGameState
             )
         }
-        .onChange(of: sales) { _, _ in
-            updateStoredGameState()
+        .alert(isPresented: $showMinimumHoursAlert) {
+            Alert(
+                title: Text("Minimum Hours Not Met"),
+                message: Text("You must work at least the minimum hours for this shift before finishing."),
+                dismissButton: .default(Text("OK"))
+            )
         }
-        .onChange(of: tips) { _, _ in
-            updateStoredGameState()
-        }
-        .onChange(of: wastage) { _, _ in
-            updateStoredGameState()
-        }
-        .onChange(of: successfulDrinks) { _, _ in
-            updateStoredGameState()
-        }
-        .onChange(of: failedDrinks) { _, _ in
-            updateStoredGameState()
-        }
-        .onChange(of: currentCustomerIndex) { _, _ in
-            updateStoredGameState()
-        }
+        .onChange(of: sales) { _, _ in updateStoredGameState() }
+        .onChange(of: tips) { _, _ in updateStoredGameState() }
+        .onChange(of: wastage) { _, _ in updateStoredGameState() }
+        .onChange(of: successfulDrinks) { _, _ in updateStoredGameState() }
+        .onChange(of: failedDrinks) { _, _ in updateStoredGameState() }
+        .onChange(of: currentCustomerIndex) { _, _ in updateStoredGameState() }
     }
     
     private func handleSwipe(direction: SwipeDirection) {
@@ -528,15 +625,16 @@ struct ContentView: View {
     }
     
     private func updateStoredGameState() {
-        // Temporarily disabled saving to AppStorage/UserDefaults
-        // UserDefaults.standard.set(sales, forKey: "gameSales_\(venueName)")
-        // UserDefaults.standard.set(tips, forKey: "gameTips_\(venueName)")
-        // UserDefaults.standard.set(wastage, forKey: "gameWastage_\(venueName)")
-        // UserDefaults.standard.set(successfulDrinks, forKey: "gameSuccessfulDrinks_\(venueName)")
-        // UserDefaults.standard.set(failedDrinks, forKey: "gameFailedDrinks_\(venueName)")
-        // UserDefaults.standard.set(timeRemaining, forKey: "gameTimeRemaining_\(venueName)")
-        // UserDefaults.standard.set(currentCustomerIndex, forKey: "gameCurrentCustomerIndex_\(venueName)")
-        // UserDefaults.standard.synchronize()  // Force immediate save
+        // Save current game state
+        UserDefaults.standard.set(sales, forKey: "gameSales_\(venueName)")
+        UserDefaults.standard.set(tips, forKey: "gameTips_\(venueName)")
+        UserDefaults.standard.set(wastage, forKey: "gameWastage_\(venueName)")
+        UserDefaults.standard.set(successfulDrinks, forKey: "gameSuccessfulDrinks_\(venueName)")
+        UserDefaults.standard.set(failedDrinks, forKey: "gameFailedDrinks_\(venueName)")
+        UserDefaults.standard.set(timeRemaining, forKey: "gameTimeRemaining_\(venueName)")
+        UserDefaults.standard.set(currentCustomerIndex, forKey: "gameCurrentCustomerIndex_\(venueName)")
+        UserDefaults.standard.set(getCurrentDateString(), forKey: "lastGameDate_\(venueName)")
+        UserDefaults.standard.synchronize()  // Force immediate save
     }
     
     private func resetGameState() {
@@ -585,6 +683,31 @@ struct ContentView: View {
         updateStoredGameState()
     }
     
+    private func saveSessionElapsedTime() {
+        guard let start = sessionStartTime else { return }
+        let sessionElapsed = Int(Date().timeIntervalSince(start))
+        let todayString = getCurrentDateString()
+        let key = "customerScreenTime_\(venueName)_\(todayString)"
+        let previous = UserDefaults.standard.integer(forKey: key)
+        let newTotal = previous + sessionElapsed
+        UserDefaults.standard.set(newTotal, forKey: key)
+        totalElapsedTime = newTotal
+    }
+
+    private func getTotalElapsedTime() -> Int {
+        // Returns total time spent in seconds (persisted + current session)
+        guard let start = sessionStartTime else { return totalElapsedTime }
+        return totalElapsedTime + Int(Date().timeIntervalSince(start))
+    }
+
+    private func canEndShift() -> Bool {
+        let venue = Venue.allVenues.first(where: { $0.name == venueName })
+        let today = Weekday(rawValue: Calendar.current.component(.weekday, from: Date())) ?? .monday
+        let minHours = venue?.minimumHoursPerShift ?? 0
+        let minSeconds = minHours * 60 * 60
+        return getTotalElapsedTime() >= minSeconds
+    }
+
     private func startTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
@@ -593,6 +716,7 @@ struct ContentView: View {
                 updateStoredGameState()
             } else {
                 timer?.invalidate()
+                saveSessionElapsedTime()
                 // Close any open views before showing summary
                 showingPreparationView = false
                 showingDrinksMenu = false
@@ -607,6 +731,14 @@ struct ContentView: View {
         }
     }
     
+    private func getCurrentDateString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: Date())
+    }
+    
+
+    
     private func timeString(from seconds: Int) -> String {
         let minutes = seconds / 60
         let remainingSeconds = seconds % 60
@@ -614,25 +746,31 @@ struct ContentView: View {
     }
     
     private func getFontForVenue(_ venueName: String, size: CGFloat = 24) -> Font {
-        switch venueStyle {
-        case .classicCocktail:
-            return .custom("Trajan Pro", size: size)
-        case .modernMixology:
-            return .custom("Optima", size: size)
-        case .speakeasy:
-            return .custom("American Typewriter", size: size)
-        case .tropical:
-            return .custom("Party LET", size: size + 4)
-        case .craftBeer:
-            return .custom("Copperplate", size: size)
-        case .skyline:
-            return .custom("Avenir Next Condensed", size: size)
-        case .whiskey:
-            return .custom("Garamond", size: size)
-        case .wine:
-            return .custom("Bodoni", size: size)
-        case .dive:
-            return .custom("Impact", size: size)
+        switch venueName {
+        case "The Bear and Badger":
+            return .custom("Copperplate", size: size)  // Traditional, sturdy font for old man pub
+        case "Mackenzie's":
+            return .custom("Impact", size: size)  // Bold, no-nonsense font for drinks factory
+        case "Paradise Cove":
+            return .custom("Party LET", size: size + 4)  // Fun, playful font for tropical nonsense
+        case "The Mourning Star":
+            return .custom("Gothic", size: size)  // Gothic font for goth pub
+        case "The Golden Lounge":
+            return .custom("Trajan Pro", size: size)  // Elegant, timeless serif for classic hotel bar
+        case "Penthouse":
+            return .custom("Avenir Next Condensed", size: size)  // Sleek, modern font for champagne elegance
+        case "The Secret Society":
+            return .custom("American Typewriter", size: size)  // Typewriter style for speakeasy
+        case "The Hop House":
+            return .custom("Copperplate", size: size)  // Industrial, sturdy font for real ale
+        case "The Dram Library":
+            return .custom("Didot", size: size)  // Elegant, refined serif for whiskies
+        case "The Grape Escape":
+            return .custom("Baskerville", size: size)  // Classic, elegant serif for wines
+        case "Modern Alchemy":
+            return .custom("Optima", size: size)  // Elegant, modern font for pretentious and unique
+        default:
+            return .system(size: size, weight: .medium, design: .serif)
         }
     }
     
@@ -642,7 +780,7 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(venueName: "BoHo Lounge", venueStyle: .classicCocktail, displayName: "BoHo Lounge")
+    ContentView(venueName: "BoHo Lounge", displayName: "BoHo Lounge")
         .modelContainer(for: Item.self, inMemory: true)
 }
 
@@ -674,6 +812,7 @@ struct MoneyPopoverView: View {
     let sales: Double
     let tips: Double
     let wastage: Double
+    let venueName: String
     private let primaryColor = Color(red: 0.8, green: 0.4, blue: 0.2)  // Burnt Orange
     private let secondaryColor = Color(red: 0.6, green: 0.3, blue: 0.1)  // Brown
     private let backgroundColor = Color(red: 0.95, green: 0.9, blue: 0.8)  // Cream
@@ -724,6 +863,26 @@ struct MoneyPopoverView: View {
                         Text(String(format: "£%.2f", wastage))
                             .font(.headline)
                             .foregroundColor(secondaryColor)
+                    }
+                    
+                    // Divider
+                    Rectangle()
+                        .fill(secondaryColor.opacity(0.3))
+                        .frame(height: 1)
+                        .padding(.vertical, 10)
+                    
+                    // Minimum takings information
+                    if let venue = Venue.allVenues.first(where: { $0.name == venueName }) {
+                        HStack {
+                            Text("Minimum Bar Take:")
+                                .font(.subheadline)
+                                .foregroundColor(secondaryColor.opacity(0.8))
+                            Spacer()
+                            Text(String(format: "£%.0f", venue.minimumBarTake))
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                                .foregroundColor(secondaryColor)
+                        }
                     }
                 }
                 .padding(24)

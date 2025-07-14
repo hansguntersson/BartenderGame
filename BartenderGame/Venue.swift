@@ -1,28 +1,16 @@
 import Foundation
 
-enum VenueStyle: String, CaseIterable {
-    case classicCocktail = "Classic Cocktail"
-    case modernMixology = "Modern Mixology"
-    case speakeasy = "Speakeasy"
-    case tropical = "Tropical"
-    case craftBeer = "Craft Beer"
-    case skyline = "Skyline"
-    case whiskey = "Whiskey"
-    case wine = "Wine"
-    case dive = "Dive"
-}
-
 enum Weekday: Int, CaseIterable {
-    case monday = 1, tuesday, wednesday, thursday, friday, saturday, sunday
+    case sunday = 1, monday, tuesday, wednesday, thursday, friday, saturday
     var shortName: String {
         switch self {
-        case .monday: return "Mon"
-        case .tuesday: return "Tue"
-        case .wednesday: return "Wed"
-        case .thursday: return "Thu"
-        case .friday: return "Fri"
-        case .saturday: return "Sat"
-        case .sunday: return "Sun"
+        case .sunday: return "Sunday"
+        case .monday: return "Monday"
+        case .tuesday: return "Tuesday"
+        case .wednesday: return "Wednesday"
+        case .thursday: return "Thursday"
+        case .friday: return "Friday"
+        case .saturday: return "Saturday"
         }
     }
 }
@@ -31,10 +19,12 @@ struct Venue: Identifiable {
     let id = UUID()
     let name: String
     let description: String
-    let style: VenueStyle
     let location: String
     let capacity: Int
     let shiftLengthHours: Int
+    let basePayPerHour: Double
+    let minimumHoursPerShift: Int
+    let minimumBarTake: Double
     let shiftPattern: [(day: Weekday, start: String?, end: String?)] // nil start/end means closed
     
     // Returns opening hours string for a given day (e.g. "4PM - 2AM" or "Closed")
@@ -75,283 +65,213 @@ struct Venue: Identifiable {
     
     static let allVenues: [Venue] = [
         Venue(
-            name: "The Classic Cocktail Bar",
-            description: "A sophisticated bar for classic cocktail lovers.",
-            style: .classicCocktail,
-            location: "Downtown",
-            capacity: 120,
-            shiftLengthHours: 10, // default/legacy, not used
-            shiftPattern: [
-                (.monday, nil, nil),
-                (.tuesday, "4PM", "12AM"),
-                (.wednesday, "4PM", "12AM"),
-                (.thursday, "4PM", "2AM"),
-                (.friday, "4PM", "2AM"),
-                (.saturday, "2PM", "2AM"),
-                (.sunday, nil, nil)
-            ]
-        ),
-        Venue(
-            name: "The Modern Mixology Lab",
-            description: "A creative space for modern, experimental cocktails.",
-            style: .modernMixology,
-            location: "Arts District",
-            capacity: 80,
-            shiftLengthHours: 8,
-            shiftPattern: [
-                (.monday, nil, nil),
-                (.tuesday, "5PM", "1AM"),
-                (.wednesday, "5PM", "1AM"),
-                (.thursday, "5PM", "1AM"),
-                (.friday, "5PM", "2AM"),
-                (.saturday, "3PM", "2AM"),
-                (.sunday, nil, nil)
-            ]
-        ),
-        Venue(
-            name: "The Hidden Speakeasy",
-            description: "A secret, intimate bar with a prohibition-era vibe.",
-            style: .speakeasy,
+            name: "The Bear & Badger",
+            description: "An old man pub with a traditional atmosphere",
             location: "Old Town",
-            capacity: 60,
+            capacity: 80,
+            shiftLengthHours: 12,
+            basePayPerHour: 9.00,
+            minimumHoursPerShift: 6,
+            minimumBarTake: 300.0,
+            shiftPattern: [
+                (.monday, "11AM", "11PM"),
+                (.tuesday, "11AM", "11PM"),
+                (.wednesday, "11AM", "11PM"),
+                (.thursday, "11AM", "12AM"),
+                (.friday, "11AM", "1AM"),
+                (.saturday, "10AM", "1AM"),
+                (.sunday, "12PM", "10PM")
+            ]
+        ),
+        Venue(
+            name: "Mackenzie's",
+            description: "A no-frills bar with basic drinks",
+            location: "Industrial District",
+            capacity: 50,
+            shiftLengthHours: 14,
+            basePayPerHour: 8.50,
+            minimumHoursPerShift: 6,
+            minimumBarTake: 200.0,
+            shiftPattern: [
+                (.monday, "11AM", "2AM"),
+                (.tuesday, "11AM", "2AM"),
+                (.wednesday, "11AM", "2AM"),
+                (.thursday, "11AM", "3AM"),
+                (.friday, "11AM", "4AM"),
+                (.saturday, "10AM", "4AM"),
+                (.sunday, nil, nil)
+            ]
+        ),
+        Venue(
+            name: "Paradise Cove",
+            description: "All your tropical dreams come true",
+            location: "Beachfront",
+            capacity: 150,
+            shiftLengthHours: 9,
+            basePayPerHour: 11.00,
+            minimumHoursPerShift: 8,
+            minimumBarTake: 700.0,
+            shiftPattern: [
+                (.monday, nil, nil),
+                (.tuesday, nil, nil),
+                (.wednesday, "2PM", "11PM"),
+                (.thursday, "2PM", "12AM"),
+                (.friday, "2PM", "2AM"),
+                (.saturday, "12PM", "2AM"),
+                (.sunday, "12PM", "10PM")
+            ]
+        ),
+        Venue(
+            name: "The Mourning Star",
+            description: "Themed bar for goths and weirdos",
+            location: "Alternative District",
+            capacity: 70,
             shiftLengthHours: 8,
+            basePayPerHour: 10.00,
+            minimumHoursPerShift: 6,
+            minimumBarTake: 400.0,
             shiftPattern: [
                 (.monday, nil, nil),
                 (.tuesday, nil, nil),
                 (.wednesday, "6PM", "2AM"),
                 (.thursday, "6PM", "2AM"),
-                (.friday, "6PM", "2AM"),
-                (.saturday, "4PM", "2AM"),
-                (.sunday, nil, nil)
+                (.friday, "5PM", "3AM"),
+                (.saturday, "4PM", "3AM"),
+                (.sunday, "5PM", "12AM")
             ]
         ),
         Venue(
-            name: "Tropical Paradise",
-            description: "A lively tiki bar with tropical drinks and decor.",
-            style: .tropical,
-            location: "Beachfront",
-            capacity: 150,
-            shiftLengthHours: 9,
+            name: "The Golden Lounge",
+            description: "Hotel bar with classic cocktails",
+            location: "Downtown",
+            capacity: 120,
+            shiftLengthHours: 10, // default/legacy, not used
+            basePayPerHour: 12.00,
+            minimumHoursPerShift: 8,
+            minimumBarTake: 800.0,
             shiftPattern: [
                 (.monday, nil, nil),
-                (.tuesday, "3PM", "12AM"),
-                (.wednesday, "3PM", "12AM"),
-                (.thursday, "3PM", "12AM"),
-                (.friday, "3PM", "1AM"),
-                (.saturday, "1PM", "1AM"),
-                (.sunday, nil, nil)
+                (.tuesday, nil, nil),
+                (.wednesday, "5PM", "1AM"),
+                (.thursday, "5PM", "2AM"),
+                (.friday, "4PM", "2AM"),
+                (.saturday, "3PM", "2AM"),
+                (.sunday, "4PM", "12AM")
             ]
         ),
         Venue(
-            name: "The Craft Beer House",
-            description: "A beer lover's haven with rotating taps and events.",
-            style: .craftBeer,
-            location: "Brewery District",
-            capacity: 200,
-            shiftLengthHours: 12,
-            shiftPattern: [
-                (.monday, "12PM", "10PM"),
-                (.tuesday, "12PM", "12AM"),
-                (.wednesday, "12PM", "12AM"),
-                (.thursday, "12PM", "12AM"),
-                (.friday, "12PM", "1AM"),
-                (.saturday, "12PM", "1AM"),
-                (.sunday, "12PM", "10PM")
-            ]
-        ),
-        Venue(
-            name: "Skyline Lounge",
-            description: "A rooftop bar with city views and champagne cocktails.",
-            style: .skyline,
+            name: "Penthouse",
+            description: "Champagne and elegance on the 35th floor",
             location: "Financial District",
             capacity: 100,
             shiftLengthHours: 8,
+            basePayPerHour: 16.00,
+            minimumHoursPerShift: 8,
+            minimumBarTake: 1200.0,
             shiftPattern: [
                 (.monday, nil, nil),
-                (.tuesday, "4PM", "12AM"),
-                (.wednesday, "4PM", "12AM"),
-                (.thursday, "4PM", "12AM"),
-                (.friday, "4PM", "1AM"),
-                (.saturday, "2PM", "1AM"),
+                (.tuesday, nil, nil),
+                (.wednesday, "5PM", "1AM"),
+                (.thursday, "5PM", "1AM"),
+                (.friday, "4PM", "2AM"),
+                (.saturday, "3PM", "2AM"),
+                (.sunday, "4PM", "12AM")
+            ]
+        ),
+        Venue(
+            name: "The Secret Society",
+            description: "Hidden speakeasy with prohibition era drinks",
+            location: "Old Town",
+            capacity: 60,
+            shiftLengthHours: 8,
+            basePayPerHour: 13.00,
+            minimumHoursPerShift: 7,
+            minimumBarTake: 500.0,
+            shiftPattern: [
+                (.monday, nil, nil),
+                (.tuesday, nil, nil),
+                (.wednesday, nil, nil),
+                (.thursday, "7PM", "2AM"),
+                (.friday, "7PM", "3AM"),
+                (.saturday, "5PM", "3AM"),
                 (.sunday, nil, nil)
             ]
         ),
         Venue(
-            name: "The Whiskey Library",
-            description: "A refined bar with a vast whiskey collection.",
-            style: .whiskey,
+            name: "The Hop House",
+            description: "Brewery bar dedicated to real ales",
+            location: "Brewery District",
+            capacity: 200,
+            shiftLengthHours: 12,
+            basePayPerHour: 10.50,
+            minimumHoursPerShift: 8,
+            minimumBarTake: 900.0,
+            shiftPattern: [
+                (.monday, "11AM", "11PM"),
+                (.tuesday, "11AM", "12AM"),
+                (.wednesday, "11AM", "12AM"),
+                (.thursday, "11AM", "12AM"),
+                (.friday, "11AM", "1AM"),
+                (.saturday, "10AM", "1AM"),
+                (.sunday, nil, nil)
+            ]
+        ),
+        Venue(
+            name: "The Dram Library",
+            description: "Whisky themed cellar with a big selection",
             location: "Historic District",
             capacity: 60,
             shiftLengthHours: 8,
+            basePayPerHour: 15.00,
+            minimumHoursPerShift: 8,
+            minimumBarTake: 1000.0,
             shiftPattern: [
                 (.monday, nil, nil),
-                (.tuesday, "4PM", "12AM"),
-                (.wednesday, "4PM", "12AM"),
-                (.thursday, "4PM", "12AM"),
-                (.friday, "4PM", "1AM"),
-                (.saturday, "2PM", "1AM"),
-                (.sunday, nil, nil)
+                (.tuesday, nil, nil),
+                (.wednesday, "6PM", "1AM"),
+                (.thursday, "6PM", "1AM"),
+                (.friday, "5PM", "2AM"),
+                (.saturday, "4PM", "2AM"),
+                (.sunday, "5PM", "12AM")
             ]
         ),
         Venue(
-            name: "The Wine Cellar",
-            description: "A cozy cellar bar specializing in rare wines.",
-            style: .wine,
+            name: "The Grape Escape",
+            description: "Wine bar for true connoisseurs",
             location: "Historic District",
             capacity: 50,
             shiftLengthHours: 7,
+            basePayPerHour: 14.00,
+            minimumHoursPerShift: 6,
+            minimumBarTake: 400.0,
             shiftPattern: [
                 (.monday, nil, nil),
-                (.tuesday, "4PM", "11PM"),
-                (.wednesday, "4PM", "11PM"),
-                (.thursday, "4PM", "11PM"),
+                (.tuesday, nil, nil),
+                (.wednesday, "5PM", "11PM"),
+                (.thursday, "5PM", "11PM"),
                 (.friday, "4PM", "12AM"),
-                (.saturday, "2PM", "12AM"),
-                (.sunday, nil, nil)
+                (.saturday, "3PM", "12AM"),
+                (.sunday, "4PM", "10PM")
             ]
         ),
         Venue(
-            name: "The Dive Bar",
-            description: "A no-frills bar with cheap drinks and character.",
-            style: .dive,
-            location: "Industrial District",
-            capacity: 50,
-            shiftLengthHours: 14,
+            name: "Modern Alchemy",
+            description: "Mixology studio with innovation as the focus",
+            location: "Arts District",
+            capacity: 80,
+            shiftLengthHours: 8,
+            basePayPerHour: 14.50,
+            minimumHoursPerShift: 6,
+            minimumBarTake: 600.0,
             shiftPattern: [
-                (.monday, "2PM", "2AM"),
-                (.tuesday, "2PM", "2AM"),
-                (.wednesday, "2PM", "2AM"),
-                (.thursday, "2PM", "4AM"),
-                (.friday, "2PM", "4AM"),
-                (.saturday, "12PM", "4AM"),
-                (.sunday, nil, nil)
+                (.monday, nil, nil),
+                (.tuesday, nil, nil),
+                (.wednesday, "6PM", "2AM"),
+                (.thursday, "6PM", "2AM"),
+                (.friday, "5PM", "3AM"),
+                (.saturday, "4PM", "3AM"),
+                (.sunday, "5PM", "1AM")
             ]
         )
     ]
-    
-    static let nameOptions: [VenueStyle: [String]] = [
-        .classicCocktail: [
-            "The Classic Cocktail Bar",
-            "The Golden Age Lounge",
-            "The Heritage Bar",
-            "The Timeless Tavern",
-            "The Vintage Vault",
-            "The Traditional Tipple",
-            "The Classic Corner",
-            "The Heritage House",
-            "The Golden Hour",
-            "The Timeless Tasting Room"
-        ],
-        
-        .modernMixology: [
-            "The Modern Mixology Lab",
-            "The Molecular Bar",
-            "The Innovation Lounge",
-            "The Future of Flavor",
-            "The Experimental Elixir",
-            "The Creative Cocktail Lab",
-            "The Modern Alchemy",
-            "The Innovation Station",
-            "The Future Bar",
-            "The Creative Chemistry"
-        ],
-        
-        .speakeasy: [
-            "The Hidden Speakeasy",
-            "The Secret Cellar",
-            "The Underground Lounge",
-            "The Hidden Gem",
-            "The Secret Society",
-            "The Underground Vault",
-            "The Hidden Door",
-            "The Secret Passage",
-            "The Underground Hideaway",
-            "The Hidden Chamber"
-        ],
-        
-        .tropical: [
-            "Tropical Paradise",
-            "The Island Oasis",
-            "The Beachside Bar",
-            "The Palm Tree Lounge",
-            "The Paradise Cove",
-            "The Island Escape",
-            "The Beach Club",
-            "The Tropical Hideaway",
-            "The Island Breeze",
-            "The Paradise Point"
-        ],
-        
-        .craftBeer: [
-            "The Craft Beer House",
-            "The Hop Haven",
-            "The Brewmaster's Bar",
-            "The Ale House",
-            "The Craft Corner",
-            "The Hop House",
-            "The Brewery Bar",
-            "The Ale Alley",
-            "The Craft Cellar",
-            "The Hop Hideaway"
-        ],
-        
-        .skyline: [
-            "Skyline Lounge",
-            "The Rooftop Retreat",
-            "The Cloud Nine Bar",
-            "The Sky High Lounge",
-            "The Penthouse Bar",
-            "The Aerial Lounge",
-            "The Sky Deck",
-            "The Cloud Bar",
-            "The Sky View",
-            "The Rooftop Bar"
-        ],
-        
-        .whiskey: [
-            "The Whiskey Library",
-            "The Bourbon Bar",
-            "The Scotch Selection",
-            "The Whiskey Vault",
-            "The Bourbon House",
-            "The Scotch Corner",
-            "The Whiskey Room",
-            "The Bourbon Library",
-            "The Scotch Cellar",
-            "The Whiskey Collection"
-        ],
-        
-        .wine: [
-            "The Wine Cellar",
-            "The Grape Escape",
-            "The Vintage Vault",
-            "The Wine Room",
-            "The Grape Gallery",
-            "The Vintage Cellar",
-            "The Wine Library",
-            "The Grape House",
-            "The Vintage Room",
-            "The Wine Gallery"
-        ],
-        
-        .dive: [
-            "The Dive Bar",
-            "The Local Watering Hole",
-            "The Corner Bar",
-            "The Neighborhood Pub",
-            "The Local Joint",
-            "The Corner Pub",
-            "The Neighborhood Bar",
-            "The Local Spot",
-            "The Corner Spot",
-            "The Neighborhood Joint"
-        ]
-    ]
-    
-    static func getRandomName(for style: VenueStyle) -> String {
-        guard let names = nameOptions[style], !names.isEmpty else {
-            return "Unknown Venue"
-        }
-        return names.randomElement() ?? "Unknown Venue"
-    }
 } 
