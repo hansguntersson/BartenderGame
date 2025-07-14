@@ -5,6 +5,11 @@ struct Customer: Identifiable {
     let drinkOrder: String
     let avatarNumber: Int
     let orderPhrase: String
+    var mood: Int // 1-5 rating (1 = very unhappy, 5 = very happy) - now mutable
+    
+    // Customer patience
+    var patienceRemaining: TimeInterval // in seconds
+    var hasLeft: Bool = false
     
     // Add preparation state
     var selectedGlassware: Glassware?
@@ -14,6 +19,7 @@ struct Customer: Identifiable {
     var selectedGarnishes: [Garnish] = []
     
     static var activeCustomers: [Customer] = []
+    static var previousCustomers: [Customer] = []
     static var currentVenue: String = ""
     
     private static let orderPhrases = [
@@ -57,7 +63,8 @@ struct Customer: Identifiable {
             Customer(
                 drinkOrder: drink,
                 avatarNumber: avatar,
-                orderPhrase: getOrderText(for: drink)
+                orderPhrase: getOrderText(for: drink),
+                mood: Int.random(in: 1...5)
             )
         }
     }
@@ -82,19 +89,63 @@ struct Customer: Identifiable {
             Customer(
                 drinkOrder: drink,
                 avatarNumber: avatar,
-                orderPhrase: getOrderText(for: drink)
+                orderPhrase: getOrderText(for: drink),
+                mood: Int.random(in: 1...5)
             )
         }
     }
     
-    init(drinkOrder: String, avatarNumber: Int, orderPhrase: String, selectedGlassware: Glassware? = nil, selectedIce: IceType = .none, selectedMethod: MethodType? = nil, selectedIngredients: [DrinkIngredient] = [], selectedGarnishes: [Garnish] = []) {
+    static func generateInitialCustomers() {
+        // Clear existing customers first
+        activeCustomers.removeAll()
+        
+        // Get venue-specific drinks
+        let venueDrinks = VenueDrinkMenu.getDrinksForVenue(currentVenue)
+        let availableDrinks = venueDrinks.map { $0.drink.name }
+        
+        if availableDrinks.isEmpty {
+            print("[Warning] No drinks found for venue: \(currentVenue). No customers will be generated.")
+            return
+        }
+        
+        // Get all available avatar numbers (assuming they start from 1)
+        let allAvatars = Array(1...10) // Adjust this number based on your available avatars
+        
+        // Start with 1 customer
+        let initialCustomerCount = 1
+        let shuffledDrinks = availableDrinks.shuffled().prefix(initialCustomerCount)
+        let shuffledAvatars = allAvatars.shuffled().prefix(initialCustomerCount)
+        
+        // Create initial customers
+        activeCustomers = zip(shuffledDrinks, shuffledAvatars).map { drink, avatar in
+            Customer(
+                drinkOrder: drink,
+                avatarNumber: avatar,
+                orderPhrase: getOrderText(for: drink),
+                mood: Int.random(in: 1...5)
+            )
+        }
+        
+        print("Generated \(initialCustomerCount) initial customers for \(currentVenue)")
+    }
+    
+
+    
+    init(drinkOrder: String, avatarNumber: Int, orderPhrase: String, mood: Int, selectedGlassware: Glassware? = nil, selectedIce: IceType = .none, selectedMethod: MethodType? = nil, selectedIngredients: [DrinkIngredient] = [], selectedGarnishes: [Garnish] = []) {
         self.drinkOrder = drinkOrder
         self.avatarNumber = avatarNumber
         self.orderPhrase = orderPhrase
+        self.mood = mood
         self.selectedGlassware = selectedGlassware
         self.selectedIce = selectedIce
         self.selectedMethod = selectedMethod
         self.selectedIngredients = selectedIngredients
         self.selectedGarnishes = selectedGarnishes
+        
+        // Initialize patience timer (5 minutes ± 30 seconds variation)
+        let basePatience: TimeInterval = 5 * 60 // 5 minutes
+        let variation: TimeInterval = Double.random(in: -30...30)
+        self.patienceRemaining = basePatience + variation
+        self.hasLeft = false
     }
 } 

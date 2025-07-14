@@ -68,6 +68,22 @@ struct ContentView: View {
     @State private var totalElapsedTime: Int = 0 // in seconds
     @State private var showMinimumHoursAlert: Bool = false
     
+    // --- Add new state for in-game session time ---
+    @State private var sessionInGameSeconds: Int = 0
+    @State private var clockTimer: Timer? = nil
+    @State private var persistedInGameSeconds: Int = 0
+    
+    // Customer generation timer
+    @State private var customerGenerationTimer: Timer? = nil
+    @State private var lastCustomerGenerationTime: Date = Date()
+    
+    // Add state for venue mood and timer
+    @State private var venueMood: Int = 3
+    @State private var venueMoodTimer: Timer? = nil
+    
+    // Customer patience timers
+    @State private var customerPatienceTimers: [UUID: Timer] = [:]
+    
     let venueName: String
     let displayName: String
     
@@ -102,6 +118,7 @@ struct ContentView: View {
          initialFailedDrinks: Int = 0,
          initialTimeRemaining: Int? = nil,
          initialCustomerIndex: Int = 0) {
+        
         self.venueName = venueName
         self.displayName = displayName
         
@@ -144,6 +161,12 @@ struct ContentView: View {
         let defaultTime = shiftLength * 60
         let savedTimeRemaining = initialTimeRemaining ?? defaultTime
         let savedCurrentCustomerIndex = UserDefaults.standard.object(forKey: "gameCurrentCustomerIndex_\(venueName)") as? Int ?? initialCustomerIndex
+        
+        // Load persisted time for clock immediately
+        let todayString = formatter.string(from: Date())
+        let timeKey = "customerScreenTime_\(venueName)_\(todayString)"
+        let savedPersistedTime = UserDefaults.standard.integer(forKey: timeKey)
+        
         _sales = State(initialValue: savedSales)
         _tips = State(initialValue: savedTips)
         _wastage = State(initialValue: savedWastage)
@@ -151,9 +174,19 @@ struct ContentView: View {
         _failedDrinks = State(initialValue: savedFailedDrinks)
         _timeRemaining = State(initialValue: savedTimeRemaining)
         _currentCustomerIndex = State(initialValue: savedCurrentCustomerIndex)
+        
+        // Initialize clock-related state
+        _persistedInGameSeconds = State(initialValue: savedPersistedTime)
+        _sessionInGameSeconds = State(initialValue: 0)
+        
         // Set the current venue for customer generation
         Customer.currentVenue = venueName
         Customer.initializeActiveCustomers()
+        
+        // Start with 2-3 initial customers
+        if Customer.activeCustomers.isEmpty {
+            Customer.generateInitialCustomers()
+        }
     }
     
     private var currentCustomer: Customer {
@@ -203,6 +236,7 @@ struct ContentView: View {
         .background(darkBackgroundColor)
     }
     
+    // --- Update timerBar to use the new ticking logic ---
     private var timerBar: some View {
         let venue = Venue.allVenues.first(where: { $0.name == venueName })
         let today = Weekday(rawValue: Calendar.current.component(.weekday, from: Date())) ?? .monday
@@ -225,15 +259,16 @@ struct ContentView: View {
             if let venue = venue {
                 if let pattern = venue.shiftPattern.first(where: { $0.day == today }),
                    let startString = pattern.start, pattern.end != nil {
-                    let shiftLength = venue.shiftLengthHours(for: today)
-                    let totalShiftSeconds = shiftLength * 60
-                    let elapsedSeconds = max(0, totalShiftSeconds - timeRemaining)
                     if let startDate = parseFormatter.date(from: startString) {
-                        let displayDate = startDate.addingTimeInterval(TimeInterval(elapsedSeconds * 60))
+                        let totalInGameSeconds = persistedInGameSeconds + sessionInGameSeconds
+                        let totalInGameMinutes = totalInGameSeconds // 1 real second = 1 in-game minute
+                        let displayDate = startDate.addingTimeInterval(TimeInterval(totalInGameMinutes * 60)) // Convert minutes to seconds
                         Text(displayFormatter.string(from: displayDate).lowercased())
                             .font(.subheadline)
                             .fontWeight(.medium)
                             .foregroundColor(.white)
+                            .onAppear {
+                            }
                     } else {
                         Text("-")
                             .font(.subheadline)
@@ -310,6 +345,15 @@ struct ContentView: View {
                         .font(.system(size: 44))
                 }
                 .disabled(!canSwipeRight)
+                
+                // Mood emoticon
+                if let currentCustomer = Customer.activeCustomers[safe: currentCustomerIndex] {
+                    Text(moodEmoticon(for: currentCustomer.mood))
+                        .font(.system(size: 44))
+                        .padding(8)
+                        .background(Color.white.opacity(0.7))
+                        .clipShape(Circle())
+                }
                 
                 Button(action: {
                     if canSwipeLeft {
@@ -440,6 +484,10 @@ struct ContentView: View {
                     currentCustomerIndex: $currentCustomerIndex,
                     onContinue: { glassware, ice, method, isCorrect, tipMultiplier in
                         if isCorrect {
+                            // Stop patience timer for this customer
+                            let currentCustomer = Customer.activeCustomers[currentCustomerIndex]
+                            stopPatienceTimer(for: currentCustomer)
+                            
                             // Show positive feedback from current customer
                             orderText = "\"" + getRandomPositiveFeedback() + "\""
                             successfulDrinks += 1
@@ -449,9 +497,33 @@ struct ContentView: View {
                             sales = (sales + drinkPrice).rounded(to: 2)
                             
                             // Add tip based on glass quality (tipMultiplier affects the percentage)
-                            let baseTipPercentage = Double.random(in: 0.1...0.2)
-                            let adjustedTipPercentage = baseTipPercentage * tipMultiplier
-                            let tip = (drinkPrice * adjustedTipPercentage).rounded(to: 2)
+                            let tip: Double
+                            switch currentCustomer.mood {
+                            case 5:
+                                tip = (drinkPrice * Double.random(in: 0.20...0.25) * tipMultiplier).rounded(to: 2)
+                            case 4:
+                                tip = (drinkPrice * Double.random(in: 0.15...0.20) * tipMultiplier).rounded(to: 2)
+                            case 3:
+                                if Double.random(in: 0...1) < 0.8 {
+                                    tip = (drinkPrice * Double.random(in: 0.10...0.15) * tipMultiplier).rounded(to: 2)
+                                } else {
+                                    tip = 0.0
+                                }
+                            case 2:
+                                if Double.random(in: 0...1) < 0.4 {
+                                    tip = (drinkPrice * Double.random(in: 0.05...0.10) * tipMultiplier).rounded(to: 2)
+                                } else {
+                                    tip = 0.0
+                                }
+                            case 1:
+                                if Double.random(in: 0...1) < 0.1 {
+                                    tip = (drinkPrice * Double.random(in: 0.00...0.05) * tipMultiplier).rounded(to: 2)
+                                } else {
+                                    tip = 0.0
+                                }
+                            default:
+                                tip = 0.0
+                            }
                             tips = (tips + tip).rounded(to: 2)
                             
                             // Show sales popup
@@ -523,8 +595,14 @@ struct ContentView: View {
         }
         .onAppear {
             if Customer.activeCustomers.isEmpty {
-                Customer.initializeActiveCustomers()
+                Customer.generateInitialCustomers()
             }
+            
+            // Start patience timers for existing customers
+            for customer in Customer.activeCustomers {
+                startPatienceTimer(for: customer)
+            }
+            
             // Persistent time tracking setup
             let todayString = getCurrentDateString()
             let key = "customerScreenTime_\(venueName)_\(todayString)"
@@ -532,10 +610,29 @@ struct ContentView: View {
             totalElapsedTime = storedElapsed
             sessionStartTime = Date()
             startTimer()
+            // --- For the clock ---
+            // persistedInGameSeconds is already loaded in init, don't override it
+            // sessionInGameSeconds is already initialized to 0 in init
+            startClockTimer()
+            startCustomerGenerationTimer()
+            // In onAppear, reset venueMood and start timer
+            venueMood = 3
+            startVenueMoodTimer()
         }
         .onDisappear {
             timer?.invalidate()
+            customerGenerationTimer?.invalidate()
+            
+            // Stop all patience timers
+            for timer in customerPatienceTimers.values {
+                timer.invalidate()
+            }
+            customerPatienceTimers.removeAll()
+            
             saveSessionElapsedTime()
+            // --- For the clock ---
+            stopClockTimer()
+            venueMoodTimer?.invalidate()
         }
         .fullScreenCover(isPresented: $showingShiftSummary) {
             ShiftSummaryView(
@@ -702,7 +799,6 @@ struct ContentView: View {
 
     private func canEndShift() -> Bool {
         let venue = Venue.allVenues.first(where: { $0.name == venueName })
-        let today = Weekday(rawValue: Calendar.current.component(.weekday, from: Date())) ?? .monday
         let minHours = venue?.minimumHoursPerShift ?? 0
         let minSeconds = minHours * 60 * 60
         return getTotalElapsedTime() >= minSeconds
@@ -777,7 +873,18 @@ struct ContentView: View {
     private func getRandomPositiveFeedback() -> String {
         return ContentView.positiveFeedbackResponses.randomElement() ?? "Perfect! Just what I wanted!"
     }
-}
+
+    // --- Add helpers for clock timer ---
+    private func startClockTimer() {
+        clockTimer?.invalidate()
+        clockTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            sessionInGameSeconds += 1 // 1 real second = 1 in-game minute
+        }
+    }
+    private func stopClockTimer() {
+        clockTimer?.invalidate()
+        clockTimer = nil
+    }
 
 #Preview {
     ContentView(venueName: "BoHo Lounge", displayName: "BoHo Lounge")
@@ -888,6 +995,193 @@ struct MoneyPopoverView: View {
                 .padding(24)
                 Spacer()
             }
+        }
+    }
+    }
+    
+    private func moodEmoticon(for mood: Int) -> String {
+        switch mood {
+        case 1: return "😠"
+        case 2: return "🙁"
+        case 3: return "😐"
+        case 4: return "🙂"
+        case 5: return "😀"
+        default: return "😐"
+        }
+    }
+    
+    // Customer generation functions
+    private func startCustomerGenerationTimer() {
+        customerGenerationTimer?.invalidate()
+        scheduleNextCustomerGeneration()
+    }
+    
+    private func scheduleNextCustomerGeneration() {
+        // Generate customer every 60 seconds ± up to 30 seconds variation
+        let baseInterval: TimeInterval = 60.0
+        let variation: TimeInterval = Double.random(in: -30...30)
+        let nextInterval = baseInterval + variation
+        
+        customerGenerationTimer = Timer.scheduledTimer(withTimeInterval: nextInterval, repeats: false) { _ in
+            self.generateNewCustomer()
+            self.scheduleNextCustomerGeneration() // Schedule the next one
+        }
+        
+        print("Next customer will be generated in \(String(format: "%.1f", nextInterval)) seconds")
+    }
+    
+    private func generateNewCustomer() {
+        // Don't generate if we already have too many customers
+        if Customer.activeCustomers.count >= 8 {
+            return
+        }
+        // 30% chance to pick a returning customer
+        let useReturning = !Customer.previousCustomers.isEmpty && Double.random(in: 0...1) < 0.3
+        var newCustomer: Customer
+        if useReturning {
+            // Pick a previous customer not currently active
+            let available = Customer.previousCustomers.filter { prev in
+                !Customer.activeCustomers.contains(where: { $0.avatarNumber == prev.avatarNumber })
+            }
+            if let returning = available.randomElement() {
+                var copy = returning
+                // Reset patience and mood (influenced by venue mood)
+                let basePatience: TimeInterval = 5 * 60
+                let variation: TimeInterval = Double.random(in: -30...30)
+                copy.patienceRemaining = basePatience + variation
+                copy.mood = generateMoodInfluencedByVenue()
+                copy.hasLeft = false
+                newCustomer = copy
+                print("Returning customer: \(copy.drinkOrder) (Avatar \(copy.avatarNumber), Mood: \(copy.mood))")
+            } else {
+                newCustomer = createRandomCustomer()
+            }
+        } else {
+            newCustomer = createRandomCustomer()
+        }
+        // Add to active customers
+        Customer.activeCustomers.append(newCustomer)
+        // Start patience timer for the new customer
+        startPatienceTimer(for: newCustomer)
+        print("Generated new customer: \(newCustomer.drinkOrder) (Avatar \(newCustomer.avatarNumber), Mood: \(newCustomer.mood))")
+    }
+    
+    private func handleCustomerLeft(_ customer: Customer) {
+        // Remove the customer from active customers
+        if let index = Customer.activeCustomers.firstIndex(where: { $0.id == customer.id }) {
+            Customer.activeCustomers.remove(at: index)
+            // Add to previousCustomers if not already present (by id)
+            if !Customer.previousCustomers.contains(where: { $0.id == customer.id }) {
+                var returning = customer
+                returning.hasLeft = false
+                // Reset patience and mood for next time
+                let basePatience: TimeInterval = 5 * 60
+                let variation: TimeInterval = Double.random(in: -30...30)
+                returning.patienceRemaining = basePatience + variation
+                returning.mood = Int.random(in: 1...5)
+                Customer.previousCustomers.append(returning)
+            }
+            // Adjust current customer index if needed
+            if currentCustomerIndex >= Customer.activeCustomers.count && !Customer.activeCustomers.isEmpty {
+                currentCustomerIndex = Customer.activeCustomers.count - 1
+            }
+            print("Customer removed from active customers. Remaining: \(Customer.activeCustomers.count)")
+        }
+    }
+    
+    // Helper to create a random new customer
+    private func createRandomCustomer() -> Customer {
+        let venueDrinks = VenueDrinkMenu.getDrinksForVenue(venueName)
+        let availableDrinks = venueDrinks.map { $0.drink.name }
+        if availableDrinks.isEmpty { fatalError("No drinks available") }
+        let allAvatars = Array(1...10)
+        let usedAvatars = Set(Customer.activeCustomers.map { $0.avatarNumber })
+        let availableAvatars = allAvatars.filter { !usedAvatars.contains($0) }
+        let randomDrink = availableDrinks.randomElement() ?? availableDrinks[0]
+        let randomAvatar = availableAvatars.randomElement() ?? availableAvatars[0]
+        
+        // Generate mood influenced by venue mood
+        let customerMood = generateMoodInfluencedByVenue()
+        
+        return Customer(
+            drinkOrder: randomDrink,
+            avatarNumber: randomAvatar,
+            orderPhrase: Customer.getOrderText(for: randomDrink),
+            mood: customerMood
+        )
+    }
+    
+    private func generateMoodInfluencedByVenue() -> Int {
+        // Create weighted probabilities based on venue mood
+        var moodWeights: [Double] = [0.1, 0.1, 0.1, 0.1, 0.1] // Default equal weights
+        
+        switch venueMood {
+        case 5: // Very happy venue
+            moodWeights = [0.05, 0.10, 0.20, 0.30, 0.35] // Heavily biased toward 4-5
+        case 4: // Happy venue
+            moodWeights = [0.08, 0.15, 0.25, 0.30, 0.22] // Biased toward 3-5
+        case 3: // Neutral venue
+            moodWeights = [0.15, 0.20, 0.30, 0.20, 0.15] // Slight bias toward middle
+        case 2: // Unhappy venue
+            moodWeights = [0.25, 0.30, 0.25, 0.15, 0.05] // Biased toward 1-3
+        case 1: // Very unhappy venue
+            moodWeights = [0.40, 0.30, 0.20, 0.08, 0.02] // Heavily biased toward 1-2
+        default:
+            moodWeights = [0.1, 0.1, 0.1, 0.1, 0.1]
+        }
+        
+        // Generate random number and use weights to determine mood
+        let random = Double.random(in: 0...1)
+        var cumulativeWeight = 0.0
+        
+        for (index, weight) in moodWeights.enumerated() {
+            cumulativeWeight += weight
+            if random <= cumulativeWeight {
+                return index + 1 // Convert to 1-5 range
+            }
+        }
+        
+        return 3 // Fallback to neutral
+    }
+    
+    // Add venue mood timer functions at the end of ContentView
+    private func startVenueMoodTimer() {
+        venueMoodTimer?.invalidate()
+        venueMoodTimer = Timer.scheduledTimer(withTimeInterval: 120.0, repeats: true) { _ in
+            self.updateVenueMood()
+        }
+    }
+    
+    private func updateVenueMood() {
+        guard !Customer.previousCustomers.isEmpty else { return }
+        let avgMood = Customer.previousCustomers.map { Double($0.mood) }.reduce(0, +) / Double(Customer.previousCustomers.count)
+        let roundedAvg = Int(round(avgMood))
+        if roundedAvg > venueMood {
+            venueMood = min(venueMood + 1, 5)
+        } else if roundedAvg < venueMood {
+            venueMood = max(venueMood - 1, 1)
+        }
+        print("Venue mood updated to \(venueMood) (avg previous customer mood: \(String(format: "%.2f", avgMood)))")
+    }
+    
+    // Customer patience timer functions
+    private func startPatienceTimer(for customer: Customer) {
+        // Stop any existing timer for this customer
+        stopPatienceTimer(for: customer)
+        
+        // Create a timer that will call the timeout callback when patience runs out
+        let timer = Timer.scheduledTimer(withTimeInterval: customer.patienceRemaining, repeats: false) { _ in
+            self.handleCustomerLeft(customer)
+        }
+        
+        // Store the timer reference
+        customerPatienceTimers[customer.id] = timer
+    }
+    
+    private func stopPatienceTimer(for customer: Customer) {
+        if let timer = customerPatienceTimers[customer.id] {
+            timer.invalidate()
+            customerPatienceTimers.removeValue(forKey: customer.id)
         }
     }
 }

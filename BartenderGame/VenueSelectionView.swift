@@ -103,6 +103,8 @@ struct VenueCard: View {
     
     private let primaryColor = Color(red: 0.8, green: 0.4, blue: 0.2)  // Burnt Orange
     private let secondaryColor = Color(red: 0.6, green: 0.3, blue: 0.1)  // Brown
+    private let backgroundColor = Color(red: 0.95, green: 0.9, blue: 0.8)  // Cream
+    private let darkBackgroundColor = Color(red: 0.22, green: 0.13, blue: 0.07) // Rich dark brown
     
     private func getFontForVenue(_ venueName: String, size: CGFloat = 30) -> Font {
         switch venueName {
@@ -136,12 +138,24 @@ struct VenueCard: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             VStack {
-                Spacer()
                 HStack {
-                    Text(name)
-                        .font(getFontForVenue(name))
-                        .fontWeight(.medium)
-                        .foregroundColor(secondaryColor)
+                    VStack(alignment: .leading, spacing: 4) {
+                        // Open/Closed indicator
+                        let today = Weekday(rawValue: Calendar.current.component(.weekday, from: Date())) ?? .monday
+                        let todayHours = venue.openingHours(for: today)
+                        let isOpen = todayHours != "Closed"
+                        
+                        Text(name)
+                            .font(getFontForVenue(name))
+                            .fontWeight(.medium)
+                            .foregroundColor(secondaryColor.opacity(isOpen ? 1.0 : 0.4))
+                        
+                        Text(isOpen ? "Open" : "Closed")
+                            .font(.caption)
+                            .fontWeight(.medium)
+                            .foregroundColor(isOpen ? primaryColor : secondaryColor.opacity(0.4))
+                    }
+                    
                     Spacer()
                     Button(action: onStartShift) {
                         Image(systemName: "arrow.right.circle.fill")
@@ -150,11 +164,10 @@ struct VenueCard: View {
                     }
                     .padding(.trailing, 5)
                 }
-                Spacer()
             }
         }
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity({ let today = Weekday(rawValue: Calendar.current.component(.weekday, from: Date())) ?? .monday; let todayHours = venue.openingHours(for: today); let isOpen = todayHours != "Closed"; return isOpen ? 1.0 : 0.4 }()))
         .cornerRadius(10)
     }
 }

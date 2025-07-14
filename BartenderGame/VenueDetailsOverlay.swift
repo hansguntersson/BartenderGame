@@ -6,6 +6,7 @@ struct VenueDetailsOverlay: View {
     let onStartShift: () -> Void
     
     @State private var showingDrinksMenu = false
+    @State private var showingRequirements = false
     
     // Track started shifts for each venue and day with date tracking
     @AppStorage("startedShifts") private var startedShiftsString = ""
@@ -101,7 +102,12 @@ struct VenueDetailsOverlay: View {
     }
     
     var body: some View {
-        ZStack {
+        // Calculate venue status at the beginning
+        let today = Weekday(rawValue: Calendar.current.component(.weekday, from: Date())) ?? .monday
+        let todayHours = venue.openingHours(for: today)
+        let isVenueOpen = todayHours != "Closed"
+        
+        return ZStack {
             // Semi-transparent background
             Color.black.opacity(0.5)
                 .edgesIgnoringSafeArea(.all)
@@ -173,9 +179,38 @@ struct VenueDetailsOverlay: View {
                     }
                 
                 // Today's shift length
-                let today = Weekday(rawValue: Calendar.current.component(.weekday, from: Date())) ?? .monday
-                let todayHours = venue.openingHours(for: today)
                 let shiftLength = venue.shiftLengthHours(for: today)
+                
+                // Buttons - always shown regardless of venue status
+                HStack {
+                    Button(action: {
+                        showingDrinksMenu = true
+                    }) {
+                        Text("Drinks Menu")
+                        .foregroundColor(.white)
+                        .fontWeight(.semibold)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .background(secondaryColor)
+                        .cornerRadius(8)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        showingRequirements = true
+                    }) {
+                        Text("Requirements")
+                        .foregroundColor(.white)
+                        .fontWeight(.semibold)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .background(secondaryColor)
+                        .cornerRadius(8)
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 25)
                 
                 if todayHours != "Closed" {
                     VStack(alignment: .leading, spacing: 0) {
@@ -193,17 +228,6 @@ struct VenueDetailsOverlay: View {
                             .padding(.vertical, 10)
                         VStack(alignment: .leading, spacing: 4) {
                             // Table structure for all shift details
-                            HStack {
-                                Text("Shift hours:")
-                                    .font(.subheadline)
-                                    .foregroundColor(secondaryColor)
-                                    .frame(width: 140, alignment: .leading)
-                                Spacer()
-                                Text(todayHours)
-                                    .font(.subheadline)
-                                    .foregroundColor(secondaryColor)
-                                    .frame(width: 100, alignment: .trailing)
-                            }
                             HStack {
                                 Text("Shift Length:")
                                     .font(.subheadline)
@@ -252,49 +276,29 @@ struct VenueDetailsOverlay: View {
                         .padding(.horizontal, 40)
                     }
                 }
-                let isVenueOpen = todayHours != "Closed"
                 
-                HStack{
-                    Button(action: {
-                        showingDrinksMenu = true
-                    }) {
-                        HStack {
-                            Image(systemName: "list.bullet")
-                            Text("Drinks Menu")
+                // Full width Start/Continue Shift button
+                Button(action: {
+                    if isVenueOpen {
+                        if !isShiftStarted() {
+                            markShiftAsStarted()
                         }
-                        .foregroundColor(.white)
-                        .fontWeight(.semibold)
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 10)
-                        .background(secondaryColor)
-                        .cornerRadius(8)
+                        isShowing = false
+                        onStartShift()
                     }
-                    Spacer()
-                    // Start/Continue Shift button
-                        Button(action: {
-                            if isVenueOpen {
-                                if !isShiftStarted() {
-                                    markShiftAsStarted()
-                                }
-                                isShowing = false
-                                onStartShift()
-                            }
-                        }) {
-                            HStack {
-                                Image(systemName: "arrow.right")
-                                Text(isShiftStarted() ? "Continue" : "Start Shift")
-                            }
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .fontWeight(.semibold)
-                            .padding(.horizontal, 15)
-                            .padding(.vertical, 10)
-                            .background(isVenueOpen ? primaryColor : primaryColor.opacity(0.3))
-                            .cornerRadius(8)
-                    }
-                    .disabled(!isVenueOpen)
-                    .opacity(isVenueOpen ? 1.0 : 0.5)
+                }) {
+                    Text(isVenueOpen ? (isShiftStarted() ? "Continue" : "Start Shift") : "Venue Closed")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 15)
+                    .background(isVenueOpen ? primaryColor : primaryColor.opacity(0.3))
+                    .cornerRadius(8)
                 }
+                .disabled(!isVenueOpen)
+                .opacity(isVenueOpen ? 1.0 : 0.5)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 30)
             }
@@ -308,6 +312,9 @@ struct VenueDetailsOverlay: View {
         .animation(.easeInOut(duration: 0.3), value: isShowing)
         .fullScreenCover(isPresented: $showingDrinksMenu) {
                             DrinksMenuView(isShowing: $showingDrinksMenu, venueName: venue.name)
+        }
+        .fullScreenCover(isPresented: $showingRequirements) {
+            VenueRequirementsOverlay(venue: venue, isShowing: $showingRequirements)
         }
     }
 }

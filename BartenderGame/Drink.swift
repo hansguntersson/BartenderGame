@@ -69,10 +69,10 @@ enum DrinkCategory: String, CaseIterable {
 }
 
 enum DrinkStyle: String, CaseIterable {
-    case spirits = "Spirits"
     case draught = "Draught"
-    case spiritMixer = "Spirit Mixer"
     case wine = "Wine"
+    case spirits = "Spirits"
+    case spiritMixer = "Spirit Mixer"
     case classic = "Classic"
     case modern = "Modern"
     case party = "Party"
@@ -937,7 +937,7 @@ struct Drink {
             requiredMethod: .built,
             glassRequirement: GlassRequirement(
                 ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
-                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Weizen Glass" })!]
             ),
             garnishRequirement: GarnishRequirement(
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
@@ -958,7 +958,7 @@ struct Drink {
             requiredMethod: .built,
             glassRequirement: GlassRequirement(
                 ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
-                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Weizen Glass" })!]
             ),
             garnishRequirement: GarnishRequirement(
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
@@ -979,7 +979,7 @@ struct Drink {
             requiredMethod: .built,
             glassRequirement: GlassRequirement(
                 ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
-                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Weizen Glass" })!]
             ),
             garnishRequirement: GarnishRequirement(
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
@@ -1000,7 +1000,7 @@ struct Drink {
             requiredMethod: .built,
             glassRequirement: GlassRequirement(
                 ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
-                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Weizen Glass" })!]
             ),
             garnishRequirement: GarnishRequirement(
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
@@ -2280,7 +2280,7 @@ struct Drink {
             requiredMethod: .built,
             glassRequirement: GlassRequirement(
                 ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
-                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Weizen Glass" })!]
             ),
             garnishRequirement: GarnishRequirement(
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
@@ -2410,7 +2410,7 @@ struct Drink {
             requiredMethod: .built,
             glassRequirement: GlassRequirement(
                 ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
-                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Weizen Glass" })!]
             ),
             garnishRequirement: GarnishRequirement(
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
@@ -2668,7 +2668,69 @@ struct Drink {
             requiredMethod: .built,
             glassRequirement: GlassRequirement(
                 ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
-                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!]
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Weizen Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .draught,
+            family: .none
+        ),
+        Drink(
+            name: "Brown Ale",
+            recipe: [
+                DrinkIngredient(name: "Brown Ale", amount: 12.0)
+            ],
+            description: "A pint of smooth brown ale",
+            requiredIce: .none,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Weizen Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .draught,
+            family: .none
+        ),
+        Drink(
+            name: "Lager Shandy",
+            recipe: [
+                DrinkIngredient(name: "Lager", amount: 6.0),
+                DrinkIngredient(name: "Lemonade", amount: 6.0)
+            ],
+            description: "A refreshing lager mixed with lemonade",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Weizen Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .draught,
+            family: .none
+        ),
+        Drink(
+            name: "Lager Top",
+            recipe: [
+                DrinkIngredient(name: "Lager", amount: 10.0),
+                DrinkIngredient(name: "Lemonade", amount: 2.0)
+            ],
+            description: "A lager with a splash of lemonade on top",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Weizen Glass" })!]
             ),
             garnishRequirement: GarnishRequirement(
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
@@ -2695,8 +2757,8 @@ struct Drink {
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
                 acceptable: []
             ),
-            category: .regular,
-            style: .draught,
+            category: .cocktail,
+            style: .obscure,
             family: .none
         ),
         Drink(
@@ -2709,7 +2771,7 @@ struct Drink {
             requiredMethod: .built,
             glassRequirement: GlassRequirement(
                 ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
-                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!]
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pilsner Glass" })!]
             ),
             garnishRequirement: GarnishRequirement(
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
@@ -2729,7 +2791,7 @@ struct Drink {
             requiredMethod: .built,
             glassRequirement: GlassRequirement(
                 ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
-                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!]
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pilsner Glass" })!]
             ),
             garnishRequirement: GarnishRequirement(
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
@@ -2749,7 +2811,7 @@ struct Drink {
             requiredMethod: .built,
             glassRequirement: GlassRequirement(
                 ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
-                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!]
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pilsner Glass" })!]
             ),
             garnishRequirement: GarnishRequirement(
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
@@ -2769,7 +2831,7 @@ struct Drink {
             requiredMethod: .built,
             glassRequirement: GlassRequirement(
                 ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
-                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!]
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pilsner Glass" })!]
             ),
             garnishRequirement: GarnishRequirement(
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
@@ -2789,7 +2851,7 @@ struct Drink {
             requiredMethod: .built,
             glassRequirement: GlassRequirement(
                 ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
-                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!]
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pilsner Glass" })!]
             ),
             garnishRequirement: GarnishRequirement(
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
@@ -2809,7 +2871,7 @@ struct Drink {
             requiredMethod: .built,
             glassRequirement: GlassRequirement(
                 ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
-                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!]
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pilsner Glass" })!]
             ),
             garnishRequirement: GarnishRequirement(
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
@@ -2829,7 +2891,28 @@ struct Drink {
             requiredMethod: .built,
             glassRequirement: GlassRequirement(
                 ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
-                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pint Glass" })!]
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pilsner Glass" })!]
+            ),
+            garnishRequirement: GarnishRequirement(
+                ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],
+                acceptable: []
+            ),
+            category: .regular,
+            style: .draught,
+            family: .none
+        ),
+        Drink(
+            name: "Half of Lager Shandy",
+            recipe: [
+                DrinkIngredient(name: "Lager", amount: 4.0),
+                DrinkIngredient(name: "Lemonade", amount: 4.0)
+            ],
+            description: "A half pint of refreshing lager mixed with lemonade",
+            requiredIce: .cubed,
+            requiredMethod: .built,
+            glassRequirement: GlassRequirement(
+                ideal: [Glassware.allGlassware.first(where: { $0.name == "Half Pint Glass" })!],
+                acceptable: [Glassware.allGlassware.first(where: { $0.name == "Pilsner Glass" })!]
             ),
             garnishRequirement: GarnishRequirement(
                 ideal: [Garnish.allGarnishes.first(where: { $0.name == "None" })!],

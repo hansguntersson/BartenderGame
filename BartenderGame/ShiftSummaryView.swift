@@ -18,12 +18,12 @@ struct ShiftSummaryView: View {
     private var basePayCalculation: (basePay: Double, hoursWorked: Double, minimumMet: Bool) {
         let venue = Venue.allVenues.first(where: { $0.name == venueName })
         let basePayPerHour = venue?.basePayPerHour ?? 0.0
-        let minimumHours = venue?.minimumHoursPerShift ?? 0.0
+        let minimumHours = Double(venue?.minimumHoursPerShift ?? 0)
         
         // Get total time worked from UserDefaults
         let todayString = getCurrentDateString()
         let key = "customerScreenTime_\(venueName)_\(todayString)"
-        let totalSeconds = UserDefaults.standard.integer(forKey: key)
+        let totalSeconds = UserDefaults.standard.object(forKey: key) as? Int ?? 0
         let hoursWorked = Double(totalSeconds) / 3600.0 // Convert seconds to hours
         
         // Only pay base pay if minimum hours were met
@@ -62,6 +62,29 @@ struct ShiftSummaryView: View {
                         }
                         .padding(.top, 10)
                     }
+                    
+                    // Show warning if minimum bar take not met
+                    let venue = Venue.allVenues.first(where: { $0.name == venueName })
+                    let minimumBarTake = venue?.minimumBarTake ?? 0.0
+                    if sales < minimumBarTake {
+                        HStack {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .foregroundColor(.red)
+                            Text("Sales below minimum bar take - 10% wage penalty applied")
+                                .font(.caption)
+                                .foregroundColor(.red)
+                        }
+                        .padding(.top, 10)
+                    } else if sales >= minimumBarTake * 1.5 {
+                        HStack {
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.green)
+                            Text("Sales significantly above target - 15% bonus applied")
+                                .font(.caption)
+                                .foregroundColor(.green)
+                        }
+                        .padding(.top, 10)
+                    }
                 }
                 .padding()
                 .background(Color.white.opacity(0.9))
@@ -94,15 +117,35 @@ struct ShiftSummaryView: View {
         // Get current player money
         let currentMoney = UserDefaults.standard.double(forKey: "playerMoney")
         
-        // Add tips and base pay to player's money
-        let totalEarnings = tips + basePayCalculation.basePay
+        // Get venue minimum bar take requirement
+        let venue = Venue.allVenues.first(where: { $0.name == venueName })
+        let minimumBarTake = venue?.minimumBarTake ?? 0.0
+        
+        // Calculate base earnings
+        var totalEarnings = tips + basePayCalculation.basePay
+        
+        // Check if sales meet minimum bar take requirement
+        if sales < minimumBarTake {
+            // Apply 10% wage penalty only to base pay
+            let penalty = basePayCalculation.basePay * 0.10
+            totalEarnings -= penalty
+            
+            print("Sales (£\(String(format: "%.2f", sales))) below minimum bar take (£\(String(format: "%.0f", minimumBarTake))) - 10% wage penalty applied to base pay: -£\(String(format: "%.2f", penalty))")
+        } else if sales >= minimumBarTake * 1.5 {
+            // Apply 15% bonus to base pay for significantly exceeding target
+            let bonus = basePayCalculation.basePay * 0.15
+            totalEarnings += bonus
+            
+            print("Sales (£\(String(format: "%.2f", sales))) significantly above minimum bar take (£\(String(format: "%.0f", minimumBarTake))) - 15% bonus applied to base pay: +£\(String(format: "%.2f", bonus))")
+        }
+        
         let newMoney = currentMoney + totalEarnings
         
         // Save updated money
         UserDefaults.standard.set(newMoney, forKey: "playerMoney")
         UserDefaults.standard.synchronize()
         
-        print("Added £\(String(format: "%.2f", tips)) in tips and £\(String(format: "%.2f", basePayCalculation.basePay)) in base pay to player money. New total: £\(String(format: "%.2f", newMoney))")
+        print("Added £\(String(format: "%.2f", tips)) in tips and £\(String(format: "%.2f", basePayCalculation.basePay)) in base pay to player money. Final earnings after penalties: £\(String(format: "%.2f", totalEarnings)). New total: £\(String(format: "%.2f", newMoney))")
     }
     
     private func getCurrentDateString() -> String {

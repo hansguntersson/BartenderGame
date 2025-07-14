@@ -1157,6 +1157,7 @@ struct GlasswareSubListView: View {
             drinkOrder: "Margarita",
             avatarNumber: 1,
             orderPhrase: "I'd like a Margarita, please!",
+            mood: 3,
             selectedGlassware: Glassware.allGlassware.first(where: { $0.name == "Margarita Glass" })!,
             selectedIce: .none,
             selectedMethod: .shaken,
