@@ -1,0 +1,30 @@
+{
+  "name": "@bartender-game/core",
+  "version": "0.1.0",
+  "description": "Bartender Game logic ported from Swift (prep validation, shifts, customers, pricing)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./data/catalog.json": "./data/catalog.json"
+  },
+  "scripts": {
+    "extract-data": "node ../../scripts/extract-swift-data.mjs",
+    "build": "npm run extract-data && tsc",
+    "test": "npm run extract-data && vitest run",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "data/catalog.json"
+  ],
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1"
+  }
+}

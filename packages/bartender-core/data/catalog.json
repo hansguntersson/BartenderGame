@@ -1,0 +1,8423 @@
+{
+  "version": 1,
+  "extractedAt": "2026-09-27T11:38:07.709Z",
+  "ingredients": [
+    {
+      "name": "Bourbon Whiskey",
+      "shortName": "Bourbon",
+      "category": "spirits",
+      "subcategory": "Whiskey",
+      "cost": 2.5
+    },
+    {
+      "name": "Rye Whiskey",
+      "shortName": "Rye",
+      "category": "spirits",
+      "subcategory": "Whiskey",
+      "cost": 2.75
+    },
+    {
+      "name": "Blended Scotch",
+      "shortName": "Blended",
+      "category": "spirits",
+      "subcategory": "Whiskey",
+      "cost": 2.75
+    },
+    {
+      "name": "Single Malt Scotch",
+      "shortName": "Single Malt",
+      "category": "spirits",
+      "subcategory": "Whiskey",
+      "cost": 3.25
+    },
+    {
+      "name": "Canadian Whiskey",
+      "shortName": "Canadian",
+      "category": "spirits",
+      "subcategory": "Whiskey",
+      "cost": 2.5
+    },
+    {
+      "name": "Irish Whiskey",
+      "shortName": "Irish",
+      "category": "spirits",
+      "subcategory": "Whiskey",
+      "cost": 2.75
+    },
+    {
+      "name": "Golden Rum",
+      "shortName": "Golden",
+      "category": "spirits",
+      "subcategory": "Rum",
+      "cost": 2.25
+    },
+    {
+      "name": "Dark Rum",
+      "shortName": "Dark",
+      "category": "spirits",
+      "subcategory": "Rum",
+      "cost": 2.5
+    },
+    {
+      "name": "Spiced Rum",
+      "shortName": "Spiced",
+      "category": "spirits",
+      "subcategory": "Rum",
+      "cost": 2.75
+    },
+    {
+      "name": "White Rum",
+      "shortName": "White",
+      "category": "spirits",
+      "subcategory": "Rum",
+      "cost": 2.25
+    },
+    {
+      "name": "Rhum Agricole",
+      "shortName": "Agricole",
+      "category": "spirits",
+      "subcategory": "Rum",
+      "cost": 2.75
+    },
+    {
+      "name": "Vodka",
+      "shortName": "Vodka",
+      "category": "spirits",
+      "subcategory": "Vodka",
+      "cost": 2
+    },
+    {
+      "name": "Vanilla Vodka",
+      "shortName": "Vanilla",
+      "category": "spirits",
+      "subcategory": "Vodka",
+      "cost": 2.25
+    },
+    {
+      "name": "Black Vodka",
+      "shortName": "Black",
+      "category": "spirits",
+      "subcategory": "Vodka",
+      "cost": 2.25
+    },
+    {
+      "name": "Gin",
+      "shortName": "Gin",
+      "category": "spirits",
+      "subcategory": "Gin",
+      "cost": 2.25
+    },
+    {
+      "name": "Blanco Tequila",
+      "shortName": "Blanco",
+      "category": "spirits",
+      "subcategory": "Tequila",
+      "cost": 2.25
+    },
+    {
+      "name": "Reposado Tequila",
+      "shortName": "Reposado",
+      "category": "spirits",
+      "subcategory": "Tequila",
+      "cost": 2.5
+    },
+    {
+      "name": "Añejo Tequila",
+      "shortName": "Añejo",
+      "category": "spirits",
+      "subcategory": "Tequila",
+      "cost": 2.75
+    },
+    {
+      "name": "Cognac",
+      "shortName": "Cognac",
+      "category": "spirits",
+      "subcategory": "Brandy",
+      "cost": 3
+    },
+    {
+      "name": "Armagnac",
+      "shortName": "Armagnac",
+      "category": "spirits",
+      "subcategory": "Brandy",
+      "cost": 3
+    },
+    {
+      "name": "Calvados",
+      "shortName": "Calvados",
+      "category": "spirits",
+      "subcategory": "Brandy",
+      "cost": 2.75
+    },
+    {
+      "name": "Triple Sec",
+      "shortName": "Triple Sec",
+      "category": "liqueurs",
+      "subcategory": "Citrus",
+      "cost": 1.75
+    },
+    {
+      "name": "Cointreau",
+      "shortName": "Cointreau",
+      "category": "liqueurs",
+      "subcategory": "Citrus",
+      "cost": 2
+    },
+    {
+      "name": "Grand Marnier",
+      "shortName": "Grand Marnier",
+      "category": "liqueurs",
+      "subcategory": "Citrus",
+      "cost": 2.25
+    },
+    {
+      "name": "Blue Curaçao",
+      "shortName": "Blue Curaçao",
+      "category": "liqueurs",
+      "subcategory": "Citrus",
+      "cost": 1.75
+    },
+    {
+      "name": "Limoncello",
+      "shortName": "Limoncello",
+      "category": "liqueurs",
+      "subcategory": "Citrus",
+      "cost": 2
+    },
+    {
+      "name": "Tia Maria",
+      "shortName": "Tia Maria",
+      "category": "liqueurs",
+      "subcategory": "Coffee",
+      "cost": 1.75
+    },
+    {
+      "name": "Kahlua",
+      "shortName": "Kahlua",
+      "category": "liqueurs",
+      "subcategory": "Coffee",
+      "cost": 1.75
+    },
+    {
+      "name": "Frangelico",
+      "shortName": "Frangelico",
+      "category": "liqueurs",
+      "subcategory": "Nut",
+      "cost": 2
+    },
+    {
+      "name": "Amaretto",
+      "shortName": "Amaretto",
+      "category": "liqueurs",
+      "subcategory": "Nut",
+      "cost": 1.75
+    },
+    {
+      "name": "Absinthe",
+      "shortName": "Absinthe",
+      "category": "liqueurs",
+      "subcategory": "Anise",
+      "cost": 2.5
+    },
+    {
+      "name": "White Sambuca",
+      "shortName": "White Sambuca",
+      "category": "liqueurs",
+      "subcategory": "Anise",
+      "cost": 2
+    },
+    {
+      "name": "Black Sambuca",
+      "shortName": "Black Sambuca",
+      "category": "liqueurs",
+      "subcategory": "Anise",
+      "cost": 2
+    },
+    {
+      "name": "Pernod",
+      "shortName": "Pernod",
+      "category": "liqueurs",
+      "subcategory": "Anise",
+      "cost": 2
+    },
+    {
+      "name": "Cherry Marnier",
+      "shortName": "Cherry Marnier",
+      "category": "liqueurs",
+      "subcategory": "Cherry",
+      "cost": 2.25
+    },
+    {
+      "name": "Maraschino Liqueur",
+      "shortName": "Maraschino",
+      "category": "liqueurs",
+      "subcategory": "Cherry",
+      "cost": 2
+    },
+    {
+      "name": "Cherry Heering",
+      "shortName": "Heering",
+      "category": "liqueurs",
+      "subcategory": "Cherry",
+      "cost": 1.75
+    },
+    {
+      "name": "Light Crème de Cacao",
+      "shortName": "Light Cacao",
+      "category": "liqueurs",
+      "subcategory": "Chocolate",
+      "cost": 1.75
+    },
+    {
+      "name": "Dark Crème de Cacao",
+      "shortName": "Dark Cacao",
+      "category": "liqueurs",
+      "subcategory": "Chocolate",
+      "cost": 1.75
+    },
+    {
+      "name": "Peach Schnapps",
+      "shortName": "Peach",
+      "category": "liqueurs",
+      "subcategory": "Fruit",
+      "cost": 1.75
+    },
+    {
+      "name": "Chambord",
+      "shortName": "Chambord",
+      "category": "liqueurs",
+      "subcategory": "Fruit",
+      "cost": 2.25
+    },
+    {
+      "name": "Melon Liqueur",
+      "shortName": "Melon",
+      "category": "liqueurs",
+      "subcategory": "Fruit",
+      "cost": 2
+    },
+    {
+      "name": "Crème Pêche",
+      "shortName": "Pêche",
+      "category": "liqueurs",
+      "subcategory": "Fruit",
+      "cost": 1.75
+    },
+    {
+      "name": "Lychee Liqueur",
+      "shortName": "Lychee",
+      "category": "liqueurs",
+      "subcategory": "Fruit",
+      "cost": 2
+    },
+    {
+      "name": "St. Germain",
+      "shortName": "St. Germain",
+      "category": "liqueurs",
+      "subcategory": "Fruit",
+      "cost": 2.25
+    },
+    {
+      "name": "Baileys",
+      "shortName": "Baileys",
+      "category": "liqueurs",
+      "subcategory": "Cream",
+      "cost": 2
+    },
+    {
+      "name": "Amarula",
+      "shortName": "Amarula",
+      "category": "liqueurs",
+      "subcategory": "Cream",
+      "cost": 2.25
+    },
+    {
+      "name": "Crème de Menthe",
+      "shortName": "Menthe",
+      "category": "liqueurs",
+      "subcategory": "Other",
+      "cost": 1.75
+    },
+    {
+      "name": "Drambuie",
+      "shortName": "Drambuie",
+      "category": "liqueurs",
+      "subcategory": "Other",
+      "cost": 2.25
+    },
+    {
+      "name": "Crème de Violette",
+      "shortName": "Violette",
+      "category": "liqueurs",
+      "subcategory": "Other",
+      "cost": 1.75
+    },
+    {
+      "name": "Angostura Bitters",
+      "shortName": "Angostura",
+      "category": "aromatics",
+      "subcategory": "Bitters",
+      "cost": 0.3
+    },
+    {
+      "name": "Peychaud's Bitters",
+      "shortName": "Peychaud's",
+      "category": "aromatics",
+      "subcategory": "Bitters",
+      "cost": 0.3
+    },
+    {
+      "name": "Orange Bitters",
+      "shortName": "Orange",
+      "category": "aromatics",
+      "subcategory": "Bitters",
+      "cost": 0.3
+    },
+    {
+      "name": "Campari",
+      "shortName": "Campari",
+      "category": "aromatics",
+      "subcategory": "Bitters",
+      "cost": 2
+    },
+    {
+      "name": "Aperol",
+      "shortName": "Aperol",
+      "category": "aromatics",
+      "subcategory": "Bitters",
+      "cost": 1.75
+    },
+    {
+      "name": "Sweet Vermouth",
+      "shortName": "Sweet",
+      "category": "aromatics",
+      "subcategory": "Vermouth",
+      "cost": 0.4
+    },
+    {
+      "name": "Dry Vermouth",
+      "shortName": "Dry",
+      "category": "aromatics",
+      "subcategory": "Vermouth",
+      "cost": 0.4
+    },
+    {
+      "name": "Semi-Dry Vermouth",
+      "shortName": "Semi-Dry",
+      "category": "aromatics",
+      "subcategory": "Vermouth",
+      "cost": 0.4
+    },
+    {
+      "name": "Lillet Blanc",
+      "shortName": "Lillet",
+      "category": "aromatics",
+      "subcategory": "Vermouth",
+      "cost": 1.75
+    },
+    {
+      "name": "Benedictine",
+      "shortName": "Benedictine",
+      "category": "aromatics",
+      "subcategory": "Other",
+      "cost": 2
+    },
+    {
+      "name": "Yellow Chartreuse",
+      "shortName": "Yellow Chartreuse",
+      "category": "aromatics",
+      "subcategory": "Other",
+      "cost": 2.5
+    },
+    {
+      "name": "Green Chartreuse",
+      "shortName": "Green Chartreuse",
+      "category": "aromatics",
+      "subcategory": "Other",
+      "cost": 2.5
+    },
+    {
+      "name": "Pinot Noir",
+      "shortName": "Pinot Noir",
+      "category": "wine",
+      "subcategory": "Red Wine",
+      "cost": 0.4
+    },
+    {
+      "name": "Cabernet Sauvignon",
+      "shortName": "Cab Sav",
+      "category": "wine",
+      "subcategory": "Red Wine",
+      "cost": 0.45
+    },
+    {
+      "name": "Rioja",
+      "shortName": "Rioja",
+      "category": "wine",
+      "subcategory": "Red Wine",
+      "cost": 0.4
+    },
+    {
+      "name": "Chardonnay",
+      "shortName": "Chardonnay",
+      "category": "wine",
+      "subcategory": "White Wine",
+      "cost": 0.4
+    },
+    {
+      "name": "Pinot Grigio",
+      "shortName": "Pinot Grigio",
+      "category": "wine",
+      "subcategory": "White Wine",
+      "cost": 0.4
+    },
+    {
+      "name": "Sauvignon Blanc",
+      "shortName": "Sauv Blanc",
+      "category": "wine",
+      "subcategory": "White Wine",
+      "cost": 0.4
+    },
+    {
+      "name": "Tempranillo Rosé",
+      "shortName": "Tempranillo Rosé",
+      "category": "wine",
+      "subcategory": "Rosé Wine",
+      "cost": 0.45
+    },
+    {
+      "name": "Champagne",
+      "shortName": "Champagne",
+      "category": "wine",
+      "subcategory": "Sparkling Wine",
+      "cost": 0.75
+    },
+    {
+      "name": "Prosecco",
+      "shortName": "Prosecco",
+      "category": "wine",
+      "subcategory": "Sparkling Wine",
+      "cost": 0.6
+    },
+    {
+      "name": "Ruby Port",
+      "shortName": "Ruby Port",
+      "category": "wine",
+      "subcategory": "Fortified",
+      "cost": 0.5
+    },
+    {
+      "name": "Tawny Port",
+      "shortName": "Tawny Port",
+      "category": "wine",
+      "subcategory": "Fortified",
+      "cost": 0.55
+    },
+    {
+      "name": "Dry Sherry",
+      "shortName": "Dry Sherry",
+      "category": "wine",
+      "subcategory": "Fortified",
+      "cost": 0.45
+    },
+    {
+      "name": "Sweet Sherry",
+      "shortName": "Sweet Sherry",
+      "category": "wine",
+      "subcategory": "Fortified",
+      "cost": 0.45
+    },
+    {
+      "name": "Ginger Wine",
+      "shortName": "Ginger Wine",
+      "category": "wine",
+      "subcategory": "Fortified",
+      "cost": 0.6
+    },
+    {
+      "name": "Ale",
+      "shortName": "Ale",
+      "category": "beer",
+      "subcategory": "Ale",
+      "cost": 0.28
+    },
+    {
+      "name": "Brown Ale",
+      "shortName": "Brown Ale",
+      "category": "beer",
+      "subcategory": "Ale",
+      "cost": 0.28
+    },
+    {
+      "name": "India Pale Ale",
+      "shortName": "IPA",
+      "category": "beer",
+      "subcategory": "Ale",
+      "cost": 0.3
+    },
+    {
+      "name": "Stout",
+      "shortName": "Stout",
+      "category": "beer",
+      "subcategory": "Stout",
+      "cost": 0.3
+    },
+    {
+      "name": "Bitter",
+      "shortName": "Bitter",
+      "category": "beer",
+      "subcategory": "Beer",
+      "cost": 0.28
+    },
+    {
+      "name": "Lager",
+      "shortName": "Lager",
+      "category": "beer",
+      "subcategory": "Beer",
+      "cost": 0.28
+    },
+    {
+      "name": "Cider",
+      "shortName": "Cider",
+      "category": "beer",
+      "subcategory": "Cider",
+      "cost": 0.28
+    },
+    {
+      "name": "Tonic Water",
+      "shortName": "Tonic",
+      "category": "mixers",
+      "subcategory": "Carbonated",
+      "cost": 0.5
+    },
+    {
+      "name": "Soda Water",
+      "shortName": "Soda Water",
+      "category": "mixers",
+      "subcategory": "Carbonated",
+      "cost": 0.25
+    },
+    {
+      "name": "Lemonade",
+      "shortName": "Lemonade",
+      "category": "mixers",
+      "subcategory": "Carbonated",
+      "cost": 0.5
+    },
+    {
+      "name": "Cola",
+      "shortName": "Cola",
+      "category": "mixers",
+      "subcategory": "Carbonated",
+      "cost": 0.5
+    },
+    {
+      "name": "Ginger Beer",
+      "shortName": "Ginger Beer",
+      "category": "mixers",
+      "subcategory": "Carbonated",
+      "cost": 0.75
+    },
+    {
+      "name": "Ginger Ale",
+      "shortName": "Ginger Ale",
+      "category": "mixers",
+      "subcategory": "Carbonated",
+      "cost": 0.5
+    },
+    {
+      "name": "Lime Juice",
+      "shortName": "Lime",
+      "category": "mixers",
+      "subcategory": "Juice",
+      "cost": 0.5
+    },
+    {
+      "name": "Lemon Juice",
+      "shortName": "Lemon",
+      "category": "mixers",
+      "subcategory": "Juice",
+      "cost": 0.5
+    },
+    {
+      "name": "Grapefruit Juice",
+      "shortName": "Grapefruit",
+      "category": "mixers",
+      "subcategory": "Juice",
+      "cost": 0.75
+    },
+    {
+      "name": "Orange Juice",
+      "shortName": "Orange",
+      "category": "mixers",
+      "subcategory": "Juice",
+      "cost": 0.75
+    },
+    {
+      "name": "Cranberry Juice",
+      "shortName": "Cranberry",
+      "category": "mixers",
+      "subcategory": "Juice",
+      "cost": 0.75
+    },
+    {
+      "name": "Pineapple Juice",
+      "shortName": "Pineapple Juice",
+      "category": "mixers",
+      "subcategory": "Juice",
+      "cost": 0.75
+    },
+    {
+      "name": "Tomato Juice",
+      "shortName": "Tomato",
+      "category": "mixers",
+      "subcategory": "Juice",
+      "cost": 0.75
+    },
+    {
+      "name": "Cream",
+      "shortName": "Cream",
+      "category": "mixers",
+      "subcategory": "Dairy",
+      "cost": 0.75
+    },
+    {
+      "name": "Half and Half",
+      "shortName": "Half & Half",
+      "category": "mixers",
+      "subcategory": "Dairy",
+      "cost": 0.75
+    },
+    {
+      "name": "Milk",
+      "shortName": "Milk",
+      "category": "mixers",
+      "subcategory": "Dairy",
+      "cost": 0.5
+    },
+    {
+      "name": "Vanilla Ice Cream",
+      "shortName": "Vanilla Ice Cream",
+      "category": "mixers",
+      "subcategory": "Dairy",
+      "cost": 1
+    },
+    {
+      "name": "Chocolate Ice Cream",
+      "shortName": "Chocolate Ice Cream",
+      "category": "mixers",
+      "subcategory": "Dairy",
+      "cost": 1
+    },
+    {
+      "name": "Espresso",
+      "shortName": "Espresso",
+      "category": "mixers",
+      "subcategory": "Other",
+      "cost": 1
+    },
+    {
+      "name": "Earl Grey Tea",
+      "shortName": "Earl Grey",
+      "category": "mixers",
+      "subcategory": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Coconut Cream",
+      "shortName": "Coconut Cream",
+      "category": "mixers",
+      "subcategory": "Other",
+      "cost": 0.75
+    },
+    {
+      "name": "Coffee",
+      "shortName": "Coffee",
+      "category": "mixers",
+      "subcategory": "Other",
+      "cost": 0.75
+    },
+    {
+      "name": "Tea",
+      "shortName": "Tea",
+      "category": "mixers",
+      "subcategory": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Lemon Wedge",
+      "shortName": "Lemon Wedge",
+      "category": "fruit",
+      "subcategory": "Citrus",
+      "cost": 0.25
+    },
+    {
+      "name": "Lime Wedge",
+      "shortName": "Lime Wedge",
+      "category": "fruit",
+      "subcategory": "Citrus",
+      "cost": 0.25
+    },
+    {
+      "name": "Orange Wedge",
+      "shortName": "Orange Wedge",
+      "category": "fruit",
+      "subcategory": "Citrus",
+      "cost": 0.25
+    },
+    {
+      "name": "Grapefruit Wedge",
+      "shortName": "Grapefruit Wedge",
+      "category": "fruit",
+      "subcategory": "Citrus",
+      "cost": 0.25
+    },
+    {
+      "name": "Raspberry",
+      "shortName": "Raspberry",
+      "category": "fruit",
+      "subcategory": "Berries",
+      "cost": 0.25
+    },
+    {
+      "name": "Strawberry",
+      "shortName": "Strawberry",
+      "category": "fruit",
+      "subcategory": "Berries",
+      "cost": 0.25
+    },
+    {
+      "name": "Blackberry",
+      "shortName": "Blackberry",
+      "category": "fruit",
+      "subcategory": "Berries",
+      "cost": 0.25
+    },
+    {
+      "name": "Blueberry",
+      "shortName": "Blueberry",
+      "category": "fruit",
+      "subcategory": "Berries",
+      "cost": 0.25
+    },
+    {
+      "name": "Apple Slice",
+      "shortName": "Apple Slice",
+      "category": "fruit",
+      "subcategory": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Pear Slice",
+      "shortName": "Pear Slice",
+      "category": "fruit",
+      "subcategory": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "White Grape",
+      "shortName": "White Grape",
+      "category": "fruit",
+      "subcategory": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Black Grape",
+      "shortName": "Black Grape",
+      "category": "fruit",
+      "subcategory": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Melon Chunk",
+      "shortName": "Melon Chunk",
+      "category": "fruit",
+      "subcategory": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Lychee",
+      "shortName": "Lychee",
+      "category": "fruit",
+      "subcategory": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Pineapple Chunk",
+      "shortName": "Pineapple Chunk",
+      "category": "fruit",
+      "subcategory": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Watermelon Slice",
+      "shortName": "Watermelon Slice",
+      "category": "fruit",
+      "subcategory": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Gomme Syrup",
+      "shortName": "Gomme",
+      "category": "sweeteners",
+      "subcategory": "Syrups",
+      "cost": 0.5
+    },
+    {
+      "name": "Grenadine",
+      "shortName": "Grenadine",
+      "category": "sweeteners",
+      "subcategory": "Syrups",
+      "cost": 0.5
+    },
+    {
+      "name": "Lime Cordial",
+      "shortName": "Lime Cordial",
+      "category": "sweeteners",
+      "subcategory": "Syrups",
+      "cost": 0.25
+    },
+    {
+      "name": "Blackcurrant Cordial",
+      "shortName": "Blackcurrant",
+      "category": "sweeteners",
+      "subcategory": "Syrups",
+      "cost": 0.5
+    },
+    {
+      "name": "Raspberry Syrup",
+      "shortName": "Raspberry Syrup",
+      "category": "sweeteners",
+      "subcategory": "Syrups",
+      "cost": 0.5
+    },
+    {
+      "name": "Passion Fruit Syrup",
+      "shortName": "Passion Fruit",
+      "category": "sweeteners",
+      "subcategory": "Syrups",
+      "cost": 0.75
+    },
+    {
+      "name": "Orgeat",
+      "shortName": "Orgeat",
+      "category": "sweeteners",
+      "subcategory": "Syrups",
+      "cost": 0.75
+    },
+    {
+      "name": "Vanilla Syrup",
+      "shortName": "Vanilla Syrup",
+      "category": "sweeteners",
+      "subcategory": "Syrups",
+      "cost": 0.5
+    },
+    {
+      "name": "Chocolate Syrup",
+      "shortName": "Chocolate Syrup",
+      "category": "sweeteners",
+      "subcategory": "Syrups",
+      "cost": 0.5
+    },
+    {
+      "name": "Strawberry Syrup",
+      "shortName": "Strawberry Syrup",
+      "category": "sweeteners",
+      "subcategory": "Syrups",
+      "cost": 0.5
+    },
+    {
+      "name": "Sugar Cube",
+      "shortName": "Sugar Cube",
+      "category": "sweeteners",
+      "subcategory": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Honey",
+      "shortName": "Honey",
+      "category": "sweeteners",
+      "subcategory": "Other",
+      "cost": 0.75
+    },
+    {
+      "name": "Maple Syrup",
+      "shortName": "Maple Syrup",
+      "category": "sweeteners",
+      "subcategory": "Other",
+      "cost": 0.75
+    },
+    {
+      "name": "Egg White",
+      "shortName": "Egg White",
+      "category": "other",
+      "subcategory": "Eggs",
+      "cost": 0.25
+    },
+    {
+      "name": "Egg Yolk",
+      "shortName": "Egg Yolk",
+      "category": "other",
+      "subcategory": "Eggs",
+      "cost": 0.25
+    },
+    {
+      "name": "Whole Egg",
+      "shortName": "Whole Egg",
+      "category": "other",
+      "subcategory": "Eggs",
+      "cost": 0.25
+    },
+    {
+      "name": "Mint Leaf",
+      "shortName": "Mint Leaf",
+      "category": "other",
+      "subcategory": "Herbs",
+      "cost": 0.25
+    },
+    {
+      "name": "Rosemary Sprig",
+      "shortName": "Rosemary Sprig",
+      "category": "other",
+      "subcategory": "Herbs",
+      "cost": 0.25
+    },
+    {
+      "name": "Thyme Sprig",
+      "shortName": "Thyme Sprig",
+      "category": "other",
+      "subcategory": "Herbs",
+      "cost": 0.25
+    },
+    {
+      "name": "Basil Leaf",
+      "shortName": "Basil Leaf",
+      "category": "other",
+      "subcategory": "Herbs",
+      "cost": 0.25
+    },
+    {
+      "name": "Worcestershire Sauce",
+      "shortName": "Worcestershire",
+      "category": "other",
+      "subcategory": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Tabasco Sauce",
+      "shortName": "Tabasco",
+      "category": "other",
+      "subcategory": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Olive Brine",
+      "shortName": "Olive Brine",
+      "category": "other",
+      "subcategory": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Green Food Coloring",
+      "shortName": "Green Food",
+      "category": "other",
+      "subcategory": "Other",
+      "cost": 0.1
+    },
+    {
+      "name": "Black Food Coloring",
+      "shortName": "Black Food",
+      "category": "other",
+      "subcategory": "Other",
+      "cost": 0.1
+    },
+    {
+      "name": "Celery Salt",
+      "shortName": "Celery Salt",
+      "category": "other",
+      "subcategory": "Other",
+      "cost": 0.25
+    }
+  ],
+  "garnishes": [
+    {
+      "name": "None",
+      "shortName": "None",
+      "category": "Other",
+      "cost": 0
+    },
+    {
+      "name": "Lemon Twist",
+      "shortName": "Lemon Twist",
+      "category": "Citrus",
+      "cost": 0.25
+    },
+    {
+      "name": "Lemon Wedge",
+      "shortName": "Lemon Wedge",
+      "category": "Citrus",
+      "cost": 0.25
+    },
+    {
+      "name": "Lemon Wheel",
+      "shortName": "Lemon Wheel",
+      "category": "Citrus",
+      "cost": 0.25
+    },
+    {
+      "name": "Lime Twist",
+      "shortName": "Lime Twist",
+      "category": "Citrus",
+      "cost": 0.25
+    },
+    {
+      "name": "Lime Wedge",
+      "shortName": "Lime Wedge",
+      "category": "Citrus",
+      "cost": 0.25
+    },
+    {
+      "name": "Lime Wheel",
+      "shortName": "Lime Wheel",
+      "category": "Citrus",
+      "cost": 0.25
+    },
+    {
+      "name": "Orange Twist",
+      "shortName": "Orange Twist",
+      "category": "Citrus",
+      "cost": 0.25
+    },
+    {
+      "name": "Orange Wedge",
+      "shortName": "Orange Wedge",
+      "category": "Citrus",
+      "cost": 0.25
+    },
+    {
+      "name": "Orange Wheel",
+      "shortName": "Orange Wheel",
+      "category": "Citrus",
+      "cost": 0.25
+    },
+    {
+      "name": "Grapefruit Twist",
+      "shortName": "Grapefruit Twist",
+      "category": "Citrus",
+      "cost": 0.25
+    },
+    {
+      "name": "Flaming Orange Zest",
+      "shortName": "Flaming Orange",
+      "category": "Citrus",
+      "cost": 0.3
+    },
+    {
+      "name": "Maraschino Cherry",
+      "shortName": "Cherry",
+      "category": "Fruit",
+      "cost": 0.25
+    },
+    {
+      "name": "Raspberry",
+      "shortName": "Raspberry",
+      "category": "Fruit",
+      "cost": 0.25
+    },
+    {
+      "name": "Strawberry",
+      "shortName": "Strawberry",
+      "category": "Fruit",
+      "cost": 0.25
+    },
+    {
+      "name": "Lychee",
+      "shortName": "Lychee",
+      "category": "Fruit",
+      "cost": 0.25
+    },
+    {
+      "name": "Blackberry",
+      "shortName": "Blackberry",
+      "category": "Fruit",
+      "cost": 0.25
+    },
+    {
+      "name": "Blueberry",
+      "shortName": "Blueberry",
+      "category": "Fruit",
+      "cost": 0.25
+    },
+    {
+      "name": "White Grape",
+      "shortName": "White Grape",
+      "category": "Fruit",
+      "cost": 0.25
+    },
+    {
+      "name": "Black Grape",
+      "shortName": "Black Grape",
+      "category": "Fruit",
+      "cost": 0.25
+    },
+    {
+      "name": "Pineapple Chunk",
+      "shortName": "Pineapple",
+      "category": "Fruit",
+      "cost": 0.25
+    },
+    {
+      "name": "Pineapple Leaf",
+      "shortName": "Pineapple Leaf",
+      "category": "Fruit",
+      "cost": 0.25
+    },
+    {
+      "name": "Apple Slice",
+      "shortName": "Apple",
+      "category": "Fruit",
+      "cost": 0.25
+    },
+    {
+      "name": "Pear Slice",
+      "shortName": "Pear Slice",
+      "category": "Fruit",
+      "cost": 0.25
+    },
+    {
+      "name": "Watermelon Slice",
+      "shortName": "Watermelon",
+      "category": "Fruit",
+      "cost": 0.25
+    },
+    {
+      "name": "Mint Sprig",
+      "shortName": "Mint",
+      "category": "Herb",
+      "cost": 0.25
+    },
+    {
+      "name": "Rosemary Sprig",
+      "shortName": "Rosemary",
+      "category": "Herb",
+      "cost": 0.25
+    },
+    {
+      "name": "Thyme Sprig",
+      "shortName": "Thyme",
+      "category": "Herb",
+      "cost": 0.25
+    },
+    {
+      "name": "Basil Leaf",
+      "shortName": "Basil Leaf",
+      "category": "Herb",
+      "cost": 0.25
+    },
+    {
+      "name": "Cinnamon Stick",
+      "shortName": "Cinnamon",
+      "category": "Spice",
+      "cost": 0.25
+    },
+    {
+      "name": "Chocolate Shavings",
+      "shortName": "Chocolate",
+      "category": "Spice",
+      "cost": 0.25
+    },
+    {
+      "name": "Grated Nutmeg",
+      "shortName": "Nutmeg",
+      "category": "Spice",
+      "cost": 0.25
+    },
+    {
+      "name": "Star Anise",
+      "shortName": "Anise",
+      "category": "Spice",
+      "cost": 0.25
+    },
+    {
+      "name": "Black Pepper",
+      "shortName": "Pepper",
+      "category": "Spice",
+      "cost": 0.25
+    },
+    {
+      "name": "Smoked Paprika",
+      "shortName": "Paprika",
+      "category": "Spice",
+      "cost": 0.25
+    },
+    {
+      "name": "Salt Rim",
+      "shortName": "Salt Rim",
+      "category": "Rim",
+      "cost": 0.25
+    },
+    {
+      "name": "Sugar Rim",
+      "shortName": "Sugar Rim",
+      "category": "Rim",
+      "cost": 0.25
+    },
+    {
+      "name": "Celery Salt Rim",
+      "shortName": "Celery Salt",
+      "category": "Rim",
+      "cost": 0.25
+    },
+    {
+      "name": "Olive",
+      "shortName": "Olive",
+      "category": "Fruit",
+      "cost": 0.25
+    },
+    {
+      "name": "Cocktail Onion",
+      "shortName": "Onion",
+      "category": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Cucumber Slice",
+      "shortName": "Cucumber",
+      "category": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Celery Stalk",
+      "shortName": "Celery Stalk",
+      "category": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Jalapeño Slice",
+      "shortName": "Jalapeño",
+      "category": "Other",
+      "cost": 0.25
+    },
+    {
+      "name": "Coffee Beans",
+      "shortName": "Coffee Beans",
+      "category": "Other",
+      "cost": 0.2
+    }
+  ],
+  "glassware": [
+    {
+      "name": "Pint Glass",
+      "shortName": "Pint",
+      "category": "beer"
+    },
+    {
+      "name": "Half Pint Glass",
+      "shortName": "Half Pint",
+      "category": "beer"
+    },
+    {
+      "name": "Pilsner Glass",
+      "shortName": "Pilsner",
+      "category": "beer"
+    },
+    {
+      "name": "Weizen Glass",
+      "shortName": "Weizen",
+      "category": "beer"
+    },
+    {
+      "name": "Red Wine Glass",
+      "shortName": "Red Wine",
+      "category": "wine"
+    },
+    {
+      "name": "White Wine Glass",
+      "shortName": "White Wine",
+      "category": "wine"
+    },
+    {
+      "name": "Wine Goblet",
+      "shortName": "Wine Goblet",
+      "category": "wine"
+    },
+    {
+      "name": "Champagne Flute",
+      "shortName": "Flute",
+      "category": "wine"
+    },
+    {
+      "name": "Champagne Coupe",
+      "shortName": "Coupe",
+      "category": "wine"
+    },
+    {
+      "name": "Sherry Glass",
+      "shortName": "Sherry",
+      "category": "wine"
+    },
+    {
+      "name": "Irish Coffee Glass",
+      "shortName": "Irish Coffee",
+      "category": "specialty"
+    },
+    {
+      "name": "Copper Mug",
+      "shortName": "Copper Mug",
+      "category": "specialty"
+    },
+    {
+      "name": "Julep Cup",
+      "shortName": "Julep",
+      "category": "specialty"
+    },
+    {
+      "name": "Tulip Whisky Glass",
+      "shortName": "Tulip Whisky",
+      "category": "specialty"
+    },
+    {
+      "name": "Absinthe Glass",
+      "shortName": "Absinthe",
+      "category": "specialty"
+    },
+    {
+      "name": "Highball Glass",
+      "shortName": "Highball",
+      "category": "tall"
+    },
+    {
+      "name": "Collins Glass",
+      "shortName": "Collins",
+      "category": "tall"
+    },
+    {
+      "name": "Milkshake Glass",
+      "shortName": "Milkshake",
+      "category": "tall"
+    },
+    {
+      "name": "Shot Glass",
+      "shortName": "Shot",
+      "category": "short"
+    },
+    {
+      "name": "Shooter Glass",
+      "shortName": "Shooter",
+      "category": "short"
+    },
+    {
+      "name": "Vodka Glass",
+      "shortName": "Vodka",
+      "category": "short"
+    },
+    {
+      "name": "Rocks Glass",
+      "shortName": "Rocks",
+      "category": "short"
+    },
+    {
+      "name": "Old Fashioned Glass",
+      "shortName": "Old Fashioned",
+      "category": "short"
+    },
+    {
+      "name": "Brandy Snifter",
+      "shortName": "Snifter",
+      "category": "short"
+    },
+    {
+      "name": "Martini Glass",
+      "shortName": "Martini",
+      "category": "cocktail"
+    },
+    {
+      "name": "Margarita Glass",
+      "shortName": "Margarita",
+      "category": "cocktail"
+    },
+    {
+      "name": "Cosmopolitan Glass",
+      "shortName": "Cosmo",
+      "category": "cocktail"
+    },
+    {
+      "name": "Hurricane Glass",
+      "shortName": "Hurricane",
+      "category": "cocktail"
+    },
+    {
+      "name": "Zombie Glass",
+      "shortName": "Zombie",
+      "category": "cocktail"
+    },
+    {
+      "name": "Sling Glass",
+      "shortName": "Sling",
+      "category": "cocktail"
+    }
+  ],
+  "drinks": [
+    {
+      "name": "Cosmopolitan",
+      "description": "A modern classic vodka cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Triple Sec",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Cranberry Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Cosmopolitan Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Flaming Orange Zest"
+        ],
+        "acceptable": [
+          "Orange Twist"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "Cosmopolitan"
+    },
+    {
+      "name": "Negroni",
+      "description": "A classic Italian aperitif cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Campari",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Sweet Vermouth",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Orange Twist"
+        ],
+        "acceptable": [
+          "Orange Wheel",
+          "Orange Wedge"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Negroni"
+    },
+    {
+      "name": "Daiquiri",
+      "description": "A classic Cuban rum cocktail",
+      "recipe": [
+        {
+          "ingredientName": "White Rum",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.75
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lime Wheel"
+        ],
+        "acceptable": [
+          "Lime Twist",
+          "Lime Wedge"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Daiquiri"
+    },
+    {
+      "name": "Whiskey Sour",
+      "description": "A classic whiskey cocktail with citrus",
+      "recipe": [
+        {
+          "ingredientName": "Bourbon Whiskey",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.75
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lemon Wedge",
+          "Maraschino Cherry"
+        ],
+        "acceptable": [
+          "Lemon Twist",
+          "Lemon Wheel"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Whiskey Sour"
+    },
+    {
+      "name": "Tom Collins",
+      "description": "A refreshing gin highball cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Soda Water",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Collins Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lemon Wheel"
+        ],
+        "acceptable": [
+          "Lemon Twist"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Tom Collins"
+    },
+    {
+      "name": "Mai Tai",
+      "description": "A classic tiki cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Dark Rum",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Golden Rum",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Orgeat",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Orange Bitters",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "Crushed",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Hurricane Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Mint Sprig"
+        ],
+        "acceptable": [
+          "Pineapple Leaf"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "Mai Tai"
+    },
+    {
+      "name": "Gimlet",
+      "description": "A classic gin and lime cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lime Twist"
+        ],
+        "acceptable": [
+          "Lime Wheel"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Gimlet"
+    },
+    {
+      "name": "Dark 'n' Stormy",
+      "description": "A classic rum and ginger beer cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Dark Rum",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Ginger Beer",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lime Wheel"
+        ],
+        "acceptable": [
+          "Lime Wedge"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Dark 'n' Stormy"
+    },
+    {
+      "name": "Sazerac",
+      "description": "A classic New Orleans cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Rye Whiskey",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Peychaud's Bitters",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Absinthe",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lemon Twist"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Sazerac"
+    },
+    {
+      "name": "Gin Martini",
+      "description": "The classic gin cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 2.5
+        },
+        {
+          "ingredientName": "Dry Vermouth",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lemon Twist"
+        ],
+        "acceptable": [
+          "Olive"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Martini"
+    },
+    {
+      "name": "Vodka Martini",
+      "description": "A vodka-based martini variation",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 2.5
+        },
+        {
+          "ingredientName": "Dry Vermouth",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lemon Twist"
+        ],
+        "acceptable": [
+          "Olive"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "Martini"
+    },
+    {
+      "name": "Dirty Martini",
+      "description": "A martini with olive brine for a savory twist",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Dry Vermouth",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Olive Brine",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Olive"
+        ],
+        "acceptable": [
+          "Lemon Twist"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "Martini"
+    },
+    {
+      "name": "Vesper",
+      "description": "James Bond's signature cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 3
+        },
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Lillet Blanc",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lemon Twist"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "Martini"
+    },
+    {
+      "name": "Rob Roy",
+      "description": "A Scotch-based Manhattan variation",
+      "recipe": [
+        {
+          "ingredientName": "Blended Scotch",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Sweet Vermouth",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Angostura Bitters",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Rob Roy"
+    },
+    {
+      "name": "Sidecar",
+      "description": "A classic brandy cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Cognac",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Cointreau",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Sugar Rim"
+        ],
+        "acceptable": [
+          "Lemon Twist",
+          "Orange Twist"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Sidecar"
+    },
+    {
+      "name": "Mint Julep",
+      "description": "A classic Kentucky Derby cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Bourbon Whiskey",
+          "amountOz": 2.5
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Mint Leaf",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "Crushed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Julep Cup"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Mint Sprig"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Julep"
+    },
+    {
+      "name": "Rusty Nail",
+      "description": "A classic scotch and honey liqueur cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Blended Scotch",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Drambuie",
+          "amountOz": 0.75
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lemon Twist"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Rusty Nail"
+    },
+    {
+      "name": "White Lady",
+      "description": "A classic gin cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Cointreau",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Egg White",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [
+          "Lemon Twist",
+          "Orange Twist"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "White Lady"
+    },
+    {
+      "name": "Bobby Burns",
+      "description": "A classic scotch and vermouth cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Blended Scotch",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Sweet Vermouth",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Benedictine",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lemon Twist"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Bobby Burns"
+    },
+    {
+      "name": "Clover Club",
+      "description": "A classic gin cocktail with raspberry",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Raspberry Syrup",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Egg White",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Raspberry"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Clover Club"
+    },
+    {
+      "name": "Death in the Afternoon",
+      "description": "A classic Hemingway cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Absinthe",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Champagne",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Champagne Flute"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Death in the Afternoon"
+    },
+    {
+      "name": "El Presidente",
+      "description": "A Cuban classic cocktail",
+      "recipe": [
+        {
+          "ingredientName": "White Rum",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Dry Vermouth",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Cointreau",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Grenadine",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "El Presidente"
+    },
+    {
+      "name": "Hemingway Daiquiri",
+      "description": "A variation of the classic Daiquiri",
+      "recipe": [
+        {
+          "ingredientName": "White Rum",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Grapefruit Juice",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Maraschino Liqueur",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Grapefruit Twist"
+        ],
+        "acceptable": [
+          "Lime Twist",
+          "Maraschino Cherry"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Daiquiri"
+    },
+    {
+      "name": "Monkey Gland",
+      "description": "A classic gin cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Orange Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Absinthe",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Grenadine",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Monkey Gland"
+    },
+    {
+      "name": "Remember the Maine",
+      "description": "A variation of the Manhattan",
+      "recipe": [
+        {
+          "ingredientName": "Rye Whiskey",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Sweet Vermouth",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Cherry Heering",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Absinthe",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Manhattan"
+    },
+    {
+      "name": "Saturn",
+      "description": "A tiki-style gin cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Passion Fruit Syrup",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Orgeat",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "Crushed",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Hurricane Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "Saturn"
+    },
+    {
+      "name": "Ti' Punch",
+      "description": "A classic Caribbean cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Rhum Agricole",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "Ti' Punch"
+    },
+    {
+      "name": "Vieux Mot",
+      "description": "A variation of the Corpse Reviver No. 2",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Lillet Blanc",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Vieux Mot"
+    },
+    {
+      "name": "Warday's Sour",
+      "description": "A variation of the Gin Sour with bitters",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Angostura Bitters",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Sour"
+    },
+    {
+      "name": "Warday's",
+      "description": "A balanced cocktail with Calvados, vermouth, and gin, finished with Chartreuse",
+      "recipe": [
+        {
+          "ingredientName": "Calvados",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Sweet Vermouth",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Gin",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Green Chartreuse",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "None"
+    },
+    {
+      "name": "Red Wine",
+      "description": "A glass of red wine",
+      "recipe": [
+        {
+          "ingredientName": "Pinot Noir",
+          "amountOz": 6
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Red Wine Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Regular",
+      "style": "Wine",
+      "family": "Red Wine"
+    },
+    {
+      "name": "White Wine",
+      "description": "A glass of white wine",
+      "recipe": [
+        {
+          "ingredientName": "Chardonnay",
+          "amountOz": 5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "White Wine Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Regular",
+      "style": "Wine",
+      "family": "White Wine"
+    },
+    {
+      "name": "Champagne",
+      "description": "A glass of champagne",
+      "recipe": [
+        {
+          "ingredientName": "Champagne",
+          "amountOz": 6
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Champagne Flute"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Regular",
+      "style": "Wine",
+      "family": "Champagne"
+    },
+    {
+      "name": "Stout",
+      "description": "A pint of stout",
+      "recipe": [
+        {
+          "ingredientName": "Stout",
+          "amountOz": 12
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "Stout"
+    },
+    {
+      "name": "Ale",
+      "description": "A pint of ale",
+      "recipe": [
+        {
+          "ingredientName": "Ale",
+          "amountOz": 12
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "Ale"
+    },
+    {
+      "name": "IPA",
+      "description": "A pint of IPA",
+      "recipe": [
+        {
+          "ingredientName": "India Pale Ale",
+          "amountOz": 12
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "IPA"
+    },
+    {
+      "name": "Cider",
+      "description": "A pint of cider",
+      "recipe": [
+        {
+          "ingredientName": "Cider",
+          "amountOz": 12
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "Cider"
+    },
+    {
+      "name": "Bourbon Neat",
+      "description": "Bourbon whiskey served neat",
+      "recipe": [
+        {
+          "ingredientName": "Bourbon Whiskey",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Regular",
+      "style": "Spirits",
+      "family": "None"
+    },
+    {
+      "name": "Scotch Neat",
+      "description": "Single malt scotch served neat",
+      "recipe": [
+        {
+          "ingredientName": "Single Malt Scotch",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Regular",
+      "style": "Spirits",
+      "family": "None"
+    },
+    {
+      "name": "Bourbon on the Rocks",
+      "description": "Bourbon whiskey served over ice",
+      "recipe": [
+        {
+          "ingredientName": "Bourbon Whiskey",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Regular",
+      "style": "Spirits",
+      "family": "None"
+    },
+    {
+      "name": "Scotch on the Rocks",
+      "description": "Single malt scotch served over ice",
+      "recipe": [
+        {
+          "ingredientName": "Single Malt Scotch",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Regular",
+      "style": "Spirits",
+      "family": "None"
+    },
+    {
+      "name": "Absinthe",
+      "description": "Traditional absinthe served with water",
+      "recipe": [
+        {
+          "ingredientName": "Absinthe",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Absinthe Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Regular",
+      "style": "Spirits",
+      "family": "None"
+    },
+    {
+      "name": "Pernod",
+      "description": "French anise liqueur served with water",
+      "recipe": [
+        {
+          "ingredientName": "Pernod",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Regular",
+      "style": "Spirits",
+      "family": "None"
+    },
+    {
+      "name": "Sambuca",
+      "description": "Italian anise liqueur served with coffee beans",
+      "recipe": [
+        {
+          "ingredientName": "White Sambuca",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Coffee Beans"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": false
+      },
+      "category": "Regular",
+      "style": "Spirits",
+      "family": "None"
+    },
+    {
+      "name": "Gin and Tonic",
+      "description": "A classic gin highball",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Tonic Water",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lime Wedge"
+        ],
+        "acceptable": [
+          "Lime Wheel"
+        ],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Spirit Mixer",
+      "family": "None"
+    },
+    {
+      "name": "Vodka & Soda",
+      "description": "A simple highball drink",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Soda Water",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Spirit Mixer",
+      "family": "None"
+    },
+    {
+      "name": "Rum & Cola",
+      "description": "A classic highball drink",
+      "recipe": [
+        {
+          "ingredientName": "Golden Rum",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Cola",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Spirit Mixer",
+      "family": "None"
+    },
+    {
+      "name": "Rum and Ginger Ale",
+      "description": "A refreshing rum highball with ginger ale",
+      "recipe": [
+        {
+          "ingredientName": "Golden Rum",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Ginger Ale",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lime Wedge"
+        ],
+        "acceptable": [
+          "Lime Wheel"
+        ],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Spirit Mixer",
+      "family": "None"
+    },
+    {
+      "name": "Vodka and Tonic",
+      "description": "A simple vodka highball with tonic",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Tonic Water",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lime Wedge"
+        ],
+        "acceptable": [
+          "Lime Wheel"
+        ],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Spirit Mixer",
+      "family": "None"
+    },
+    {
+      "name": "Whisky and Coke",
+      "description": "A classic whiskey highball with cola",
+      "recipe": [
+        {
+          "ingredientName": "Bourbon Whiskey",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Cola",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Spirit Mixer",
+      "family": "None"
+    },
+    {
+      "name": "Brandy and Coke",
+      "description": "A smooth brandy highball with cola",
+      "recipe": [
+        {
+          "ingredientName": "Cognac",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Cola",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Spirit Mixer",
+      "family": "None"
+    },
+    {
+      "name": "Brandy and Ginger",
+      "description": "A warming brandy highball with ginger ale",
+      "recipe": [
+        {
+          "ingredientName": "Cognac",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Ginger Ale",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lemon Wedge"
+        ],
+        "acceptable": [
+          "Lemon Wheel"
+        ],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Spirit Mixer",
+      "family": "None"
+    },
+    {
+      "name": "Gin and Orange Juice",
+      "description": "A refreshing gin highball with orange juice",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Orange Juice",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Orange Wedge"
+        ],
+        "acceptable": [
+          "Orange Wheel"
+        ],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Spirit Mixer",
+      "family": "None"
+    },
+    {
+      "name": "Vodka Cranberry",
+      "description": "A tart vodka highball with cranberry juice",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Cranberry Juice",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lime Wedge"
+        ],
+        "acceptable": [
+          "Lime Wheel"
+        ],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Spirit Mixer",
+      "family": "None"
+    },
+    {
+      "name": "Vodka Lemonade",
+      "description": "A refreshing vodka highball with lemonade",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lemonade",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lemon Wedge"
+        ],
+        "acceptable": [
+          "Lemon Wheel"
+        ],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Spirit Mixer",
+      "family": "None"
+    },
+    {
+      "name": "Old Fashioned",
+      "description": "The original cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Bourbon Whiskey",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Angostura Bitters",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Orange Twist"
+        ],
+        "acceptable": [
+          "Orange Wheel"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Old Fashioned"
+    },
+    {
+      "name": "Manhattan",
+      "description": "A classic whiskey cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Rye Whiskey",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Sweet Vermouth",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Angostura Bitters",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Orange Twist"
+        ],
+        "acceptable": [
+          "Maraschino Cherry"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Manhattan"
+    },
+    {
+      "name": "Moscow Mule",
+      "description": "A classic vodka and ginger beer cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Ginger Beer",
+          "amountOz": 4
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Copper Mug"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lime Wheel"
+        ],
+        "acceptable": [
+          "Lime Wedge"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "None"
+    },
+    {
+      "name": "Brandy Sidecar",
+      "description": "A classic brandy cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Cognac",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Cointreau",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Sidecar"
+    },
+    {
+      "name": "Margarita",
+      "description": "A classic tequila cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Blanco Tequila",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Triple Sec",
+          "amountOz": 0.75
+        }
+      ],
+      "requiredIce": "Crushed",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Margarita Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lime Wheel"
+        ],
+        "acceptable": [
+          "Salt Rim"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Margarita"
+    },
+    {
+      "name": "Mojito",
+      "description": "A refreshing rum cocktail",
+      "recipe": [
+        {
+          "ingredientName": "White Rum",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Mint Leaf",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Soda Water",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "Crushed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Mint Sprig"
+        ],
+        "acceptable": [
+          "Lime Wheel"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Mojito"
+    },
+    {
+      "name": "Espresso Martini",
+      "description": "A modern coffee cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Kahlua",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Espresso",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Coffee Beans"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "Espresso Martini"
+    },
+    {
+      "name": "Long Island Iced Tea",
+      "description": "A strong mixed drink",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Gin",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "White Rum",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Blanco Tequila",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Triple Sec",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Cola",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "Long Island Iced Tea"
+    },
+    {
+      "name": "Champagne Cocktail",
+      "description": "A classic champagne cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Champagne",
+          "amountOz": 4
+        },
+        {
+          "ingredientName": "Sugar Cube",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Angostura Bitters",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Champagne Flute"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Champagne Cocktail"
+    },
+    {
+      "name": "French 75",
+      "description": "A champagne and gin cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Champagne",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Champagne Flute"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": false
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "French 75"
+    },
+    {
+      "name": "Pina Colada",
+      "description": "A tropical rum cocktail",
+      "recipe": [
+        {
+          "ingredientName": "White Rum",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Coconut Cream",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Pineapple Juice",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "Crushed",
+      "requiredMethod": "Blend",
+      "glassRequirement": {
+        "ideal": [
+          "Hurricane Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Pineapple Leaf"
+        ],
+        "acceptable": [
+          "Pineapple Chunk"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "Pina Colada"
+    },
+    {
+      "name": "French Martini",
+      "description": "A modern vodka cocktail with raspberry liqueur",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Chambord",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Pineapple Juice",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Raspberry"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "Martini"
+    },
+    {
+      "name": "Brain Haemorrhage",
+      "description": "A layered shot with a dramatic appearance",
+      "recipe": [
+        {
+          "ingredientName": "Peach Schnapps",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Baileys",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Grenadine",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Shot Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "None"
+    },
+    {
+      "name": "Tequila Sunrise",
+      "description": "A layered cocktail with a sunrise effect",
+      "recipe": [
+        {
+          "ingredientName": "Blanco Tequila",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Orange Juice",
+          "amountOz": 4
+        },
+        {
+          "ingredientName": "Grenadine",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "None"
+    },
+    {
+      "name": "Blue Lagoon",
+      "description": "A refreshing blue cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Blue Curaçao",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Lemonade",
+          "amountOz": 3
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "None"
+    },
+    {
+      "name": "Grasshopper",
+      "description": "A minty chocolate cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Crème de Menthe",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Light Crème de Cacao",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Cream",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "None"
+    },
+    {
+      "name": "Bloody Mary",
+      "description": "A savory cocktail with a spicy kick",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Tomato Juice",
+          "amountOz": 4
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Worcestershire Sauce",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Tabasco Sauce",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Celery Salt",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Celery Salt Rim",
+          "Celery Stalk"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "None"
+    },
+    {
+      "name": "Sex on the Beach",
+      "description": "A fruity vodka cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Peach Schnapps",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Orange Juice",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Cranberry Juice",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "None"
+    },
+    {
+      "name": "Shirley Temple",
+      "description": "A non-alcoholic classic",
+      "recipe": [
+        {
+          "ingredientName": "Ginger Ale",
+          "amountOz": 4
+        },
+        {
+          "ingredientName": "Grenadine",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Maraschino Cherry"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Party",
+      "family": "None"
+    },
+    {
+      "name": "Black Velvet",
+      "description": "A mix of stout and champagne",
+      "recipe": [
+        {
+          "ingredientName": "Stout",
+          "amountOz": 6
+        },
+        {
+          "ingredientName": "Champagne",
+          "amountOz": 6
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Party",
+      "family": "None"
+    },
+    {
+      "name": "Snakebite and Black",
+      "description": "A mix of lager, cider, and blackcurrant",
+      "recipe": [
+        {
+          "ingredientName": "Lager",
+          "amountOz": 6
+        },
+        {
+          "ingredientName": "Cider",
+          "amountOz": 6
+        },
+        {
+          "ingredientName": "Blackcurrant Cordial",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Party",
+      "family": "None"
+    },
+    {
+      "name": "New York Flip",
+      "description": "A rich and creamy bourbon cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Bourbon Whiskey",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Sweet Vermouth",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Whole Egg",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Angostura Bitters",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "None"
+    },
+    {
+      "name": "Godfather",
+      "description": "A simple but sophisticated Scotch cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Blended Scotch",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Amaretto",
+          "amountOz": 0.75
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "None"
+    },
+    {
+      "name": "White Russian",
+      "description": "A creamy coffee-flavored cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Kahlua",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Cream",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Coffee Beans"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "None"
+    },
+    {
+      "name": "Black Russian",
+      "description": "A simple coffee-flavored cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Kahlua",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "None"
+    },
+    {
+      "name": "Amarula Espresso",
+      "description": "A luxurious coffee cocktail with Amarula cream liqueur",
+      "recipe": [
+        {
+          "ingredientName": "Amarula",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Espresso",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Cream",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "None"
+    },
+    {
+      "name": "Armagnac Sidecar",
+      "description": "A sophisticated brandy cocktail using Armagnac",
+      "recipe": [
+        {
+          "ingredientName": "Armagnac",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Cointreau",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Sidecar"
+    },
+    {
+      "name": "Canadian Manhattan",
+      "description": "A smooth variation of the Manhattan using Canadian Whiskey",
+      "recipe": [
+        {
+          "ingredientName": "Canadian Whiskey",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Sweet Vermouth",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Angostura Bitters",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Manhattan"
+    },
+    {
+      "name": "Sambuca Sour",
+      "description": "A unique anise-flavored sour cocktail",
+      "recipe": [
+        {
+          "ingredientName": "White Sambuca",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Egg White",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.75
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Sour"
+    },
+    {
+      "name": "Pernod Fizz",
+      "description": "A refreshing anise-flavored fizz",
+      "recipe": [
+        {
+          "ingredientName": "Pernod",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Soda Water",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Egg White",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Fizz"
+    },
+    {
+      "name": "Cherry Marnier Old Fashioned",
+      "description": "A fruity twist on the classic Old Fashioned",
+      "recipe": [
+        {
+          "ingredientName": "Cherry Marnier",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Angostura Bitters",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Sugar Cube",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "Old Fashioned"
+    },
+    {
+      "name": "Frangelico Flip",
+      "description": "A rich, nutty dessert cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Frangelico",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Whole Egg",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "None"
+    },
+    {
+      "name": "Tia Maria Colada",
+      "description": "A coffee-flavored take on the Piña Colada",
+      "recipe": [
+        {
+          "ingredientName": "Tia Maria",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Coconut Cream",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Pineapple Juice",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "Crushed",
+      "requiredMethod": "Blend",
+      "glassRequirement": {
+        "ideal": [
+          "Hurricane Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "Pina Colada"
+    },
+    {
+      "name": "Aperol Spritz",
+      "description": "A classic Italian aperitif",
+      "recipe": [
+        {
+          "ingredientName": "Aperol",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Champagne",
+          "amountOz": 3
+        },
+        {
+          "ingredientName": "Soda Water",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "White Wine Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Spritz"
+    },
+    {
+      "name": "Melon Sour",
+      "description": "A vibrant green sour cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Melon Liqueur",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Egg White",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "Sour"
+    },
+    {
+      "name": "Lychee Martini",
+      "description": "A floral, exotic martini variation",
+      "recipe": [
+        {
+          "ingredientName": "Lychee Liqueur",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Dry Vermouth",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "Martini"
+    },
+    {
+      "name": "Crème Pêche Fizz",
+      "description": "A refreshing peach cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Crème Pêche",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Soda Water",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "Fizz"
+    },
+    {
+      "name": "Yellow Chartreuse Swizzle",
+      "description": "A herbal, complex swizzle",
+      "recipe": [
+        {
+          "ingredientName": "Yellow Chartreuse",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Mint Leaf",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "Crushed",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Collins Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Swizzle"
+    },
+    {
+      "name": "Ruby Port Flip",
+      "description": "A rich, fortified wine cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Ruby Port",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Whole Egg",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "None"
+    },
+    {
+      "name": "Brown Ale Shandy",
+      "description": "A refreshing beer cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Brown Ale",
+          "amountOz": 6
+        },
+        {
+          "ingredientName": "Lemonade",
+          "amountOz": 6
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Party",
+      "family": "None"
+    },
+    {
+      "name": "Sauvignon Blanc Spritzer",
+      "description": "A light, refreshing wine cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Sauvignon Blanc",
+          "amountOz": 4
+        },
+        {
+          "ingredientName": "Soda Water",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "White Wine Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Wine",
+      "family": "None"
+    },
+    {
+      "name": "Tawny Port Toddy",
+      "description": "A warming winter drink",
+      "recipe": [
+        {
+          "ingredientName": "Tawny Port",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Irish Coffee Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Wine",
+      "family": "Toddy"
+    },
+    {
+      "name": "Dry Sherry Cobbler",
+      "description": "A refreshing wine-based cobbler",
+      "recipe": [
+        {
+          "ingredientName": "Dry Sherry",
+          "amountOz": 3
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "Crushed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Sherry Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Wine",
+      "family": "Cobbler"
+    },
+    {
+      "name": "Crème de Violette Aviation",
+      "description": "A classic Aviation cocktail with violet liqueur",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Crème de Violette",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Maraschino Liqueur",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 0.75
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "None"
+    },
+    {
+      "name": "Benedictine Sazerac",
+      "description": "A herbal variation on the Sazerac",
+      "recipe": [
+        {
+          "ingredientName": "Rye Whiskey",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Benedictine",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Peychaud's Bitters",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Absinthe",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Stir",
+      "glassRequirement": {
+        "ideal": [
+          "Old Fashioned Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "Sazerac"
+    },
+    {
+      "name": "Bitter",
+      "description": "A pint of bitter",
+      "recipe": [
+        {
+          "ingredientName": "Bitter",
+          "amountOz": 12
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "None"
+    },
+    {
+      "name": "Hocus Pocus",
+      "description": "A magical vanilla and elderflower cocktail",
+      "recipe": [
+        {
+          "ingredientName": "Vanilla Vodka",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "St. Germain",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Vanilla Syrup",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Soda Water",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lemon Twist"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "Hocus Pocus"
+    },
+    {
+      "name": "Vampires Kiss Martini",
+      "description": "A blood-red martini with raspberry and cranberry",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Chambord",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Cranberry Juice",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Grenadine",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Raspberry"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "Vampires Kiss"
+    },
+    {
+      "name": "Foolish Mortal",
+      "description": "A bright green cocktail with melon and citrus",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Melon Liqueur",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Green Food Coloring",
+          "amountOz": 0.1
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lime Wheel"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "Foolish Mortal"
+    },
+    {
+      "name": "All Hallow's Eve Martini",
+      "description": "A mysterious black martini with blackcurrant",
+      "recipe": [
+        {
+          "ingredientName": "Black Vodka",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Blackcurrant Cordial",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Black Food Coloring",
+          "amountOz": 0.1
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Blackberry"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "All Hallow's Eve"
+    },
+    {
+      "name": "Love Potion Cocktail",
+      "description": "A romantic pink cocktail with elderflower and peach",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "St. Germain",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Crème Pêche",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Grenadine",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Strawberry"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "Love Potion"
+    },
+    {
+      "name": "Irish Coffee",
+      "description": "A classic Irish coffee with whiskey and cream",
+      "recipe": [
+        {
+          "ingredientName": "Irish Whiskey",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Espresso",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Cream",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Irish Coffee Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Irish Coffee"
+    },
+    {
+      "name": "Pornstar Martini",
+      "description": "A modern martini with passion fruit and vanilla",
+      "recipe": [
+        {
+          "ingredientName": "Vanilla Vodka",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Passion Fruit Syrup",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Vanilla Syrup",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Champagne",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Pineapple Chunk"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Modern",
+      "family": "Pornstar Martini"
+    },
+    {
+      "name": "Gin Rickey",
+      "description": "A refreshing gin highball with lime and soda",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Soda Water",
+          "amountOz": 3
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lime Wheel"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Gin Rickey"
+    },
+    {
+      "name": "Whiskey Highball",
+      "description": "A simple whiskey and soda highball",
+      "recipe": [
+        {
+          "ingredientName": "Bourbon Whiskey",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Soda Water",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lemon Twist"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Whiskey Highball"
+    },
+    {
+      "name": "Aviation",
+      "description": "A classic gin cocktail with violet liqueur",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Maraschino Liqueur",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Lemon Juice",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Crème de Violette",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "None"
+    },
+    {
+      "name": "Lager",
+      "description": "A pint of lager",
+      "recipe": [
+        {
+          "ingredientName": "Lager",
+          "amountOz": 16
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "None"
+    },
+    {
+      "name": "Brown Ale",
+      "description": "A pint of smooth brown ale",
+      "recipe": [
+        {
+          "ingredientName": "Brown Ale",
+          "amountOz": 12
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "None"
+    },
+    {
+      "name": "Lager Shandy",
+      "description": "A refreshing lager mixed with lemonade",
+      "recipe": [
+        {
+          "ingredientName": "Lager",
+          "amountOz": 6
+        },
+        {
+          "ingredientName": "Lemonade",
+          "amountOz": 6
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "None"
+    },
+    {
+      "name": "Lager Top",
+      "description": "A lager with a splash of lemonade on top",
+      "recipe": [
+        {
+          "ingredientName": "Lager",
+          "amountOz": 10
+        },
+        {
+          "ingredientName": "Lemonade",
+          "amountOz": 2
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "None"
+    },
+    {
+      "name": "Victorian Shandy",
+      "description": "A classic Victorian-era beer cocktail with stout and ginger ale",
+      "recipe": [
+        {
+          "ingredientName": "Stout",
+          "amountOz": 6
+        },
+        {
+          "ingredientName": "Ginger Ale",
+          "amountOz": 6
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Obscure",
+      "family": "None"
+    },
+    {
+      "name": "Half of Ale",
+      "description": "A half pint of traditional ale",
+      "recipe": [
+        {
+          "ingredientName": "Ale",
+          "amountOz": 8
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Half Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "None"
+    },
+    {
+      "name": "Half of Stout",
+      "description": "A half pint of rich, dark stout",
+      "recipe": [
+        {
+          "ingredientName": "Stout",
+          "amountOz": 8
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Half Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "None"
+    },
+    {
+      "name": "Half of Bitter",
+      "description": "A half pint of traditional English bitter",
+      "recipe": [
+        {
+          "ingredientName": "Bitter",
+          "amountOz": 8
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Half Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "None"
+    },
+    {
+      "name": "Half of Lager",
+      "description": "A half pint of crisp lager",
+      "recipe": [
+        {
+          "ingredientName": "Lager",
+          "amountOz": 8
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Half Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "None"
+    },
+    {
+      "name": "Half of Brown Ale",
+      "description": "A half pint of smooth brown ale",
+      "recipe": [
+        {
+          "ingredientName": "Brown Ale",
+          "amountOz": 8
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Half Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "None"
+    },
+    {
+      "name": "Half of IPA",
+      "description": "A half pint of hoppy India Pale Ale",
+      "recipe": [
+        {
+          "ingredientName": "India Pale Ale",
+          "amountOz": 8
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Half Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "None"
+    },
+    {
+      "name": "Half of Cider",
+      "description": "A half pint of refreshing cider",
+      "recipe": [
+        {
+          "ingredientName": "Cider",
+          "amountOz": 8
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Half Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "None"
+    },
+    {
+      "name": "Half of Lager Shandy",
+      "description": "A half pint of refreshing lager mixed with lemonade",
+      "recipe": [
+        {
+          "ingredientName": "Lager",
+          "amountOz": 4
+        },
+        {
+          "ingredientName": "Lemonade",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Half Pint Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Draught",
+      "family": "None"
+    },
+    {
+      "name": "Zombie",
+      "description": "A complex tiki cocktail with multiple rums and tropical flavors",
+      "recipe": [
+        {
+          "ingredientName": "White Rum",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Golden Rum",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Dark Rum",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Pineapple Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Passion Fruit Syrup",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Angostura Bitters",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Absinthe",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "Crushed",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Hurricane Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Pineapple Leaf"
+        ],
+        "acceptable": [
+          "Mint Sprig"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "None"
+    },
+    {
+      "name": "Hurricane",
+      "description": "A New Orleans classic with rum and passion fruit",
+      "recipe": [
+        {
+          "ingredientName": "White Rum",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Dark Rum",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Passion Fruit Syrup",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Orange Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "Crushed",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Hurricane Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Orange Wheel"
+        ],
+        "acceptable": [
+          "Pineapple Leaf"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "None"
+    },
+    {
+      "name": "Salty Dog",
+      "description": "A gin highball with grapefruit juice and salt rim",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Grapefruit Juice",
+          "amountOz": 4
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Salt Rim"
+        ],
+        "acceptable": [
+          "Grapefruit Twist"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "None"
+    },
+    {
+      "name": "Sea Breeze",
+      "description": "A refreshing vodka cocktail with cranberry and grapefruit",
+      "recipe": [
+        {
+          "ingredientName": "Vodka",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Cranberry Juice",
+          "amountOz": 3
+        },
+        {
+          "ingredientName": "Grapefruit Juice",
+          "amountOz": 1
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lime Wedge"
+        ],
+        "acceptable": [
+          "Grapefruit Twist"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "None"
+    },
+    {
+      "name": "Strawberry Daiquiri",
+      "description": "A fruity variation of the classic Daiquiri",
+      "recipe": [
+        {
+          "ingredientName": "White Rum",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.75
+        },
+        {
+          "ingredientName": "Strawberry Syrup",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "Crushed",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Martini Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Strawberry"
+        ],
+        "acceptable": [
+          "Lime Wheel"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Party",
+      "family": "Daiquiri"
+    },
+    {
+      "name": "Singapore Sling",
+      "description": "A complex gin cocktail with multiple liqueurs and tropical flavors",
+      "recipe": [
+        {
+          "ingredientName": "Gin",
+          "amountOz": 1.5
+        },
+        {
+          "ingredientName": "Cherry Heering",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Benedictine",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Cointreau",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Pineapple Juice",
+          "amountOz": 1
+        },
+        {
+          "ingredientName": "Lime Juice",
+          "amountOz": 0.5
+        },
+        {
+          "ingredientName": "Gomme Syrup",
+          "amountOz": 0.25
+        },
+        {
+          "ingredientName": "Angostura Bitters",
+          "amountOz": 0.25
+        }
+      ],
+      "requiredIce": "Crushed",
+      "requiredMethod": "Shake",
+      "glassRequirement": {
+        "ideal": [
+          "Hurricane Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Pineapple Leaf"
+        ],
+        "acceptable": [
+          "Maraschino Cherry"
+        ],
+        "required": true
+      },
+      "category": "Cocktail",
+      "style": "Classic",
+      "family": "Sling"
+    },
+    {
+      "name": "Vanilla Milkshake",
+      "description": "A creamy vanilla milkshake",
+      "recipe": [
+        {
+          "ingredientName": "Vanilla Ice Cream",
+          "amountOz": 4
+        },
+        {
+          "ingredientName": "Milk",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Vanilla Syrup",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Blend",
+      "glassRequirement": {
+        "ideal": [
+          "Milkshake Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Non-Alcoholic",
+      "family": "None"
+    },
+    {
+      "name": "Chocolate Milkshake",
+      "description": "A rich chocolate milkshake",
+      "recipe": [
+        {
+          "ingredientName": "Chocolate Ice Cream",
+          "amountOz": 4
+        },
+        {
+          "ingredientName": "Milk",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Chocolate Syrup",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Blend",
+      "glassRequirement": {
+        "ideal": [
+          "Milkshake Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Chocolate Shavings"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Non-Alcoholic",
+      "family": "None"
+    },
+    {
+      "name": "Strawberry Milkshake",
+      "description": "A fruity strawberry milkshake",
+      "recipe": [
+        {
+          "ingredientName": "Vanilla Ice Cream",
+          "amountOz": 4
+        },
+        {
+          "ingredientName": "Milk",
+          "amountOz": 2
+        },
+        {
+          "ingredientName": "Strawberry Syrup",
+          "amountOz": 0.5
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Blend",
+      "glassRequirement": {
+        "ideal": [
+          "Milkshake Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Strawberry"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Non-Alcoholic",
+      "family": "None"
+    },
+    {
+      "name": "Pineapple Juice",
+      "description": "A glass of fresh pineapple juice",
+      "recipe": [
+        {
+          "ingredientName": "Pineapple Juice",
+          "amountOz": 6
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Pineapple Chunk"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Non-Alcoholic",
+      "family": "None"
+    },
+    {
+      "name": "Orange Juice",
+      "description": "A glass of fresh orange juice",
+      "recipe": [
+        {
+          "ingredientName": "Orange Juice",
+          "amountOz": 6
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Orange Wedge"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Non-Alcoholic",
+      "family": "None"
+    },
+    {
+      "name": "Cranberry Juice",
+      "description": "A glass of tart cranberry juice",
+      "recipe": [
+        {
+          "ingredientName": "Cranberry Juice",
+          "amountOz": 6
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lime Wedge"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Non-Alcoholic",
+      "family": "None"
+    },
+    {
+      "name": "Cranberry and Soda",
+      "description": "A refreshing cranberry spritzer",
+      "recipe": [
+        {
+          "ingredientName": "Cranberry Juice",
+          "amountOz": 3
+        },
+        {
+          "ingredientName": "Soda Water",
+          "amountOz": 3
+        }
+      ],
+      "requiredIce": "Cubed",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Highball Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "Lime Wedge"
+        ],
+        "acceptable": [
+          "None"
+        ],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Non-Alcoholic",
+      "family": "None"
+    },
+    {
+      "name": "Coffee",
+      "description": "A hot cup of coffee",
+      "recipe": [
+        {
+          "ingredientName": "Coffee",
+          "amountOz": 8
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Irish Coffee Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Non-Alcoholic",
+      "family": "None"
+    },
+    {
+      "name": "Tea",
+      "description": "A hot cup of tea",
+      "recipe": [
+        {
+          "ingredientName": "Tea",
+          "amountOz": 8
+        }
+      ],
+      "requiredIce": "None",
+      "requiredMethod": "Build",
+      "glassRequirement": {
+        "ideal": [
+          "Irish Coffee Glass"
+        ],
+        "acceptable": []
+      },
+      "garnishRequirement": {
+        "ideal": [
+          "None"
+        ],
+        "acceptable": [],
+        "required": true
+      },
+      "category": "Regular",
+      "style": "Non-Alcoholic",
+      "family": "None"
+    }
+  ],
+  "venues": [
+    {
+      "name": "The Bear & Badger",
+      "description": "An old man pub with a traditional atmosphere",
+      "location": "Old Town",
+      "capacity": 80,
+      "shiftLengthHours": 12,
+      "basePayPerHour": 9,
+      "minimumHoursPerShift": 6,
+      "minimumBarTake": 300,
+      "shiftPattern": [
+        {
+          "day": "monday",
+          "start": "11AM",
+          "end": "11PM"
+        },
+        {
+          "day": "tuesday",
+          "start": "11AM",
+          "end": "11PM"
+        },
+        {
+          "day": "wednesday",
+          "start": "11AM",
+          "end": "11PM"
+        },
+        {
+          "day": "thursday",
+          "start": "11AM",
+          "end": "12AM"
+        },
+        {
+          "day": "friday",
+          "start": "11AM",
+          "end": "1AM"
+        },
+        {
+          "day": "saturday",
+          "start": "10AM",
+          "end": "1AM"
+        },
+        {
+          "day": "sunday",
+          "start": "12PM",
+          "end": "10PM"
+        }
+      ]
+    },
+    {
+      "name": "Mackenzie's",
+      "description": "A no-frills bar with basic drinks",
+      "location": "Industrial District",
+      "capacity": 50,
+      "shiftLengthHours": 14,
+      "basePayPerHour": 8.5,
+      "minimumHoursPerShift": 6,
+      "minimumBarTake": 200,
+      "shiftPattern": [
+        {
+          "day": "monday",
+          "start": "11AM",
+          "end": "2AM"
+        },
+        {
+          "day": "tuesday",
+          "start": "11AM",
+          "end": "2AM"
+        },
+        {
+          "day": "wednesday",
+          "start": "11AM",
+          "end": "2AM"
+        },
+        {
+          "day": "thursday",
+          "start": "11AM",
+          "end": "3AM"
+        },
+        {
+          "day": "friday",
+          "start": "11AM",
+          "end": "4AM"
+        },
+        {
+          "day": "saturday",
+          "start": "10AM",
+          "end": "4AM"
+        },
+        {
+          "day": "sunday",
+          "start": null,
+          "end": null
+        }
+      ]
+    },
+    {
+      "name": "Paradise Cove",
+      "description": "All your tropical dreams come true",
+      "location": "Beachfront",
+      "capacity": 150,
+      "shiftLengthHours": 9,
+      "basePayPerHour": 11,
+      "minimumHoursPerShift": 8,
+      "minimumBarTake": 700,
+      "shiftPattern": [
+        {
+          "day": "monday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "tuesday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "wednesday",
+          "start": "2PM",
+          "end": "11PM"
+        },
+        {
+          "day": "thursday",
+          "start": "2PM",
+          "end": "12AM"
+        },
+        {
+          "day": "friday",
+          "start": "2PM",
+          "end": "2AM"
+        },
+        {
+          "day": "saturday",
+          "start": "12PM",
+          "end": "2AM"
+        },
+        {
+          "day": "sunday",
+          "start": "12PM",
+          "end": "10PM"
+        }
+      ]
+    },
+    {
+      "name": "The Mourning Star",
+      "description": "Themed bar for goths and weirdos",
+      "location": "Alternative District",
+      "capacity": 70,
+      "shiftLengthHours": 8,
+      "basePayPerHour": 10,
+      "minimumHoursPerShift": 6,
+      "minimumBarTake": 400,
+      "shiftPattern": [
+        {
+          "day": "monday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "tuesday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "wednesday",
+          "start": "6PM",
+          "end": "2AM"
+        },
+        {
+          "day": "thursday",
+          "start": "6PM",
+          "end": "2AM"
+        },
+        {
+          "day": "friday",
+          "start": "5PM",
+          "end": "3AM"
+        },
+        {
+          "day": "saturday",
+          "start": "4PM",
+          "end": "3AM"
+        },
+        {
+          "day": "sunday",
+          "start": "5PM",
+          "end": "12AM"
+        }
+      ]
+    },
+    {
+      "name": "The Golden Lounge",
+      "description": "Hotel bar with classic cocktails",
+      "location": "Downtown",
+      "capacity": 120,
+      "shiftLengthHours": 10,
+      "basePayPerHour": 12,
+      "minimumHoursPerShift": 8,
+      "minimumBarTake": 800,
+      "shiftPattern": [
+        {
+          "day": "monday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "tuesday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "wednesday",
+          "start": "5PM",
+          "end": "1AM"
+        },
+        {
+          "day": "thursday",
+          "start": "5PM",
+          "end": "2AM"
+        },
+        {
+          "day": "friday",
+          "start": "4PM",
+          "end": "2AM"
+        },
+        {
+          "day": "saturday",
+          "start": "3PM",
+          "end": "2AM"
+        },
+        {
+          "day": "sunday",
+          "start": "4PM",
+          "end": "12AM"
+        }
+      ]
+    },
+    {
+      "name": "Penthouse",
+      "description": "Champagne and elegance on the 35th floor",
+      "location": "Financial District",
+      "capacity": 100,
+      "shiftLengthHours": 8,
+      "basePayPerHour": 16,
+      "minimumHoursPerShift": 8,
+      "minimumBarTake": 1200,
+      "shiftPattern": [
+        {
+          "day": "monday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "tuesday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "wednesday",
+          "start": "5PM",
+          "end": "1AM"
+        },
+        {
+          "day": "thursday",
+          "start": "5PM",
+          "end": "1AM"
+        },
+        {
+          "day": "friday",
+          "start": "4PM",
+          "end": "2AM"
+        },
+        {
+          "day": "saturday",
+          "start": "3PM",
+          "end": "2AM"
+        },
+        {
+          "day": "sunday",
+          "start": "4PM",
+          "end": "12AM"
+        }
+      ]
+    },
+    {
+      "name": "The Secret Society",
+      "description": "Hidden speakeasy with prohibition era drinks",
+      "location": "Old Town",
+      "capacity": 60,
+      "shiftLengthHours": 8,
+      "basePayPerHour": 13,
+      "minimumHoursPerShift": 7,
+      "minimumBarTake": 500,
+      "shiftPattern": [
+        {
+          "day": "monday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "tuesday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "wednesday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "thursday",
+          "start": "7PM",
+          "end": "2AM"
+        },
+        {
+          "day": "friday",
+          "start": "7PM",
+          "end": "3AM"
+        },
+        {
+          "day": "saturday",
+          "start": "5PM",
+          "end": "3AM"
+        },
+        {
+          "day": "sunday",
+          "start": null,
+          "end": null
+        }
+      ]
+    },
+    {
+      "name": "The Hop House",
+      "description": "Brewery bar dedicated to real ales",
+      "location": "Brewery District",
+      "capacity": 200,
+      "shiftLengthHours": 12,
+      "basePayPerHour": 10.5,
+      "minimumHoursPerShift": 8,
+      "minimumBarTake": 900,
+      "shiftPattern": [
+        {
+          "day": "monday",
+          "start": "11AM",
+          "end": "11PM"
+        },
+        {
+          "day": "tuesday",
+          "start": "11AM",
+          "end": "12AM"
+        },
+        {
+          "day": "wednesday",
+          "start": "11AM",
+          "end": "12AM"
+        },
+        {
+          "day": "thursday",
+          "start": "11AM",
+          "end": "12AM"
+        },
+        {
+          "day": "friday",
+          "start": "11AM",
+          "end": "1AM"
+        },
+        {
+          "day": "saturday",
+          "start": "10AM",
+          "end": "1AM"
+        },
+        {
+          "day": "sunday",
+          "start": null,
+          "end": null
+        }
+      ]
+    },
+    {
+      "name": "The Dram Library",
+      "description": "Whisky themed cellar with a big selection",
+      "location": "Historic District",
+      "capacity": 60,
+      "shiftLengthHours": 8,
+      "basePayPerHour": 15,
+      "minimumHoursPerShift": 8,
+      "minimumBarTake": 1000,
+      "shiftPattern": [
+        {
+          "day": "monday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "tuesday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "wednesday",
+          "start": "6PM",
+          "end": "1AM"
+        },
+        {
+          "day": "thursday",
+          "start": "6PM",
+          "end": "1AM"
+        },
+        {
+          "day": "friday",
+          "start": "5PM",
+          "end": "2AM"
+        },
+        {
+          "day": "saturday",
+          "start": "4PM",
+          "end": "2AM"
+        },
+        {
+          "day": "sunday",
+          "start": "5PM",
+          "end": "12AM"
+        }
+      ]
+    },
+    {
+      "name": "The Grape Escape",
+      "description": "Wine bar for true connoisseurs",
+      "location": "Historic District",
+      "capacity": 50,
+      "shiftLengthHours": 7,
+      "basePayPerHour": 14,
+      "minimumHoursPerShift": 6,
+      "minimumBarTake": 400,
+      "shiftPattern": [
+        {
+          "day": "monday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "tuesday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "wednesday",
+          "start": "5PM",
+          "end": "11PM"
+        },
+        {
+          "day": "thursday",
+          "start": "5PM",
+          "end": "11PM"
+        },
+        {
+          "day": "friday",
+          "start": "4PM",
+          "end": "12AM"
+        },
+        {
+          "day": "saturday",
+          "start": "3PM",
+          "end": "12AM"
+        },
+        {
+          "day": "sunday",
+          "start": "4PM",
+          "end": "10PM"
+        }
+      ]
+    },
+    {
+      "name": "Modern Alchemy",
+      "description": "Mixology studio with innovation as the focus",
+      "location": "Arts District",
+      "capacity": 80,
+      "shiftLengthHours": 8,
+      "basePayPerHour": 14.5,
+      "minimumHoursPerShift": 6,
+      "minimumBarTake": 600,
+      "shiftPattern": [
+        {
+          "day": "monday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "tuesday",
+          "start": null,
+          "end": null
+        },
+        {
+          "day": "wednesday",
+          "start": "6PM",
+          "end": "2AM"
+        },
+        {
+          "day": "thursday",
+          "start": "6PM",
+          "end": "2AM"
+        },
+        {
+          "day": "friday",
+          "start": "5PM",
+          "end": "3AM"
+        },
+        {
+          "day": "saturday",
+          "start": "4PM",
+          "end": "3AM"
+        },
+        {
+          "day": "sunday",
+          "start": "5PM",
+          "end": "1AM"
+        }
+      ]
+    }
+  ],
+  "venueMenus": {
+    "The Bear & Badger": [
+      {
+        "drinkName": "Bitter",
+        "price": 4.5,
+        "isSignature": true
+      },
+      {
+        "drinkName": "Ale",
+        "price": 4,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Stout",
+        "price": 4.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Lager",
+        "price": 4,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Cider",
+        "price": 4.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Half of Bitter",
+        "price": 2.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Half of Ale",
+        "price": 2,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Half of Stout",
+        "price": 2.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Half of Lager",
+        "price": 2,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Half of Cider",
+        "price": 2.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bourbon Neat",
+        "price": 6,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Scotch Neat",
+        "price": 7,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bourbon on the Rocks",
+        "price": 6,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Scotch on the Rocks",
+        "price": 7,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gin and Tonic",
+        "price": 5.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vodka & Soda",
+        "price": 5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Rum & Cola",
+        "price": 5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Red Wine",
+        "price": 5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "White Wine",
+        "price": 5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vodka and Tonic",
+        "price": 5.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vodka Cranberry",
+        "price": 5.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vodka Lemonade",
+        "price": 5.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Whisky and Coke",
+        "price": 5.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Rum and Ginger Ale",
+        "price": 5.5,
+        "isSignature": false
+      }
+    ],
+    "Mackenzie's": [
+      {
+        "drinkName": "Ale",
+        "price": 4,
+        "isSignature": true
+      },
+      {
+        "drinkName": "Vodka & Soda",
+        "price": 6,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Rum & Cola",
+        "price": 6,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gin and Tonic",
+        "price": 6,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bourbon Neat",
+        "price": 7,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Scotch Neat",
+        "price": 8,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bourbon on the Rocks",
+        "price": 7,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Scotch on the Rocks",
+        "price": 8,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Whiskey Sour",
+        "price": 8,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Long Island Iced Tea",
+        "price": 10,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Moscow Mule",
+        "price": 9,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Tequila Sunrise",
+        "price": 9,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Sex on the Beach",
+        "price": 9,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Shirley Temple",
+        "price": 5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Stout",
+        "price": 4,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Lager",
+        "price": 4,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Half of Ale",
+        "price": 3,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Half of Stout",
+        "price": 3,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Half of Lager",
+        "price": 3,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bloody Mary",
+        "price": 8,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Irish Coffee",
+        "price": 7,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Salty Dog",
+        "price": 8,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Sea Breeze",
+        "price": 8,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vanilla Milkshake",
+        "price": 6,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Chocolate Milkshake",
+        "price": 6,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Strawberry Milkshake",
+        "price": 6,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Coffee",
+        "price": 3,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Tea",
+        "price": 2.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gin and Orange Juice",
+        "price": 6.5,
+        "isSignature": false
+      }
+    ],
+    "Paradise Cove": [
+      {
+        "drinkName": "Mai Tai",
+        "price": 15,
+        "isSignature": true
+      },
+      {
+        "drinkName": "Pina Colada",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Mojito",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Dark 'n' Stormy",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Saturn",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Tia Maria Colada",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Long Island Iced Tea",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Moscow Mule",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gin and Tonic",
+        "price": 11,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vodka & Soda",
+        "price": 10,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Rum & Cola",
+        "price": 10,
+        "isSignature": false
+      },
+      {
+        "drinkName": "White Russian",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Shirley Temple",
+        "price": 8,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gin Rickey",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Whiskey Highball",
+        "price": 11,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Pineapple Juice",
+        "price": 4,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Orange Juice",
+        "price": 4,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Cranberry Juice",
+        "price": 4,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Cranberry and Soda",
+        "price": 4.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gin and Tonic",
+        "price": 11,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vodka & Soda",
+        "price": 10,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Rum & Cola",
+        "price": 10,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Blue Lagoon",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Tequila Sunrise",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Sex on the Beach",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Zombie",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Hurricane",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Strawberry Daiquiri",
+        "price": 14,
+        "isSignature": false
+      }
+    ],
+    "The Mourning Star": [
+      {
+        "drinkName": "Black Russian",
+        "price": 12,
+        "isSignature": true
+      },
+      {
+        "drinkName": "Death in the Afternoon",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vampires Kiss Martini",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Hocus Pocus",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Foolish Mortal",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "All Hallow's Eve Martini",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Love Potion Cocktail",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Brain Haemorrhage",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Absinthe",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Sambuca",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Pernod",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Sambuca Sour",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Pernod Fizz",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Benedictine Sazerac",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Crème de Violette Aviation",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Monkey Gland",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bourbon Neat",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Scotch Neat",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gin and Tonic",
+        "price": 10,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vodka & Soda",
+        "price": 9,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Red Wine",
+        "price": 10,
+        "isSignature": false
+      },
+      {
+        "drinkName": "White Wine",
+        "price": 10,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Coffee",
+        "price": 3.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Tea",
+        "price": 3,
+        "isSignature": false
+      }
+    ],
+    "The Golden Lounge": [
+      {
+        "drinkName": "Old Fashioned",
+        "price": 14,
+        "isSignature": true
+      },
+      {
+        "drinkName": "Manhattan",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gin Martini",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Negroni",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Whiskey Sour",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Rob Roy",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Sidecar",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "White Lady",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bobby Burns",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Clover Club",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Benedictine Sazerac",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Crème de Violette Aviation",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "New York Flip",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Godfather",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bourbon Neat",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Scotch Neat",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bourbon on the Rocks",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Scotch on the Rocks",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gin and Tonic",
+        "price": 11,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vodka & Soda",
+        "price": 10,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Daiquiri",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gimlet",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vesper",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vodka Martini",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Dirty Martini",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Sazerac",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Mint Julep",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Tom Collins",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Aviation",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Singapore Sling",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Cosmopolitan",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Margarita",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Grasshopper",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Cherry Marnier Old Fashioned",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Brandy Sidecar",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Brandy and Coke",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Brandy and Ginger",
+        "price": 12,
+        "isSignature": false
+      }
+    ],
+    "Penthouse": [
+      {
+        "drinkName": "French 75",
+        "price": 16,
+        "isSignature": true
+      },
+      {
+        "drinkName": "Champagne Cocktail",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Aperol Spritz",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Champagne",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "White Russian",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Black Russian",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Espresso Martini",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "French Martini",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Lychee Martini",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gin Martini",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Manhattan",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Old Fashioned",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Negroni",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gin and Tonic",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vodka & Soda",
+        "price": 11,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Red Wine",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "White Wine",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Sauvignon Blanc Spritzer",
+        "price": 13,
+        "isSignature": false
+      }
+    ],
+    "The Secret Society": [
+      {
+        "drinkName": "Remember the Maine",
+        "price": 16,
+        "isSignature": true
+      },
+      {
+        "drinkName": "Monkey Gland",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Death in the Afternoon",
+        "price": 17,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bobby Burns",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Clover Club",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "El Presidente",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Hemingway Daiquiri",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Saturn",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Ti' Punch",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vieux Mot",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Warday's",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Warday's Sour",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Armagnac Sidecar",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Canadian Manhattan",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Benedictine Sazerac",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Crème de Violette Aviation",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "New York Flip",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Godfather",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bourbon Neat",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Scotch Neat",
+        "price": 14,
+        "isSignature": false
+      }
+    ],
+    "The Hop House": [
+      {
+        "drinkName": "IPA",
+        "price": 8,
+        "isSignature": true
+      },
+      {
+        "drinkName": "Stout",
+        "price": 9,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Ale",
+        "price": 7,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Cider",
+        "price": 8,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bitter",
+        "price": 7,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Brown Ale Shandy",
+        "price": 8,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Black Velvet",
+        "price": 10,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Snakebite and Black",
+        "price": 9,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Victorian Shandy",
+        "price": 9,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Half of Bitter",
+        "price": 4,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Half of Brown Ale",
+        "price": 4,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Half of IPA",
+        "price": 4.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Half of Cider",
+        "price": 4.5,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Half of Lager",
+        "price": 4,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Half of Stout",
+        "price": 4.5,
+        "isSignature": false
+      }
+    ],
+    "The Dram Library": [
+      {
+        "drinkName": "Old Fashioned",
+        "price": 16,
+        "isSignature": true
+      },
+      {
+        "drinkName": "Manhattan",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bourbon Neat",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Scotch Neat",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Godfather",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Rob Roy",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Rusty Nail",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bobby Burns",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Remember the Maine",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Canadian Manhattan",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Benedictine Sazerac",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "New York Flip",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bourbon on the Rocks",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Scotch on the Rocks",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gin and Tonic",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vodka & Soda",
+        "price": 11,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Red Wine",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "White Wine",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Champagne",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gin and Tonic",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vodka & Soda",
+        "price": 11,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Negroni",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Gin Martini",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "White Russian",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Black Russian",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bourbon Neat",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Scotch Neat",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Bourbon on the Rocks",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Scotch on the Rocks",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Old Fashioned",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Manhattan",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Whiskey Sour",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Godfather",
+        "price": 14,
+        "isSignature": false
+      }
+    ],
+    "The Grape Escape": [
+      {
+        "drinkName": "Red Wine",
+        "price": 12,
+        "isSignature": true
+      },
+      {
+        "drinkName": "White Wine",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Champagne",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Sauvignon Blanc Spritzer",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Dry Sherry Cobbler",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Tawny Port Toddy",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Ruby Port Flip",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Champagne Cocktail",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "French 75",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Aperol Spritz",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Death in the Afternoon",
+        "price": 17,
+        "isSignature": false
+      }
+    ],
+    "Modern Alchemy": [
+      {
+        "drinkName": "Espresso Martini",
+        "price": 16,
+        "isSignature": true
+      },
+      {
+        "drinkName": "French Martini",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Lychee Martini",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Melon Sour",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Brain Haemorrhage",
+        "price": 12,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Amarula Espresso",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Sambuca Sour",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Pernod Fizz",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Frangelico Flip",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Tia Maria Colada",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Crème Pêche Fizz",
+        "price": 13,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Ruby Port Flip",
+        "price": 14,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Shirley Temple",
+        "price": 8,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Pornstar Martini",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Hocus Pocus",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Vampires Kiss Martini",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Foolish Mortal",
+        "price": 15,
+        "isSignature": false
+      },
+      {
+        "drinkName": "All Hallow's Eve Martini",
+        "price": 16,
+        "isSignature": false
+      },
+      {
+        "drinkName": "Love Potion Cocktail",
+        "price": 15,
+        "isSignature": false
+      }
+    ]
+  },
+  "orderPhrases": [
+    "I'd like %@, please!",
+    "I'd like to try %@.",
+    "Could I have %@?",
+    "I'll take %@.",
+    "Make me %@."
+  ],
+  "livingSituations": [
+    {
+      "name": "Living with Parents",
+      "dailyCost": 0,
+      "oneOffCost": 0
+    },
+    {
+      "name": "Shared Flat",
+      "dailyCost": 15,
+      "oneOffCost": 100
+    },
+    {
+      "name": "Studio Flat",
+      "dailyCost": 25,
+      "oneOffCost": 1000
+    },
+    {
+      "name": "One Bedroom Flat",
+      "dailyCost": 35,
+      "oneOffCost": 1500
+    },
+    {
+      "name": "Two Bedroom Flat",
+      "dailyCost": 45,
+      "oneOffCost": 2000
+    },
+    {
+      "name": "House Share",
+      "dailyCost": 20,
+      "oneOffCost": 300
+    },
+    {
+      "name": "Luxury Apartment",
+      "dailyCost": 60,
+      "oneOffCost": 5000
+    }
+  ],
+  "transportOptions": [
+    {
+      "name": "Walking",
+      "purchaseCost": 0,
+      "perShiftCost": 0
+    },
+    {
+      "name": "Bus",
+      "purchaseCost": 0,
+      "perShiftCost": 3
+    },
+    {
+      "name": "Bike",
+      "purchaseCost": 100,
+      "perShiftCost": 0.5
+    },
+    {
+      "name": "Scooter",
+      "purchaseCost": 800,
+      "perShiftCost": 1
+    },
+    {
+      "name": "Car",
+      "purchaseCost": 3000,
+      "perShiftCost": 5
+    },
+    {
+      "name": "Luxury Car",
+      "purchaseCost": 15000,
+      "perShiftCost": 8
+    }
+  ],
+  "gameConfig": {
+    "customerPatienceBaseSeconds": 300,
+    "customerPatienceVariationSeconds": 30,
+    "maxActiveCustomers": 8,
+    "customersPerWave": 5,
+    "initialCustomerCount": 1,
+    "customerGenerationBaseSeconds": 60,
+    "customerGenerationVariationSeconds": 30,
+    "returningCustomerChance": 0.3,
+    "tipMultiplierIdeal": 1,
+    "tipMultiplierAcceptable": 0.8,
+    "tipMultiplierWrong": 0.2,
+    "belowMinimumBarTakeWagePenalty": 0.1,
+    "aboveMinimumBarTakeBonusThreshold": 1.5,
+    "aboveMinimumBarTakeBonus": 0.15
+  }
+}
